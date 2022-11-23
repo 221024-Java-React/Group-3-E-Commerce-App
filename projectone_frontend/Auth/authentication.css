@@ -1,0 +1,33 @@
+
+
+html, body{
+    height:100%;
+}
+
+.container_flex{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+   
+}
+
+#auth{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border-style: solid;
+   
+    padding: 50px;
+}
+
+.authentication{
+    background-color: blue;
+    color:white;
+    padding: 10px;
+}
+
+
+   
