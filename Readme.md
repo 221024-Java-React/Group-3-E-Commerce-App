@@ -1,6 +1,6 @@
 # Add environment variables
 
-DB_URL : jdbc:postgresql://localhost:5432/ecommerce
+DB_URL : jdbc:postgresql://localhost:5432
 
 DB_USERNAME: admin
 
