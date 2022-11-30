@@ -13,10 +13,10 @@ DB_PASSWORD: admin
 
 # Git Steps
 
-- pull everything from github : git pull or git pull url (if you didn't added the url as origin)
-- create a new branch on local machine
+- pull everything from github : git pull or git pull url (if you didn't add the git url as origin)
+- create a new branch on the local machine
 - work on the feature inside the new branch
 - test everything is working
 - commit the changes
-- from main branch : git merge your -branch
-- git push  main or git push url main (if you didn't added the url as origin)
+- from main branch : git merge your-branch
+- git push  main or git push url main (if you didn't add the git url as origin)
