@@ -6,6 +6,11 @@ DB_USERNAME: admin
 
 DB_PASSWORD: admin
 
+# PostgreSQL
+
+- create a database with the name ecommerce
+- create a username admin and password admin for the ecommerce database
+
 # Git Steps
 
 - pull everything from github : git pull url
