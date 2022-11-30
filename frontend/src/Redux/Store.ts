@@ -9,7 +9,8 @@ export const store = configureStore({
         product: ProductSlice,
         user: UserSlice,
         order: OrderSlice
-    }
+    },
+    devTools:true
 });
 
 export type RootState = ReturnType<typeof store.getState>;
