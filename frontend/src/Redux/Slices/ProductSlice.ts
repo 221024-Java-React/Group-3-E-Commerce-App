@@ -20,6 +20,7 @@ export const ProductSlice = createSlice({
         },
 
         updateProduct: (state:ProductSliceState, action:PayloadAction<number>) => {
+            console.log("Enters update product slice");
             for(let i = 0; i<state.products.length; i++){
                 let product = state.products[i];
                 if(product.id === action.payload){
@@ -27,6 +28,7 @@ export const ProductSlice = createSlice({
                     state.products.splice(i, 1, product);
                 }
             }
+            console.log("state: " + state);
            
             return state; 
         },

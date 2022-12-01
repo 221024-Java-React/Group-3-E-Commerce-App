@@ -1,50 +1,52 @@
-import React, {useState, useEffect} from 'react';
-import {Product} from '../../Types/Product';
+import React, { useState, useEffect } from 'react';
+import { Product } from '../../Types/Product';
 import { useDispatch } from 'react-redux';
 import { DispatchType } from '../../Redux/Store';
 import { updateProduct, removeProduct } from '../../Redux/Slices/ProductSlice';
 import './CartCard.css';
 import logo from '../../Assets/ecommercelogos.png';
 
-export const CartCard:React.FC<Product> = (product) => {
-
+export const CartCard:React.FC<Product> = ({id, title, price, quantity, description}) => {
     const dispatch:DispatchType = useDispatch();
 
     const [products, setProds] = useState<Product[]>([]);
 
-    const [qty, setQty] = useState<number>(0);
+    const [quant, setQuant] = useState<number>();
+
+    const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+        setQuant(parseInt(e.target.value));    
+    }
 
     const update = () => {
         console.log("Enters update function");
-        dispatch(updateProduct(product.id));
+        dispatch(updateProduct(id));
     }
 
     const remove = () => {
-        dispatch(removeProduct(product.id));
+        dispatch(removeProduct(id));
     }
 
 
     useEffect(()=>{
         console.log("Enters useEffect");
-        setQty(product.quantity);
-        console.log("product quantity should have entered setQty");
+        console.log("Quantity value from HTML: " + quant);
     //    console.log("State changed in the store ", state);
-    }, [products, products.length,]);
+    }, [quant, products, products.length]);
 
     return (
-            <div className="cartcard-container">
-                <br />
-                <img className='product-logo' src={logo}/>
-                <p>{product.title}</p>
-                <p>{product.price}</p>
-               <span className="dSetInnerHtml-qtyInput" dangerouslySetInnerHTML={{__html: `<input className="qtyInput" type="number" value="${product.quantity}"></input>  `}} />
-                <p>{product.description}</p>
-                <button className="update-btn" onClick={update}>update</button>
-                <button className="remove-btn" onClick={remove}>remove</button>
-            </div>)
-    
-    
-    
+        
+        <div className="cartcard-container">
+            <br />
+            <img className='product-logo' src={logo}/>
+            <p>{title}</p>
+            <p>{price}</p>
+            <input className="qtyInput" id="qtyId" name="quantity" type="number" onChange={handleChange} value={quantity} ></input>
+            <p>{description}</p>
+            <button className="update-btn" onClick={update}>update</button>
+            <button className="remove-btn" onClick={remove}>remove</button>
+        </div>
+        
+    )
 }
 
 

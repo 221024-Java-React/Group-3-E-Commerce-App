@@ -9,6 +9,7 @@ import { Register } from './Components/Register/Register';
 import { Shop } from './Components/Shop/Shop';
 import { Cart } from './Components/Cart/Cart';
 import { Checkout } from './Components/Checkout/Checkout';
+import { CheckoutComplete } from './Components/Checkout/CheckoutComplete';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/profile" element={<Profile />}/>
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />}/>;
+        <Route path="/checkout-complete" element={<CheckoutComplete />}/>;
       </Routes>
       <Footer />
     </BrowserRouter>
