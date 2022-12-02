@@ -1,26 +1,22 @@
 import React, {useState, useEffect} from 'react';
 import { Product } from '../../Types/Product';
-import { OrderDetail } from '../../Types/OrderDetail';
+import { Order } from '../../Types/Order';
+import { Payment } from '../../Types/Payment';
 import { useDispatch, useSelector } from 'react-redux';
 import { DispatchType, RootState } from '../../Redux/Store';
 import { CartCard } from './CartCard';
 import { OrderCard } from './OrderCard';
 import { addProduct } from '../../Redux/Slices/ProductSlice';
-import { addOrder, removeOrder } from '../../Redux/Slices/OrderSlice';
+import { addOrder, updateOrder,removeOrder } from '../../Redux/Slices/OrderSlice';
+import { addPayment } from '../../Redux/Slices/PaymentSlice';
 import './Cart.css';
+import { removePayment } from '../../Redux/Slices/PaymentSlice';
+import { Link } from 'react-router-dom'
 
 export const Cart:React.FC = () => {
 
     const dispatch:DispatchType = useDispatch();
     const state = useSelector((state:RootState) => state);
-
-    useEffect(()=>{
-        /*
-            if(localstore.get("userid")) dispatch(getUserInfo(id))
-            else push to login
-        */
-        console.log("State changed in the store ", state);
-    }, [state]);
 
     const [newCart, setNewCart] = useState<Product>({
         id:0,
@@ -28,16 +24,16 @@ export const Cart:React.FC = () => {
         price:0,
         quantity:0,
         description:"",
+        order_id:0
     });
 
-   /* const [newOrder, setNewOrder] = useState<OrderDetail>({
+    //const [newOrder, setNewOrder] = useState<Order>();
+
+    const [newPayment, setNewPayment] = useState<Payment>({
         id:0,
-        product_id: 0,
-        total_price: 0,
-        total_items: 0,
-        tax: 0,
-        shipping_price:0
-    });*/
+        name:"",
+        description:""
+    });
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setNewCart({
@@ -47,87 +43,110 @@ export const Cart:React.FC = () => {
     }
 
     const submitCart = () => {
-        
+
         const item:Product = {
             id: Math.floor(Math.random()*1000)+1,
             title: newCart.title,
             price: newCart.price,
             quantity: newCart.quantity,
             description: newCart.description,
-            order_id : 1
+            order_id : 5
         };
 
-        let nTotal_price=0;
-        let nTotal_items=0;
+        dispatch(addProduct(item));
+
+        let totalPrice=0;
+        let totalItems=0;
         let nTax=0;
 
-       //Note to self: get prop data from state rather that from CartProps this should fix the problem.
-        
-     /*   for(let i=0; i< props.prods.length; i++){
-            nstate.cart.carts.map(()=>{
-                nTotal_price = nTotal_price + (props[i].price*props[i].quantity);
-                nTotal_items += props.prods[i].quantity;
-                console.log(props.prods[i]);
-                console.log("went in for loop");
-            })
-        }
-    */
+        state.product.products.map(({price, quantity})=>{ 
+            totalPrice+=(price * quantity)
+            return totalPrice
+        });
 
-        nTax = nTotal_price * .08;
-        nTotal_price += nTax;
-
-        
-        const order:OrderDetail = {
+        state.product.products.map(({quantity})=>{ 
+            totalItems+=(quantity * 1)
+            return totalItems 
+        });
+      
+        console.log("Prices: " + totalPrice );
+        console.log("Quantities: " + totalItems);
+     
+        const order:Order = {
             id: 5,
-            product_id: 0, //props.ord.product_id,
-            total_price: nTotal_price,
-            total_items: nTotal_items,
+            total_price: totalPrice,
+            total_items: totalItems,
             tax: nTax,
-            shipping_price:0 //props.ord.shipping_price
-        };
-        
-        let tempProdOrderId;
+            shipping_price:0
+        }
 
-        state.product.products.map((prod:Product)=>{
-            tempProdOrderId = prod.order_id;
-        })
-        
-        dispatch(removeOrder(5));
-        if(tempProdOrderId === 5){
-            dispatch(addProduct(item));
-        }else{
-            dispatch(addProduct(item));
+        if(order.id === 0){
+            dispatch(removeOrder(0));
+        }else if(order.id === 5){
             dispatch(addOrder(order));
         }
 
+        //dispatch(updateOrder(order));
+        //dispatch(removeOrder(orderId));
     }
+
+    const submitCheckout = () => {
+        const payment1:Payment = {
+            id:1,
+            name:"Paypal",
+            description:"Pay using you Paypal account"
+        }
+        
+        dispatch(addPayment(payment1));
+
+        const payment2:Payment = {
+            id:2,
+            name:"Credit/Debit",
+            description:"Pay using you debit or credit card"
+        }
+        
+        dispatch(addPayment(payment2));
+
+        const payment3:Payment = {
+            id:3,
+            name:"Check/Money",
+            description:"We will give you detailed instructions via email"
+        }
+        
+        dispatch(addPayment(payment3));
+    }
+
+    useEffect(()=>{
+        
+        console.log("State changed in the store ", state);
+    }, [state, state.product.products.length, state.order, state.order.orders.length, newCart, newPayment]);
 
     return (
 
         <>
-            <h1 className="cart-title">Shopping Cart</h1>     
+        <h1 className="cart-title">Shopping Cart</h1>     
         <div className="cart-container">
             
             <div className="product-container">
-                
-                {
+            {
                 state.product.products.map((product:Product)=>{
                     return <CartCard key={product.id} id={product.id} title={product.title} price={product.price} quantity={product.quantity} description={product.description} />
                 })
-                }
+            }
             </div>
             <div className="order-container">
                 <h2>Order Details</h2>
                 {
-                    state.order.orders.map((order:OrderDetail)=>{
-                    return <OrderCard key={order.id} id={order.id} product_id={order.product_id} total_price={order.total_price} total_items={order.total_items} tax={order.tax} shipping_price={order.shipping_price}/>
+                    state.order.orders.map((order:Order)=>{
+                    return <OrderCard key={order.id} id={order.id} total_price={order.total_price} total_items={order.total_items} tax={order.tax} shipping_price={order.shipping_price}/>
                     })
                 }
+                <Link to="/checkout" onClick={submitCheckout}>Checkout</Link>
             </div>
         </div>
 
-        <br/> <br></br>
-<div>
+            <br/> <br></br>
+            <div>
                 <h3>Product Name</h3>
                 <input name="title" type="text" onChange={handleChange}/>
                 <h3>Price</h3>
@@ -138,7 +157,6 @@ export const Cart:React.FC = () => {
                 <input name="description" type="textarea" onChange={handleChange}/>
                 <button onClick={submitCart}>Buy Item</button>
             </div>
-
- </>
+        </>
     )
 }

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { OrderDetail } from '../../Types/OrderDetail';
+import { Order } from '../../Types/Order';
 
 interface OrderSliceState {
-    orders: OrderDetail[]
+    orders: Order[]
 };
 
 const initialState:OrderSliceState = {
@@ -16,22 +16,36 @@ export const OrderSlice = createSlice({
     initialState,
     reducers: {
 
-        addOrder: (state:OrderSliceState, action:PayloadAction<OrderDetail>) => {
+        addOrder: (state:OrderSliceState, action:PayloadAction<Order>) => {
             state.orders = [...state.orders, action.payload];
             return state;
         },
 
-        checkoutOrder: (state:OrderSliceState, action:PayloadAction<OrderDetail>) => {
+        updateOrder: (state:OrderSliceState, action:PayloadAction<Order>)=> {
+            for(let i = 0; i<state.orders.length; i++){
+                let order = state.orders[i];
+                if(order.id === action.payload.id){
+                    order.id = order.id;
+                    order.total_price= order.total_price;
+                    order.total_items = order.total_items;
+                    order.tax =  order.tax;
+                    order.shipping_price = order.shipping_price; 
+                    state.orders.splice(i, 1, order);
+                }
+            }
+        },
+
+        checkoutOrder: (state:OrderSliceState, action:PayloadAction<Order>) => {
             state.orders = [...state.orders, action.payload];
             return state;
         },
 
         removeOrder: (state:OrderSliceState, action:PayloadAction<number>) => {
-            state.orders = state.orders.filter((order:OrderDetail) => order.id !== action.payload);
-            return state
-        },
+            state.orders = state.orders.filter((order:Order) => order.id !== action.payload);
+            return state;
+        }
     }
 });
 
-export const {addOrder, checkoutOrder, removeOrder} = OrderSlice.actions;
+export const {addOrder, checkoutOrder, removeOrder, updateOrder} = OrderSlice.actions;
 export default OrderSlice.reducer;
