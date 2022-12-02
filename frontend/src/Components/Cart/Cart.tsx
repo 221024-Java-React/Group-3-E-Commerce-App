@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import { Product } from '../../Types/Product';
 import { Order } from '../../Types/Order';
+import { Payment } from '../../Types/Payment';
 import { useDispatch, useSelector } from 'react-redux';
 import { DispatchType, RootState } from '../../Redux/Store';
 import { CartCard } from './CartCard';
 import { OrderCard } from './OrderCard';
 import { addProduct } from '../../Redux/Slices/ProductSlice';
 import { addOrder, updateOrder,removeOrder } from '../../Redux/Slices/OrderSlice';
+import { addPayment } from '../../Redux/Slices/PaymentSlice';
 import './Cart.css';
 import { removePayment } from '../../Redux/Slices/PaymentSlice';
 import { Link } from 'react-router-dom'
@@ -25,13 +27,12 @@ export const Cart:React.FC = () => {
         order_id:0
     });
 
-    const [newOrder, setNewOrder] = useState<Order>({
+    //const [newOrder, setNewOrder] = useState<Order>();
+
+    const [newPayment, setNewPayment] = useState<Payment>({
         id:0,
-        product_id: 0,
-        total_price: 0,
-        total_items: 0,
-        tax: 0,
-        shipping_price:0
+        name:"",
+        description:""
     });
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -72,34 +73,53 @@ export const Cart:React.FC = () => {
         console.log("Quantities: " + totalItems);
      
         const order:Order = {
-            id: 0,
+            id: 5,
             total_price: totalPrice,
             total_items: totalItems,
             tax: nTax,
-            shipping_price:0 //props.ord.shipping_price
-        };
+            shipping_price:0
+        }
 
-        let orderId = 0;
-        
-        state.order.orders.map(({id})=>{ 
-            id=(id * 1)
-            return id
-        });
-        
-        console.log("orderid: " + orderId);
-
-        //dispatch(updateOrder(order));
-        dispatch(removeOrder(orderId));
-
-        if( orderId === 0){
+        if(order.id === 0){
+            dispatch(removeOrder(0));
+        }else if(order.id === 5){
             dispatch(addOrder(order));
         }
+
+        //dispatch(updateOrder(order));
+        //dispatch(removeOrder(orderId));
+    }
+
+    const submitCheckout = () => {
+        const payment1:Payment = {
+            id:1,
+            name:"Paypal",
+            description:"Pay using you Paypal account"
+        }
+        
+        dispatch(addPayment(payment1));
+
+        const payment2:Payment = {
+            id:2,
+            name:"Credit/Debit",
+            description:"Pay using you debit or credit card"
+        }
+        
+        dispatch(addPayment(payment2));
+
+        const payment3:Payment = {
+            id:3,
+            name:"Check/Money",
+            description:"We will give you detailed instructions via email"
+        }
+        
+        dispatch(addPayment(payment3));
     }
 
     useEffect(()=>{
         
         console.log("State changed in the store ", state);
-    }, [state, state.order, state.product.products.length]);
+    }, [state, state.product.products.length, state.order, state.order.orders.length, newCart, newPayment]);
 
     return (
 
@@ -108,12 +128,11 @@ export const Cart:React.FC = () => {
         <div className="cart-container">
             
             <div className="product-container">
-                
-                {
+            {
                 state.product.products.map((product:Product)=>{
                     return <CartCard key={product.id} id={product.id} title={product.title} price={product.price} quantity={product.quantity} description={product.description} />
                 })
-                }
+            }
             </div>
             <div className="order-container">
                 <h2>Order Details</h2>
@@ -122,7 +141,7 @@ export const Cart:React.FC = () => {
                     return <OrderCard key={order.id} id={order.id} total_price={order.total_price} total_items={order.total_items} tax={order.tax} shipping_price={order.shipping_price}/>
                     })
                 }
-                <Link to="/checkout">Checkout</Link>
+                <Link to="/checkout" onClick={submitCheckout}>Checkout</Link>
             </div>
         </div>
 
