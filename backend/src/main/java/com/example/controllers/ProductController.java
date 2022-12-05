@@ -1,8 +1,10 @@
 package com.example.controllers;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,51 +16,36 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.models.Product;
 import com.example.models.PaymentType;
+import com.example.models.Person;
 import com.example.service.ProductService;
 
 import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/products")
+@CrossOrigin("*")
 @AllArgsConstructor(onConstructor=@__(@Autowired))
 public class ProductController {
 	
 	private ProductService tService;
 	
-	@PostMapping("/")
-	public Product createTicket(@RequestBody NewProductObject body) {
-		return tService.createProduct(body.type, body.description, body.amount, body.email, body.date);
-	}
-	
-	@PutMapping("/")
-	public Product approveOrDeny(@RequestBody UpdateProductObject body) {
-		return tService.approveDenyTicket(body.managerId, body.ticketId, body.approved);
-	}
-	
-	@GetMapping("/{role}")
-	public List<Product> getProducts(@PathVariable("role")String role, @RequestParam("id")int id){
-		if(role.equals("manager")) {
+	@GetMapping("/")
+	public List<Product> getProducts(){
 		
-			return tService.getProductsByCategory(id);
+			return tService.getAllProducts();
 		}
-		else {
+	
+	@GetMapping("/{category}")
+	public List<Product> getProductsByCategory(@PathVariable int category){
+		    
+			return tService.getProductsByCategory(category);
+		}
+	
+	@PostMapping("/cart")
+	public Person register(@RequestBody LinkedHashMap<String, String> body) {
+		System.out.println("fsfsfdsfsfffsffdfsdd   "+body.toString());
+		return tService.addToCart(body.get("name"), body.get("email"), body.get("password"));
+	}
 		
-			return tService.getProductsByCategory(id);
-		}
 	}
 
-}
-
-class NewProductObject {
-	public PaymentType type;
-	public String description;
-	public Double amount;
-	public String email;
-	public String date;
-}
-
-class UpdateProductObject {
-	public int managerId;
-	public int ticketId;
-	public boolean approved;
-}

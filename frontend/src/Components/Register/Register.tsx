@@ -1,32 +1,36 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { DispatchType, RootState } from '../../Redux/Store';
-import { login, User } from '../../Redux/Slices/PersonSlice';
+import { register, User } from '../../Redux/Slices/PersonSlice';
 import  './Register.css'
 
 export const Register:React.FC = () => {
 
-    const userState = useSelector((state:RootState) => state.user);
+    const userState = useSelector((state:RootState) => state.auth);
     const dispatch:DispatchType = useDispatch();
 
+    const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         if(e.target.name === "email"){
             setEmail(e.target.value);
-        } else {
+        } else if(e.target.name === "name"){
+            setName(e.target.value);
+        }else {
             setPassword(e.target.value);
         }
     }
 
 
-    const handleLogin = () => {
+    const handleRegister = () => {
        const user:User ={
-           email: email ,
-           password: password
-           }   
-        dispatch(login(user));
+           email: email,
+           password: password,
+           name: name
+       }   
+        dispatch(register(user));
     }
 
     return(
@@ -44,7 +48,7 @@ export const Register:React.FC = () => {
             <input id= "email" name="email" placeholder="Your email" onChange={handleChange}/>
             <label>Password</label>
             <input type="password" id="password" name="password" placeholder="Your password" onChange={handleChange}/>
-            <button id="login" className="authentication" onClick={handleLogin}>Login</button>
+            <button id="login" className="authentication" onClick={handleRegister}>Register</button>
             </form>
         </div>
     )

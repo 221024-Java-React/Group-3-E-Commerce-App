@@ -1,4 +1,3 @@
-import React, { Component } from 'react'
 import './Footer.css'
 import logo from '../../Assets/ecommercelogos.png'
 export const Footer:React.FC = () => {
@@ -8,15 +7,14 @@ export const Footer:React.FC = () => {
 
 <div className="footerAddress">
             <img className="footerLogo" src={logo} />
-                  
-             
             </div>
 
-            <div className="footerAddress">
-                  
+            <div className="footerAddress">      
+            <br/>            
               <h2>Contact Us</h2>
-              
+             
               <address>
+              <p>Address: xyz Ave 45212, MI</p>
                 <p>Email: support@ecommerce.com</p>
                 <p>Phone: 313-585-5914</p>
                     

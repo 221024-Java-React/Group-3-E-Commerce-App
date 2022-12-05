@@ -1,6 +1,6 @@
 
 label, input , button{
-font-size:2em;
+
 }
 
 html, body{
@@ -23,15 +23,13 @@ html, body{
     flex-direction: column;
     align-content: space-between;
     align-items: flex-start;
-    border-style: solid;
     gap: 30px;
     padding: 50px;
-    background-color: #F9FFED;
 }
 
 .authentication{
     background-color: blue;
-    color:white;
+   
     padding: 10px;
     align-self: center;
 }

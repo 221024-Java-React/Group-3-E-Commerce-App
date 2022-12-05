@@ -14,7 +14,7 @@ import com.example.models.Person;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer>{
 	
-	List<Product> getProductsByCategory(ProductCategory s);
+	List<Product> findAllByCategory(ProductCategory s);
 /*	List<Product> getProductsBySubmitterAndType(Person e, PaymentType t);
 	List<Product> getProductsBySubmitterAndStatus(Person e, OrderStatus s);*/
 

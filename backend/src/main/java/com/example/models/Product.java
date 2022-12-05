@@ -35,7 +35,7 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="product_id")
-	private Integer productId;
+	private Integer id;
 	
 	private String title;
 	
@@ -44,6 +44,8 @@ public class Product {
 	private String description;
 	
 	private Double price;
+	
+	private String image;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="category_id")

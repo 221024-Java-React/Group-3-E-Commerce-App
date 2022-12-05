@@ -3,6 +3,19 @@
     text-decoration: underline;
 }
 
+.categoryBtn {
+    background: none!important;
+    border: none;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color:black;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
 .productcard{
     width: 80%;
     display: flex;

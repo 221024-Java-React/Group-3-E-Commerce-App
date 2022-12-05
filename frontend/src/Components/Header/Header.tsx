@@ -1,52 +1,67 @@
-import React, { Component, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import logo from '../../Assets/ecommercelogos.png';
 import './Header.css';
 import 'font-awesome/css/font-awesome.min.css';
+import { useDispatch } from 'react-redux';
+import { DispatchType } from '../../Redux/Store';
+import { logout } from '../../Redux/Slices/PersonSlice';
+import { allProducts, filterProducts } from '../../Redux/Slices/ProductSlice';
+import DarkMode from '../Theme/DarkMode';
 
 export const Header:React.FC = () => {
 
-  const [isChecked, setIsChecked] = useState<boolean>(false);
-
+  let navigate = useNavigate();
+  const dispatch:DispatchType = useDispatch();
   
-  function toggleCheck() {
-    setIsChecked( !isChecked);
-    if(isChecked){
-    document.getElementsByTagName("body")[0].style.backgroundColor= 'gray';
-    document.getElementsByTagName("header")[0].style.backgroundColor= 'gray';
-    document.getElementsByTagName("footer")[0].style.backgroundColor= 'gray';
-  }
-    else{
-       document.getElementsByTagName("body")[0].style.backgroundColor= 'white';
-       document.getElementsByTagName("footer")[0].style.backgroundColor= 'white';
-       document.getElementsByTagName("header")[0].style.backgroundColor= 'white';
-    }
+  
+
+      const handleLogout = (e: { preventDefault: () => void; })=>{
+        e.preventDefault();
+        dispatch(logout())
+        navigate("/login")
       }
 
-    return(
-       //const isUserLoggedIn = true;
-       //localStorage.isUserLoggedIn();
-        //console.log(isUserLoggedIn);
-      <header id="header" className="header">
- 
+      const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+        const inputValue = e.target.value;
+        if (inputValue !== "") {
+          console.log(inputValue);
+          dispatch(filterProducts(inputValue));
+        } else {
+          console.log("inside input value =  ");
+          dispatch(allProducts());
+        }
+      };
 
-  <div className="nav">
- 
-  <img className='logo' src={logo}/>
-  <Link to="/shop" className="active">Shop</Link>
-  <Link to="/login">Login</Link>
-  <Link to="/register">Register</Link>
-  <Link to="/cart"><i className="fa fa-shopping-cart"/></Link>
-  <Link to="/profile"><i className="fa fa-user"></i></Link>
-  <input type="text"  placeholder="Search.."/>
-  <label className="switch">
-  <input className="checkbox" onClick={toggleCheck} type="checkbox" checked={isChecked}/>
-  <span className="slider round"></span>
-</label>
+if(localStorage.getItem("user")!=null)
+{
+  return(
+<header id="header" className="header">
+<div className="nav">
+<img className='logo' src={logo}/>
+<Link className="linkReact" to="/shop">Shop</Link>
+<Link to="/cart"><i className="fa fa-shopping-cart"/></Link>
+<Link to="/profile"><i className="fa fa-user"></i></Link>
+<input type="text" onChange={handleChange} placeholder="Search.."/>
+<DarkMode />
+<button className="logoutBtn" name="logout" onClick={handleLogout}>Logout</button>
 </div>
-  </header>
+</header>
 
-        )
+      )
+}else{
+  return(
+    <header id="header" className="header">
+<div className="nav">
+<img className='logo' src={logo}/>
+<Link to="/login">Login</Link>
+<Link to="/register">Register</Link>
+<DarkMode />
+</div>
+</header>
+
+      )
+}
+   
     }
 
 

@@ -20,7 +20,7 @@ import com.example.service.PersonService;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/employees")
+@RequestMapping("/persons")
 @CrossOrigin("*")
 @AllArgsConstructor(onConstructor=@__(@Autowired))
 public class PersonController {
@@ -53,9 +53,3 @@ public class PersonController {
 	}
 }
 
-class RegisterObject {
-	public String firstName;
-	public String lastName;
-	public String email;
-	public String password;
-}

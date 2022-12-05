@@ -13,7 +13,9 @@ import com.example.models.Theme;
 import com.example.models.OrderStatus;
 import com.example.models.PaymentType;
 import com.example.models.Person;
+import com.example.models.ProductCategory;
 import com.example.repository.PersonRepository;
+import com.example.repository.ProductCategoryRepository;
 import com.example.repository.RoleRepository;
 import com.example.repository.ThemeRepository;
 import com.example.repository.OrderStatusRepository;
@@ -27,8 +29,20 @@ public class EcommerceApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner CommandLineRunnerBean(RoleRepository err, OrderStatusRepository tsr, PaymentTypeRepository ttr, PersonRepository er, ThemeRepository hr) {
+	public CommandLineRunner CommandLineRunnerBean(ProductCategoryRepository pcr, RoleRepository err, OrderStatusRepository tsr, PaymentTypeRepository ttr, PersonRepository er, ThemeRepository hr) {
 		return (args) -> {
+			
+			if(pcr.count() < 1) {
+				ProductCategory pc1 = new ProductCategory(1, "All");
+				ProductCategory pc2 = new ProductCategory(2, "Deals");
+				ProductCategory pc3 = new ProductCategory(3, "Sales");
+				ProductCategory pc4 = new ProductCategory(4, "Featured");
+				
+				pcr.save(pc1);
+				pcr.save(pc2);
+				pcr.save(pc3);
+				pcr.save(pc4);
+			}
 			
 			if(err.count() < 1) {
 				Role r1 = new Role(2, "CUSTOMER");
@@ -70,12 +84,12 @@ public class EcommerceApplication {
 				ttr.save(tt4);
 			}
 			
-			if(er.count() < 1) {
+			/*if(er.count() < 1) {
 				Optional<Role> roles;
 				roles = err.findById(1);
 				Person admin = new Person();
 				er.save(admin);
-			}
+			}*/
 		};
 	}
 

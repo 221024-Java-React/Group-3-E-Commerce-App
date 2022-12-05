@@ -1,12 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { DispatchType, RootState } from '../../Redux/Store';
-import { login, User } from '../../Redux/Slices/PersonSlice';
+import {  login, User } from '../../Redux/Slices/PersonSlice';
 import  './Login.css'
+import { useNavigate } from 'react-router-dom';
+import { allProducts } from '../../Redux/Slices/ProductSlice';
 
 export const Login:React.FC = () => {
-
-    const userState = useSelector((state:RootState) => state.user);
+    let navigate = useNavigate();
+    const userState = useSelector((state:RootState) => state.auth);
     const dispatch:DispatchType = useDispatch();
 
     const [email, setEmail] = useState<string>("");
@@ -20,14 +22,23 @@ export const Login:React.FC = () => {
         }
     }
 
+    useEffect(()=>{
+        if(userState.isLoggedIn)navigate("/shop");
+    console.log(localStorage.getItem('customerId'));
+    }, [userState.isLoggedIn])
 
-    const handleLogin = () => {
+    const handleLogin = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
        const user:User ={
            email: email ,
            password: password
            }   
-        dispatch(login(user));
-    }
+        dispatch(login(user)).then(()=>{
+            dispatch(allProducts());
+        });
+  };
+    
+ 
 
     return(
 

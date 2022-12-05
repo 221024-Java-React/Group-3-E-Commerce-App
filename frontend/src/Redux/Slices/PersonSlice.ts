@@ -1,72 +1,72 @@
-import {createSlice, createAsyncThunk, PayloadAction} from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
-import { Person } from "../../Types/Person";
 
-interface UserSliceState {
-    loading: boolean;
-    error: boolean;
-    user?:Person;
-}
+
 
 export interface User {
+    name?:string,
     email:string;
     password:string;
 }
 
-const initialState: UserSliceState = {
-    loading: false,
-    error: false
-};
+const initialState =  { isLoggedIn: false, error:false, currentUser: null };
+
+export const register = createAsyncThunk(
+    'user/register',
+    async(user:User, thunkAPI) => {
+        try{
+            
+            const res = await axios.post("http://localhost:8500/persons/register", user);
+
+            return res.data;
+        } catch(e) {
+            return thunkAPI.rejectWithValue('Email Already Exist');
+        }
+    }
+);
+
 export const login = createAsyncThunk(
     'user/login',
     async(user:User, thunkAPI) => {
-        try{
-            const res = await axios.post("http://localhost:8000/person/login", user);
-
-            return({
-                id: res.data.id,
-                type: res.data.type,
-                firstName: res.data.firstName,
-                lastName: res.data.lastName,
-                email: res.data.email,
-                password: res.data.password,
-                image: res.data.image,
-                phone: res.data.phone,
-                theme: res.data.theme,
-                role: res.data.role
-            });
+        try{    
+            const res = await axios.post("http://localhost:8500/persons/login", user);
+           return {user: res.data};
         } catch(e) {
             return thunkAPI.rejectWithValue('Incorrect username or password');
         }
     }
 );
 
+export const logout = createAsyncThunk("auth/logout", async () => {
+     localStorage.removeItem("user");
+  });
+
 export const UserSlice = createSlice({
-    name: "user",
+    name: "auth",
     initialState,
     reducers: {
 
     },
     extraReducers: (builder) => {
-        builder.addCase(login.pending, (state, action)=> {
-            state.loading = true;
-            state.error = false;
-
-            return state;
-        });
-
         builder.addCase(login.fulfilled, (state, action) => {
-            state.user = action.payload;
-            state.loading = false;
-
-            localStorage.setItem("userid", `${state.user?.id}`);
-
+            state.isLoggedIn = true;
+            state.error=false;
+            state.currentUser= action.payload.user;
+            localStorage.setItem('user', JSON.stringify(action.payload.user));
             return state;
         });
 
-        builder.addCase(login.rejected, (state, action) => {
+        builder.addCase(login.rejected, (state) => {
             state.error = true;
-            state.loading = false;
+            state.isLoggedIn=false;
+            state.currentUser=null;
+            return state
+        });
+        builder.addCase(logout.fulfilled, (state) => {
+            state.error = false;
+            state.isLoggedIn=false;
+            state.currentUser=null;
+            return state
         });
     }
 });

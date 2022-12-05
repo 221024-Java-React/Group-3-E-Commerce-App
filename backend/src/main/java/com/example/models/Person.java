@@ -42,7 +42,7 @@ public class Person {
 	
 	private String password;
 	
-	@Column(unique= true)
+
 	private String phone;
 	
 	private String image;

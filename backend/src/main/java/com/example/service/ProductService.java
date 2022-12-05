@@ -13,12 +13,14 @@ import org.springframework.stereotype.Service;
 import com.example.exceptions.NotAManagerException;
 import com.example.models.Product;
 import com.example.models.ProductCategory;
+import com.example.models.Order;
 import com.example.models.OrderStatus;
 import com.example.models.PaymentType;
 import com.example.models.Person;
 import com.example.repository.PersonRepository;
 import com.example.repository.ProductCategoryRepository;
 import com.example.repository.ProductRepository;
+import com.example.repository.OrderRepository;
 import com.example.repository.OrderStatusRepository;
 import com.example.repository.PaymentTypeRepository;
 
@@ -33,47 +35,25 @@ public class ProductService {
 	private PaymentTypeRepository ttRepo;
 	private PersonRepository eRepo;
 	private ProductCategoryRepository cRepo;
+	private OrderRepository or;
 	
-	public Product createProduct(PaymentType type, String description, Double amount, String email, String date) {
-		PaymentType t = ttRepo.findById(type.getPaymentTypeId()).get();
-		OrderStatus s = tsRepo.findById(1).get();
-		Person e = eRepo.getByEmail(email).get();
-		DateTimeFormatter format = DateTimeFormatter.ofPattern("MM-dd-yyyy");
-		LocalDate time = LocalDate.parse(date, format);
-		Product ticket = new Product();
-		return tRepo.save(ticket);
-	}
 	
-	public Product approveDenyTicket(int manager, int id, boolean approved) {
-		Person approver = eRepo.findById(manager).get();
-		System.out.println(approver);
-		if(approver.getRole().getRoleId().equals("ADMIN")) {
-			Product t = tRepo.findById(id).get();
-			/*if(!t.getStatus().get(0).getStatus().equals("PENDING")) return t;
-			OrderStatus ts = approved ? tsRepo.findById(2).get() : tsRepo.findById(3).get();*/
-			//List<OrderStatus> status = t.getStatus();
-		
-		//	status.set(0, ts);
-			return tRepo.save(t);
-		}
-		
-		throw new NotAManagerException();
-	}
-	
-	public List<Product> getProductsByCategory(int categoty) {
-		Person m = eRepo.findById(categoty).get();
-		if(m.getRole().getRole().equals("MANAGER")) {
-			ProductCategory s = cRepo.findById(1).get();
-			return tRepo.getProductsByCategory(s);
-		}
-		
-		throw new NotAManagerException();
+	public List<Product> getProductsByCategory(int categoryId) {
+		System.out.println("category "+categoryId);
+		ProductCategory category = cRepo.findById(categoryId).get();
+			return tRepo.findAllByCategory(category);
 	}
 	
 	public List<Product> getAllProducts(){
 		List<Product> e = tRepo.findAll();
 		
 		return e;
+	}
+
+	public Person addToCart(String string, String string2, String string3) {
+		Order order = new Order();
+		//or.save(order);
+		return null;
 	}
 	
 }
