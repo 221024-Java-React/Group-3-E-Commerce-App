@@ -25,8 +25,8 @@ public class NotificationAspect {
 	
 	@AfterReturning("execution(* com.example.service.PersonService.login(..))")
 	public void NotifyWhenUserLogsIn(JoinPoint jp) {
-		System.out.println("The user: " + jp.getArgs()[0] + " was logged in");
-		 notification.setMessage("you successfuly logged in");
+		System.out.println("The user: " + jp.getArgs().toString() + " was logged in");
+		 notification.setMessage("you was logged in");
 		 notification.setModifiedDate(LocalDateTime.now());
 		 notification.setPerson(null);
 		// nr.save(notification);
@@ -38,10 +38,10 @@ public class NotificationAspect {
 	}
 	
 	
-	@After("execution(* com.example.service.ProductService.createTicket(..))")
+/*	@After("execution(* com.example.service.ProductService.createTicket(..))")
 	public void logNewTicketCreated(JoinPoint jp) {
 		System.out.println("User: " + jp.getArgs()[3] + " created a ticket for: $" + jp.getArgs()[2]);
-	}
+	}*/
 	
 
 }

@@ -10,6 +10,7 @@ import { Shop } from './Components/Shop/Shop';
 import { Cart } from './Components/Cart/Cart';
 import { Checkout } from './Components/Checkout/Checkout';
 import { CheckoutComplete } from './Components/Checkout/CheckoutComplete';
+import { Admin } from './Components/Admin/admin';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login" element={<Login />}/>
         <Route path="/register" element={<Register />}/>
         <Route path="/shop" element={<Shop />}/>
+        <Route path="/admin" element={<Admin />}/>
         <Route path="/profile" element={<Profile />}/>
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />}/>;

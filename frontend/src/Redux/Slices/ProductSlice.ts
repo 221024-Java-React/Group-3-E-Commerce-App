@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "axios";
+import { OrderDetail } from "../../Types/OrderDetail";
 import {Product } from "../../Types/Product";
 
 interface ProductSliceState {
@@ -32,19 +33,6 @@ export const productByCategory = createAsyncThunk(
             return {products: res.data};
         } catch(e) {  
             return null;      
-        }
-    }
-);
-
-export const addToCart = createAsyncThunk(
-    'user/addToCart',
-    async(product:Product, thunkAPI) => {
-        try{
-            
-            const res = await axios.post("http://localhost:8500/products/cart", product);
-            return res.data;
-        } catch(e) {
-            return thunkAPI.rejectWithValue('Unable to add this item to the cart');
         }
     }
 );
@@ -98,10 +86,6 @@ export const ProductSlice = createSlice({
         builder.addCase(productByCategory.fulfilled, (state,action) => {
             state.products= action.payload?.products;
             localStorage.setItem('products', JSON.stringify(action.payload?.products));
-            return state;
-        });
-        builder.addCase(addToCart.fulfilled, (state,action) => {
-           console.log("item added to the cart");
             return state;
         });
     }

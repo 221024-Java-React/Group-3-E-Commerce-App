@@ -52,7 +52,7 @@ public class Product {
 	private ProductCategory category;
 	
 	@Column(name="modified_date")
-	private LocalDate modifiedDate;
+	private LocalDateTime modifiedDate;
 	
 
 	
