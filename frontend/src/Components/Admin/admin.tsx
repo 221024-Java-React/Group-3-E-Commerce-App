@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import  { useDispatch } from 'react-redux'
-import { Product } from '../../Types/Product';
+import { Category, Product } from '../../Types/Product';
 import { DispatchType } from '../../Redux/Store';
 import { addProduct } from '../../Redux/Slices/AdminSlice';
 
@@ -10,13 +10,18 @@ export const Admin: React.FC = () => {
 
     const dispatch:DispatchType = useDispatch();
 
+    const cat: Category={
+        id: 0,
+        name: ''
+    }
+
     const [newProduct, setNewProduct] = useState<Product>({
         id: 0,
             title: '',
             price: 0,
             quantity: 0,
             description: '',
-            category: 0
+            category: cat
     });
 
 

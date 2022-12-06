@@ -1,14 +1,15 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { DispatchType, RootState } from '../../Redux/Store';
 import { register, User } from '../../Redux/Slices/PersonSlice';
 import  './Register.css'
+import { useNavigate } from 'react-router-dom';
 
 export const Register:React.FC = () => {
 
     const userState = useSelector((state:RootState) => state.auth);
     const dispatch:DispatchType = useDispatch();
-
+    let navigate = useNavigate();
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -24,7 +25,12 @@ export const Register:React.FC = () => {
     }
 
 
-    const handleRegister = () => {
+    useEffect(()=>{
+        if(userState.isRegistered)navigate("/login");
+    }, [userState.isRegistered])
+
+    const handleRegister = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
        const user:User ={
            email: email,
            password: password,

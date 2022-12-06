@@ -9,7 +9,7 @@ import com.example.models.Person;
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Integer>{
 	
-	Optional<Person> getByEmail(String email);
+	Person findByEmail(String email);
 
 	
 }

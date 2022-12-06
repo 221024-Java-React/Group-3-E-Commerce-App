@@ -25,7 +25,7 @@ public class PersonService {
 	private ThemeRepository themeRepo;
 	
 	public Person register(String name, String email, String password) {
-		Role role = roleRepo.findById(1).get();
+		Role role = roleRepo.findById(2).get();
 		Theme theme = themeRepo.findById(1).get();
 		Person person = new Person(0, name, email, password, "","", theme,role);
 		
@@ -38,12 +38,12 @@ public class PersonService {
 	}
 	
 	public Person login(String email, String password) {
-		Person person = personRepo.getByEmail(email).orElseThrow(InvalidCredentialsException::new);
+		Person person = personRepo.findByEmail(email);
 		
 		if(!person.getPassword().equals(password)) {
 			throw new InvalidCredentialsException();
 		}
-		System.out.println("The user login successfully");
+		//System.out.println("The user login successfully "+person.toString());
 		return person;
 		
 	}
