@@ -59,7 +59,7 @@ export const Shop:React.FC = () => {
         {
                 products.map((product:Product) => {
                     return <ProductCard key={product.id} id={product.id} price={product.price}
-                    title={product.title} description={product.description} quantity={product.quantity}                 />
+                    title={product.title} description={product.description} quantity={product.quantity} image={''} category={undefined}                 />
                 })
             }
                     

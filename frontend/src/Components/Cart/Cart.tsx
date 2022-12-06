@@ -10,12 +10,11 @@ import { addProduct } from '../../Redux/Slices/ProductSlice';
 import { addOrder, updateOrder,removeOrder } from '../../Redux/Slices/OrderSlice';
 import { addPayment } from '../../Redux/Slices/PaymentSlice';
 import './Cart.css';
-import { removePayment } from '../../Redux/Slices/PaymentSlice';
 import { Link } from 'react-router-dom'
 
 export const Cart:React.FC = () => {
-
-    const dispatch:DispatchType = useDispatch();
+return <></>
+   /* const dispatch:DispatchType = useDispatch();
     const state = useSelector((state:RootState) => state);
 
     const [newCart, setNewCart] = useState<Product>({
@@ -24,7 +23,7 @@ export const Cart:React.FC = () => {
         price:0,
         quantity:0,
         description:"",
-        order_id:0
+      
     });
 
     //const [newOrder, setNewOrder] = useState<Order>();
@@ -50,7 +49,7 @@ export const Cart:React.FC = () => {
             price: newCart.price,
             quantity: newCart.quantity,
             description: newCart.description,
-            order_id : 5
+     
         };
 
         dispatch(addProduct(item));
@@ -72,20 +71,9 @@ export const Cart:React.FC = () => {
         console.log("Prices: " + totalPrice );
         console.log("Quantities: " + totalItems);
      
-        const order:Order = {
-            id: 5,
-            total_price: totalPrice,
-            total_items: totalItems,
-            tax: nTax,
-            shipping_price:0
-        }
+      
 
-        if(order.id === 0){
-            dispatch(removeOrder(0));
-        }else if(order.id === 5){
-            dispatch(addOrder(order));
-        }
-
+       
         //dispatch(updateOrder(order));
         //dispatch(removeOrder(orderId));
     }
@@ -138,7 +126,7 @@ export const Cart:React.FC = () => {
                 <h2>Order Details</h2>
                 {
                     state.order.orders.map((order:Order)=>{
-                    return <OrderCard key={order.id} id={order.id} total_price={order.total_price} total_items={order.total_items} tax={order.tax} shipping_price={order.shipping_price}/>
+                    return <OrderCard key={order.id} id={order.id} total_price={order.total_price} total_items={order.total_items} tax={order.tax} shipping_price={order.shipping_price} person={undefined}/>
                     })
                 }
                 <Link to="/checkout" onClick={submitCheckout}>Checkout</Link>
@@ -158,5 +146,5 @@ export const Cart:React.FC = () => {
                 <button onClick={submitCart}>Buy Item</button>
             </div>
         </>
-    )
+    )*/
 }

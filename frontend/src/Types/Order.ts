@@ -1,13 +1,25 @@
+import { Person } from "./Person";
+import { Product } from "./Product";
 
 export interface Order{
     id:number;
-    customer_id?:number;
-    product_id?:number;
+    person:Person;
+    product:Product;
     created_date?:Date;
     total_price:number;
     total_items:number;
     tax:number;
     shipping_price:number;
-    status_id?:number;
-    payment_id?:number;
+    status:Status;
+    payment:Payment;
+}
+
+export interface Payment{
+    id: number;
+    name: string;
+}
+
+export interface Status{
+    id : number,
+    name: string
 }
