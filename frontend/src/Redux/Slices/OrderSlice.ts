@@ -81,7 +81,8 @@ export const OrderSlice = createSlice({
             });
 
             builder.addCase(orderById.fulfilled, (state, action)=>{
-                localStorage.setItem('orders', JSON.stringify(action.payload));
+                state.orders= action.payload?.orders
+                localStorage.setItem('orders', JSON.stringify(action.payload?.orders));
                 return state;
             })
     }

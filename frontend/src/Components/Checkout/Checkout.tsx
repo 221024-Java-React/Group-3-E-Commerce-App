@@ -28,9 +28,10 @@ export const Checkout:React.FC = () => {
             <div className="order-container">
                 <h2>Order Details</h2>
                 {
-                /*    state.order.orders.map((order:Order)=>{
+                    /*state.order.orders.map((order:Order)=>{
                         return <OrderCard key={order.id} id={order.id} total_price={order.total_price} total_items={order.total_items} tax={order.tax} shipping_price={order.shipping_price}/>
-                        })*/
+                        })
+                        */
                 }
             </div>
             <div className="payment-container">

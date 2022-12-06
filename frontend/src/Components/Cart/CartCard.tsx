@@ -8,6 +8,7 @@ import logo from '../../Assets/ecommercelogos.png';
 
 export const CartCard:React.FC<Product> = ({id, title, price, quantity, description}) => {
     const dispatch:DispatchType = useDispatch();
+    
 
     const [products, setProds] = useState<Product[]>([]);
 

@@ -86,5 +86,3 @@ if(localStorage.getItem("user")!=null)
 }
    
     }
-
-

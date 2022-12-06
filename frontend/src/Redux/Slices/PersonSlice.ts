@@ -30,11 +30,7 @@ const person:Person={
     phone: "",
     image: "",
     theme: 0,
-<<<<<<< HEAD
-    role: 0,
-=======
     role: personRole,
->>>>>>> 9fc0b33f91a120ad8cc614abd87ebe81c7827079
     orders:[]
 };
 

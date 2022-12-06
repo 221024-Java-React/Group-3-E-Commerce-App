@@ -10,14 +10,15 @@ import { addProduct } from '../../Redux/Slices/ProductSlice';
 import { addOrder, updateOrder,removeOrder } from '../../Redux/Slices/OrderSlice';
 import { addPayment } from '../../Redux/Slices/PaymentSlice';
 import './Cart.css';
+import { removePayment } from '../../Redux/Slices/PaymentSlice';
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { OnDeviceTraining } from '@mui/icons-material';
 import { OrderDetail } from '../../Types/OrderDetail';
 
 export const Cart:React.FC = () => {
-return <></>
-   /* const dispatch:DispatchType = useDispatch();
+
+    const dispatch:DispatchType = useDispatch();
     const state = useSelector((state:RootState) => state);
     const userState = useSelector((state:RootState) => state.auth);
     let navigate = useNavigate();
@@ -28,13 +29,8 @@ return <></>
         price:0,
         quantity:0,
         description:"",
-<<<<<<< HEAD
         order_id:0
     });*/
-=======
-      
-    });
->>>>>>> 9fc0b33f91a120ad8cc614abd87ebe81c7827079
 
     //const [newOrder, setNewOrder] = useState<Order>();
 
@@ -59,7 +55,7 @@ return <></>
             price: newCart.price,
             quantity: newCart.quantity,
             description: newCart.description,
-     
+            order_id : 5
         };
 
         dispatch(addProduct(item));
@@ -80,7 +76,6 @@ return <></>
       
         console.log("Prices: " + totalPrice );
         console.log("Quantities: " + totalItems);
-<<<<<<< HEAD
 
         const order:Order = {
             total_price: totalPrice,
@@ -101,12 +96,6 @@ return <></>
         }
 
 
-=======
-     
-      
-
-       
->>>>>>> 9fc0b33f91a120ad8cc614abd87ebe81c7827079
         //dispatch(updateOrder(order));
         //
     }
@@ -166,20 +155,16 @@ console.log(user);
             <div className="order-container">
                 <h2>Order Details</h2>
                 {
-<<<<<<< HEAD
                   /*orders.map((order:Order)=>{
 
                         return <OrderCard key={order.id} id={order.id} total_price={order.total_price} total_items={order.total_items} tax={order.tax} shipping_price={order.shipping_price} />
 
                    })*/
 
-                   <p>{orders[53].total_price}</p>
+                   <p>{orders.map((order:Order)=>{
+                        return [order.total_price];
+                   })}</p>
                    
-=======
-                    state.order.orders.map((order:Order)=>{
-                    return <OrderCard key={order.id} id={order.id} total_price={order.total_price} total_items={order.total_items} tax={order.tax} shipping_price={order.shipping_price} person={undefined}/>
-                    })
->>>>>>> 9fc0b33f91a120ad8cc614abd87ebe81c7827079
                 }
                 
                 <Link to="/checkout" onClick={submitCheckout}>Checkout</Link>
@@ -200,5 +185,5 @@ console.log(user);
             </div>
             */}
         </>
-    )*/
+    )
 }
