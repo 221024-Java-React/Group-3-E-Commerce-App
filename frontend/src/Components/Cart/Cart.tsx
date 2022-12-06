@@ -71,7 +71,7 @@ export const Cart:React.FC = () => {
       
         console.log("Prices: " + totalPrice );
         console.log("Quantities: " + totalItems);
-     
+
         const order:Order = {
             id: 5,
             total_price: totalPrice,
@@ -79,15 +79,21 @@ export const Cart:React.FC = () => {
             tax: nTax,
             shipping_price:0
         }
+        
+        dispatch(addOrder(order));
 
-        if(order.id === 0){
-            dispatch(removeOrder(0));
-        }else if(order.id === 5){
+        console.log("state of order: " + state.order.orders);
+       
+        if(order.id === 5){
+            dispatch(removeOrder(5));
             dispatch(addOrder(order));
+        }else{
+            
         }
 
+
         //dispatch(updateOrder(order));
-        //dispatch(removeOrder(orderId));
+        //
     }
 
     const submitCheckout = () => {
@@ -117,9 +123,10 @@ export const Cart:React.FC = () => {
     }
 
     useEffect(()=>{
-        
+
+        console.log("order: " + state.order.orders);
         console.log("State changed in the store ", state);
-    }, [state, state.product.products.length, state.order, state.order.orders.length, newCart, newPayment]);
+    }, [state, state.product.products.length, state.order.orders, state.order.orders.length, newCart, newPayment]);
 
     return (
 
