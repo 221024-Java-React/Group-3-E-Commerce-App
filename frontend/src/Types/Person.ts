@@ -1,3 +1,5 @@
+import { OrderDetail } from "./OrderDetail";
+
 export interface Person{
     id: number;
 	firstName: string;
@@ -8,4 +10,5 @@ export interface Person{
 	image:string;
 	theme:number;
 	role: number;
+	orders:OrderDetail[];
 }

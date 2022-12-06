@@ -12,20 +12,25 @@ import { addPayment } from '../../Redux/Slices/PaymentSlice';
 import './Cart.css';
 import { removePayment } from '../../Redux/Slices/PaymentSlice';
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
+import { OnDeviceTraining } from '@mui/icons-material';
+import { OrderDetail } from '../../Types/OrderDetail';
 
 export const Cart:React.FC = () => {
 
     const dispatch:DispatchType = useDispatch();
     const state = useSelector((state:RootState) => state);
+    const userState = useSelector((state:RootState) => state.auth);
+    let navigate = useNavigate();
 
-    const [newCart, setNewCart] = useState<Product>({
+   /* const [newCart, setNewCart] = useState<Product>({
         id:0,
         title:"",
         price:0,
         quantity:0,
         description:"",
         order_id:0
-    });
+    });*/
 
     //const [newOrder, setNewOrder] = useState<Order>();
 
@@ -35,17 +40,17 @@ export const Cart:React.FC = () => {
         description:""
     });
 
-    const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    /*const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setNewCart({
             ...newCart,
             [e.target.name]: e.target.value
         });
-    }
+    }*/
 
-    const submitCart = () => {
+   /* const submitCart = () => {
 
         const item:Product = {
-            id: Math.floor(Math.random()*1000)+1,
+            id: newCart.id,
             title: newCart.title,
             price: newCart.price,
             quantity: newCart.quantity,
@@ -73,7 +78,6 @@ export const Cart:React.FC = () => {
         console.log("Quantities: " + totalItems);
 
         const order:Order = {
-            id: 5,
             total_price: totalPrice,
             total_items: totalItems,
             tax: nTax,
@@ -95,6 +99,7 @@ export const Cart:React.FC = () => {
         //dispatch(updateOrder(order));
         //
     }
+    */
 
     const submitCheckout = () => {
         const payment1:Payment = {
@@ -124,9 +129,17 @@ export const Cart:React.FC = () => {
 
     useEffect(()=>{
 
-        console.log("order: " + state.order.orders);
-        console.log("State changed in the store ", state);
-    }, [state, state.product.products.length, state.order.orders, state.order.orders.length, newCart, newPayment]);
+    //if(userState.isLoggedIn)navigate("/cart");
+    console.log(localStorage.getItem('customerId'));
+
+}, [state, state.product.products.length, state.order.orders, state.order.orders.length, newPayment, userState.isLoggedIn])
+
+const user = JSON.parse(localStorage.getItem("user")|| '{}');
+const orders:Order[] = JSON.parse(localStorage.getItem("orders")|| '{}');
+console.log(orders);
+console.log(user);
+
+
 
     return (
 
@@ -136,22 +149,26 @@ export const Cart:React.FC = () => {
             
             <div className="product-container">
             {
-                state.product.products.map((product:Product)=>{
-                    return <CartCard key={product.id} id={product.id} title={product.title} price={product.price} quantity={product.quantity} description={product.description} />
-                })
+          
             }
             </div>
             <div className="order-container">
                 <h2>Order Details</h2>
                 {
-                    state.order.orders.map((order:Order)=>{
-                    return <OrderCard key={order.id} id={order.id} total_price={order.total_price} total_items={order.total_items} tax={order.tax} shipping_price={order.shipping_price}/>
-                    })
+                  /*orders.map((order:Order)=>{
+
+                        return <OrderCard key={order.id} id={order.id} total_price={order.total_price} total_items={order.total_items} tax={order.tax} shipping_price={order.shipping_price} />
+
+                   })*/
+
+                   <p>{orders[53].total_price}</p>
+                   
                 }
+                
                 <Link to="/checkout" onClick={submitCheckout}>Checkout</Link>
             </div>
         </div>
-
+                {/*
             <br/> <br></br>
             <div>
                 <h3>Product Name</h3>
@@ -164,6 +181,7 @@ export const Cart:React.FC = () => {
                 <input name="description" type="textarea" onChange={handleChange}/>
                 <button onClick={submitCart}>Buy Item</button>
             </div>
+            */}
         </>
     )
 }

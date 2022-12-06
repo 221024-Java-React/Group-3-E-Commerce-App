@@ -24,7 +24,8 @@ const person:Person={
     phone: "",
     image: "",
     theme: 0,
-    role: 0
+    role: 0,
+    orders:[]
 };
 
 const initialState:AuthState =  { isLoggedIn: false, error:false, currentUser:person };

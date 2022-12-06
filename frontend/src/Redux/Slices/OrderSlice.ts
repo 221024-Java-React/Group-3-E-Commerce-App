@@ -26,6 +26,18 @@ export const createOrder = createAsyncThunk(
     }
 );
 
+export const orderById = createAsyncThunk(
+    'user/orders/',
+    async(order:number, thunkAPI) => {
+        try{      
+            const res = await axios.get(`http://localhost:8500/orders/${order}`);
+            return {orders: res.data};
+        } catch(e) {  
+            return null;      
+        }
+    }
+);
+
 //Create our slice and map our reducers
 export const OrderSlice = createSlice({
     //we need to name our slice
@@ -67,6 +79,11 @@ export const OrderSlice = createSlice({
                 localStorage.setItem('orders', JSON.stringify(action.payload.orders));
                 return state;
             });
+
+            builder.addCase(orderById.fulfilled, (state, action)=>{
+                localStorage.setItem('orders', JSON.stringify(action.payload));
+                return state;
+            })
     }
 });
 

@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { DispatchType } from '../../Redux/Store';
+import { DispatchType, RootState } from '../../Redux/Store';
 import { Order } from '../../Types/Order';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { orderById } from '../../Redux/Slices/OrderSlice';
 
 export const OrderCard:React.FC<Order> = (order) => {
 
+    let navigate = useNavigate();
+    const state  = useSelector((state:RootState) => state);
+    const userState = useSelector((state:RootState) => state.auth);
     const dispatch:DispatchType = useDispatch();
-    const [newOrder, setOrder] = useState();
-    const checkout = () => {
-        // dispatch(checkoutOrder(order));
-    }
 
     useEffect(()=>{
+        if(userState.isLoggedIn)navigate("/cart");
+            console.log(localStorage.getItem('customerId'));
+        }, [userState.isLoggedIn, state.order.orders.length])
 
+        
 
-    }, [newOrder])
-    
+    const user = JSON.parse(localStorage.getItem("user")|| '{}');
+    console.log(user);
+    dispatch(orderById(1));
     return (
 
         <div>
