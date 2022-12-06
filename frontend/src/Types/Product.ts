@@ -5,6 +5,14 @@ export interface Product {
     image?:string;
     quantity: number;
     description: string;
-    category?:number;
-    order_id?:number;
+    category?:Category;
 }
+
+
+export interface Category{
+
+id: number;
+name: string;
+}
+
+

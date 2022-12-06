@@ -1,9 +1,14 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
-import { Product } from "../../Types/Product";
+import { Category, Product } from "../../Types/Product";
 
 interface ProductState {
     currentProduct: Product;
+}
+
+const cat :Category={
+    id: 0,
+    name: ""
 }
 
 const p:Product={
@@ -12,7 +17,7 @@ const p:Product={
     price: 0,
     quantity: 0,
     description: "",
-    category:0
+    category:cat
 };
 
 const initialState:ProductState =  {  currentProduct: p };

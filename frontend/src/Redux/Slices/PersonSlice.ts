@@ -1,10 +1,11 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
-import { Person } from "../../Types/Person";
+import { Person, Role } from "../../Types/Person";
 
 
 interface AuthState{
     isLoggedIn:boolean,
+    isRegistered: boolean
     error: boolean,
     currentUser: Person
 }
@@ -15,6 +16,11 @@ export interface User {
     password:string;
 };
 
+const  personRole:Role = {
+    roleId: 0,
+    role: ""
+}
+
 const person:Person={
     id: 0,
     firstName: "",
@@ -24,10 +30,11 @@ const person:Person={
     phone: "",
     image: "",
     theme: 0,
-    role: 0
+    role: personRole,
+    orders:[]
 };
 
-const initialState:AuthState =  { isLoggedIn: false, error:false, currentUser:person };
+const initialState:AuthState =  { isLoggedIn: false, isRegistered:false,error:false, currentUser:person };
 
 export const register = createAsyncThunk(
     'user/register',
@@ -48,22 +55,28 @@ export const login = createAsyncThunk(
     async(user:User, thunkAPI) => {
         try{    
             const res = await axios.post("http://localhost:8500/persons/login", user);
+            console.log("login slice res data "+res.data);
            return {user: res.data};
+         
         } catch(e) {
             return thunkAPI.rejectWithValue('Incorrect username or password');
         }
     }
 );
 
-export const logout = createAsyncThunk("auth/logout", async () => {
-     localStorage.removeItem("user");
-  });
 
 export const UserSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-
+        logout: (state) => {
+            localStorage.removeItem("user");
+            state.error = false;
+            state.isLoggedIn=false;
+            state.isRegistered=true;
+            state.currentUser=person;
+            return state;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, action) => {
@@ -71,7 +84,14 @@ export const UserSlice = createSlice({
             state.error=false;
             state.currentUser= action.payload.user;
             localStorage.setItem('user', JSON.stringify(action.payload.user));
+            console.log("useruseruser "+JSON.stringify(localStorage.getItem('user')));
             return state;
+        });
+
+        builder.addCase(register.fulfilled, (state,action) => {
+            state.isRegistered = true;
+            state.currentUser=action.payload.user;
+            return state
         });
 
         builder.addCase(login.rejected, (state) => {
@@ -80,13 +100,8 @@ export const UserSlice = createSlice({
             state.currentUser=person;
             return state
         });
-        builder.addCase(logout.fulfilled, (state) => {
-            state.error = false;
-            state.isLoggedIn=false;
-            state.currentUser=person;
-            return state
-        });
+   
     }
 });
-
+export const {logout}= UserSlice.actions;
 export default UserSlice.reducer;

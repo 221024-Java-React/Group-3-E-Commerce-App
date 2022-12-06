@@ -5,6 +5,7 @@ import {  login, User } from '../../Redux/Slices/PersonSlice';
 import  './Login.css'
 import { useNavigate } from 'react-router-dom';
 import { allProducts } from '../../Redux/Slices/ProductSlice';
+import { Person } from '../../Types/Person';
 
 export const Login:React.FC = () => {
     let navigate = useNavigate();
@@ -23,8 +24,15 @@ export const Login:React.FC = () => {
     }
 
     useEffect(()=>{
-        if(userState.isLoggedIn)navigate("/shop");
-    console.log(localStorage.getItem('customerId'));
+        if(userState.isLoggedIn)
+        {
+            const p:Person=  JSON.parse(localStorage.getItem("user")|| '');
+            if(p.role.roleId===1)
+        navigate("/admin");
+        else  navigate("/shop");
+        
+        }
+        console.log(localStorage.getItem('customerId'));
     }, [userState.isLoggedIn])
 
     const handleLogin = (e: { preventDefault: () => void; }) => {

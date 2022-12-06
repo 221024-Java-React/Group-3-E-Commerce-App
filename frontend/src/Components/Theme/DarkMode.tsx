@@ -24,31 +24,24 @@ if (defaultDark) {
   setDark();
 }
 
-const toggleTheme: ChangeEventHandler<HTMLInputElement> = (e) => {
-  if (e.target.checked) {
+const toggleTheme=(e: { preventDefault: () => void; }) => {
+  e.preventDefault();
+  let span = document.getElementById('spanMode') as HTMLInputElement;
+  if(localStorage.getItem("theme")==="light")
+  {
+   span.textContent  =String.fromCodePoint( 127765 ); 
     setDark();
-  } else {
-    setLight();
   }
-};
-
+    else if(localStorage.getItem("theme")==="dark")
+    {
+      span.textContent  =  String.fromCodePoint( 127761 );
+      setLight();
+    }
+  
+}
 const DarkMode = () => {
   return (
-    <div className="toggle-theme-wrapper">
-   
-      <label className="toggle-theme" htmlFor="checkbox">
-        <input
-          type="checkbox"
-          id="checkbox"
-
-          // NEW
-          onChange={toggleTheme}
-          defaultChecked={defaultDark}
-        />
-        <div className="slider round"></div>
-      </label>
-      <span>&#9899;</span>
-    </div>
+    <span id="spanMode" onClick={toggleTheme}>&#127761;</span>
   );
 };
 

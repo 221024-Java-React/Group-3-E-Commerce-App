@@ -29,7 +29,6 @@ export const allProducts = createAsyncThunk(
     }
 );
 
-
 export const productByCategory = createAsyncThunk(
     'products/productCategory',
     async(category:number, thunkAPI) => {
