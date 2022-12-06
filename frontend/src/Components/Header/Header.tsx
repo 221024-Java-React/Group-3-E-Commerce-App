@@ -41,6 +41,7 @@ if(localStorage.getItem("user")!=null)
 <Link className="linkReact" to="/shop">Shop</Link>
 <Link to="/cart"><i className="fa fa-shopping-cart"/></Link>
 <Link to="/profile"><i className="fa fa-user"></i></Link>
+<Link to="/admin">Admin</Link>
 <input type="text" onChange={handleChange} placeholder="Search.."/>
 <DarkMode />
 <button className="logoutBtn" name="logout" onClick={handleLogout}>Logout</button>
@@ -54,6 +55,7 @@ if(localStorage.getItem("user")!=null)
 <div className="nav">
 <img className='logo' src={logo}/>
 <Link to="/login">Login</Link>
+<Link to="/admin">Admin</Link>
 <Link to="/register">Register</Link>
 <DarkMode />
 </div>

@@ -52,10 +52,11 @@ public class EcommerceApplication {
 			}
 			
 			if(tsr.count() < 1) {
-				OrderStatus ts1 = new OrderStatus(1, "ORDERDED");
-				OrderStatus ts2 = new OrderStatus(2, "SHIPPED");
-				OrderStatus ts3 = new OrderStatus(3, "DELIVERED");
-				OrderStatus ts4 = new OrderStatus(4, "CANCELLED");
+				OrderStatus ts1 = new OrderStatus(1, "PENDING");
+				OrderStatus ts2 = new OrderStatus(2, "ORDERDED");
+				OrderStatus ts3 = new OrderStatus(3, "SHIPPED");
+				OrderStatus ts4 = new OrderStatus(4, "DELIVERED");
+				OrderStatus ts5 = new OrderStatus(5, "CANCELLED");
 				
 				tsr.save(ts1);
 				tsr.save(ts2);

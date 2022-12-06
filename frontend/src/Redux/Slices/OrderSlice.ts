@@ -1,5 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
 import { Order } from '../../Types/Order';
+import { OrderDetail } from "../../Types/OrderDetail";
 
 interface OrderSliceState {
     orders: Order[]
@@ -10,6 +12,19 @@ const initialState:OrderSliceState = {
 };
 
 
+export const createOrder = createAsyncThunk(
+    'user/addToCard',
+    async(order:OrderDetail, thunkAPI) => {
+        try{
+            
+            const res = await axios.post("http://localhost:8500/orders/addTocart", order);
+
+            return {orders :res.data};
+        } catch(e) {
+            return thunkAPI.rejectWithValue('Item Already Exist');
+        }
+    }
+);
 
 //Create our slice and map our reducers
 export const OrderSlice = createSlice({
@@ -45,7 +60,13 @@ export const OrderSlice = createSlice({
         removeOrder: (state:OrderSliceState, action:PayloadAction<number>) => {
             state.orders = state.orders.filter((order:Order) => order.id !== action.payload);
             return state;
-        }
+        },
+    },
+        extraReducers: (builder) => {
+            builder.addCase(createOrder.fulfilled, (state, action) => {
+                localStorage.setItem('orders', JSON.stringify(action.payload.orders));
+                return state;
+            });
     }
 });
 

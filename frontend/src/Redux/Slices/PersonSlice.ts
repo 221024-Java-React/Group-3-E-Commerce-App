@@ -1,15 +1,33 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
+import { Person } from "../../Types/Person";
 
 
+interface AuthState{
+    isLoggedIn:boolean,
+    error: boolean,
+    currentUser: Person
+}
 
 export interface User {
     name?:string,
     email:string;
     password:string;
-}
+};
 
-const initialState =  { isLoggedIn: false, error:false, currentUser: null };
+const person:Person={
+    id: 0,
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    phone: "",
+    image: "",
+    theme: 0,
+    role: 0
+};
+
+const initialState:AuthState =  { isLoggedIn: false, error:false, currentUser:person };
 
 export const register = createAsyncThunk(
     'user/register',
@@ -59,13 +77,13 @@ export const UserSlice = createSlice({
         builder.addCase(login.rejected, (state) => {
             state.error = true;
             state.isLoggedIn=false;
-            state.currentUser=null;
+            state.currentUser=person;
             return state
         });
         builder.addCase(logout.fulfilled, (state) => {
             state.error = false;
             state.isLoggedIn=false;
-            state.currentUser=null;
+            state.currentUser=person;
             return state
         });
     }

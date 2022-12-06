@@ -50,9 +50,12 @@ public class ProductService {
 		return e;
 	}
 
-	public Person addToCart(String string, String string2, String string3) {
-		Order order = new Order();
-		//or.save(order);
+	public Product addProduct(int id, String title, double price, int quantity, String description, int categoryId) {
+		
+		ProductCategory cat = cRepo.findById(categoryId).get();
+		Product product = new Product(id, title, quantity, description, price, "", cat, LocalDateTime.now());
+		System.out.println(product.toString());
+		tRepo.save(product);
 		return null;
 	}
 	

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.models.Product;
+import com.example.models.Order;
 import com.example.models.PaymentType;
 import com.example.models.Person;
 import com.example.service.ProductService;
@@ -41,11 +42,12 @@ public class ProductController {
 			return tService.getProductsByCategory(category);
 		}
 	
-	@PostMapping("/cart")
-	public Person register(@RequestBody LinkedHashMap<String, String> body) {
-		System.out.println("fsfsfdsfsfffsffdfsdd   "+body.toString());
-		return tService.addToCart(body.get("name"), body.get("email"), body.get("password"));
-	}
+	@PostMapping("/create")
+	public Product createProduct(@RequestBody LinkedHashMap<String,String>body) {
+	
+		return tService.addProduct(Integer.parseInt(body.get("id")),body.get("title"), Double.parseDouble(body.get("price")),
+				Integer.parseInt(body.get("quantity")) ,body.get("description"), Integer.parseInt(body.get("category")));
+	} 
 		
 	}
 
