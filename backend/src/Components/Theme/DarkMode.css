@@ -1,0 +1,32 @@
+
+:root {
+  --font-color: black;
+  --background-color: #F9FFED;
+  --link-color: cornflowerblue;
+  border-top-color: black;
+  border-bottom-color: black;
+  color: black;
+  font-size: 2em;
+  
+}
+
+[data-theme="dark"] {
+  --font-color: white;
+  --background-color: #333;
+  --link-color: peachpuff;
+  border-bottom-color: black;
+  border-top-color: white;
+  color: white;
+  font-size: 2em;
+}
+
+#spanMode{
+font-size: 2em;
+cursor: pointer;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--font-color);
+}
+

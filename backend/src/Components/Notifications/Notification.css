@@ -1,0 +1,15 @@
+
+
+.notifyContaner{
+
+    display: flex;
+    flex-direction: column;
+    gap :20px;
+}
+
+.notifyRecord{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap:20px;
+}

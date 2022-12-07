@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.models.Notification;
-import com.example.repository.NotificationRepository;
 import com.example.service.NotificationService;
 
 import lombok.AllArgsConstructor;
