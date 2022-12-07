@@ -9,16 +9,23 @@ import { PaymentCard } from './PaymentCard';
 import { addPayment, removePayment } from '../../Redux/Slices/PaymentSlice';
 import { Link } from 'react-router-dom'
 import { Payments } from '@mui/icons-material';
+import { removeOrder } from '../../Redux/Slices/OrderSlice';
 
 export const Checkout:React.FC = () => {
     
     const dispatch:DispatchType = useDispatch();
     const state = useSelector((state:RootState) => state);
+
+    const handlePurchase = ()=>{
+        dispatch(removeOrder(state.order.orders.length));
+    };
     
     useEffect(()=>{
     
     }, [state]);
 
+    const orders = JSON.parse(localStorage.getItem("orders")|| '{}');
+    
     return (
         
         <>
@@ -28,9 +35,9 @@ export const Checkout:React.FC = () => {
             <div className="order-container">
                 <h2>Order Details</h2>
                 {
-                /*    state.order.orders.map((order:Order)=>{
-                        return <OrderCard key={order.id} id={order.id} total_price={order.total_price} total_items={order.total_items} tax={order.tax} shipping_price={order.shipping_price}/>
-                        })*/
+                    orders.map((orders:Order)=>{
+                        return <OrderCard key={orders.orderId} orderId={orders.orderId} person={orders.person} product={orders.product} totalPrice={orders.totalPrice} totalItem={orders.totalItem} OrderStatus={orders.OrderStatus} paymentType={orders.paymentType} />
+                    })
                 }
             </div>
             <div className="payment-container">
@@ -40,7 +47,7 @@ export const Checkout:React.FC = () => {
                     return <PaymentCard key={payment.id} id={payment.id} name={payment.name} description={payment.description}/>
                     })
                 }
-                <Link to="/checkout-complete">Purchase Order!</Link>
+                <Link to="/checkout-complete" onClick={handlePurchase}>Purchase Order!</Link>
             </div>
         </div>
         </>
