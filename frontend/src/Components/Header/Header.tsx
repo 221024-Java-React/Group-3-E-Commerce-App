@@ -12,13 +12,8 @@ import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
 
 export const Header:React.FC = () => {
                                     
-  const orderState = useSelector((state:RootState) => state.order); 
   let navigate = useNavigate();
   const dispatch:DispatchType = useDispatch();
- // const ordersCount = Object(JSON.stringify(localStorage.getItem("orders"))).length;
- let  ordersCount =Object.keys(JSON.parse(localStorage.getItem("orders")|| '')).length;
- //console.log("orders count "+JSON.stringify(localStorage.getItem("orders")));
-  //console.log("orders count "+ ordersCount.orderId);
 
       const handleLogout = (e: { preventDefault: () => void; })=>{
         e.preventDefault();
@@ -27,8 +22,10 @@ export const Header:React.FC = () => {
       }
 
       useEnhancedEffect(()=>{
-        ordersCount =Object.keys(JSON.parse(localStorage.getItem("orders")|| '')).length;
-      }, orderState.orders)
+     
+      }, [])
+
+      const orders = useSelector((state:RootState) => state.order); 
 
       const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
@@ -47,6 +44,7 @@ if(localStorage.getItem("user")!=null)
  const p:Person=  JSON.parse(localStorage.getItem("user")|| '');
  console.log("header person data "+p['email']);
  console.log("header person.email data "+p.role.roleId);
+ 
  if(p.role.roleId ===1)
  {
   return(
@@ -68,7 +66,7 @@ if(localStorage.getItem("user")!=null)
     <Link className="linkReact" to="/shop">Shop</Link>
     <Link className="linkReact" to="/notification">Notify</Link>
     <Link to="/cart"><i className="fa fa-shopping-cart"/>
-    <span className='badge badge-warning' id='lblCartCount'> {ordersCount} </span></Link>
+    <span className='badge badge-warning' id='lblCartCount'> {orders.orders.length} </span></Link>
     <Link to="/profile"><i className="fa fa-user"></i></Link>
     <input type="text" onChange={handleChange} placeholder="Search.."/>
     <DarkMode />

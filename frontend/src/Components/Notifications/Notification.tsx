@@ -9,7 +9,7 @@ import { NotificationRow } from './NotificationRow';
 
 
 export const Notification:React.FC = () => {
-    const notifications=  JSON.parse(localStorage.getItem("notifications")|| '{}');
+   // const notifications=  JSON.parse(localStorage.getItem("notifications")|| '{}');
     const p:Person=  JSON.parse(localStorage.getItem("user")|| '');
     const dispatch:DispatchType= useDispatch();
     console.log(p);
@@ -19,13 +19,15 @@ export const Notification:React.FC = () => {
      } , []
     );
     
+    const notifications = useSelector((state:RootState) => state.notify); 
+
     return (
        
 <div className="notifyContaner">
 
 
 {
-                notifications.map((notification:NotificationData) => {
+                notifications.notifications.map((notification:NotificationData) => {
                     return <NotificationRow key={notification.id}
                     message={notification.message} id={notification.id} modifiedDate={notification.modifiedDate}/>
                 })

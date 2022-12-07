@@ -1,12 +1,15 @@
 package com.example.controllers;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.exceptions.EmailAlreadyExistsException;
 import com.example.exceptions.InvalidCredentialsException;
+import com.example.models.Notification;
 import com.example.models.Order;
 import com.example.models.Person;
 import com.example.service.OrderService;
@@ -36,6 +40,15 @@ public class OrderController {
 				Integer.parseInt(body.get("payment_id")),Double.parseDouble(body.get("total_price"))
 				,Integer.parseInt(body.get("total_items")));
 	} 
+	
+	@GetMapping("/{customer_id}")
+	public List<Order> getAllOrders(@PathVariable int customer_id){
+		    
+		    List<Order> orders = oService.getOrdersByPerson(customer_id);
+		    //System.out.println("reach getallorders method orders are "+orders);
+			return orders;
+		}
+
 	
 }
 

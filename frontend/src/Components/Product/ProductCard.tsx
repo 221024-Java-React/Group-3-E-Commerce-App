@@ -18,10 +18,12 @@ const dispatch:DispatchType = useDispatch();
 
 useEffect(()=>{
     if(userState.isLoggedIn)navigate("/shop");
-console.log(localStorage.getItem('customerId'));
+//console.log(localStorage.getItem('customerId'));
 }, [userState.isLoggedIn])
 const user = JSON.parse(localStorage.getItem("user")|| '{}');
-console.log(user);
+//console.log(user);
+
+
 const handleAddToCard = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
    const order:OrderDetail ={
