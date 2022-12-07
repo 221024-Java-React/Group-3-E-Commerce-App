@@ -5,6 +5,7 @@ import  productReducer from './Slices/ProductSlice';
 import OrderSlice from './Slices/OrderSlice';
 import PaymentSlice from './Slices/PaymentSlice';
 import AdminSlice from './Slices/AdminSlice';
+import NotificationSlice from './Slices/NotificationSlice';
 
 export const store = configureStore({
     reducer: {
@@ -12,7 +13,8 @@ export const store = configureStore({
         auth: authReducer,
         order: OrderSlice,
         payment: PaymentSlice,
-        admin: AdminSlice
+        admin: AdminSlice,
+        notify: NotificationSlice
     },
     devTools:true
 });

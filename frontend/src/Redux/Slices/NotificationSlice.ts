@@ -1,13 +1,14 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import axios from "axios";
+import { NotificationData } from "../../Types/NotificationData";
 
 interface NotificationSliceState {
-    notification: Notification[]
+    notifications: NotificationData[]
 };
 
 
 const initialState: NotificationSliceState = {
-    notification: []
+    notifications: []
 };
 
 export const getNotifications = createAsyncThunk(
@@ -15,7 +16,9 @@ export const getNotifications = createAsyncThunk(
     async(customer_id:number) => {
         try{      
             const res = await axios.get(`http://localhost:8500/notifications/${customer_id}`);
+            console.log(res.data);
             return {notification: res.data};
+           
         } catch(e) {  
             return null;      
         }
@@ -43,7 +46,7 @@ export const NotificationSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getNotifications.fulfilled, (state, action) => {
-            state.notification= action.payload?.notification;
+            state.notifications= action.payload?.notification;
             localStorage.setItem('notifications', JSON.stringify(action.payload?.notification));
             return state;
         });

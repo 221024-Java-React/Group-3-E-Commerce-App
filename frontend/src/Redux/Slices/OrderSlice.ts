@@ -4,27 +4,46 @@ import { Order } from '../../Types/Order';
 import { OrderDetail } from "../../Types/OrderDetail";
 
 interface OrderSliceState {
-    orders: Order[]
+    orders: Order[],
+
 };
 
+
 const initialState:OrderSliceState = {
-    orders: []
+    orders: [],
 };
 
 
 export const createOrder = createAsyncThunk(
-    'user/addToCard',
+    'order/addToCard',
     async(order:OrderDetail, thunkAPI) => {
         try{
             
             const res = await axios.post("http://localhost:8500/orders/addTocart", order);
-
+            
             return {orders :res.data};
+           
         } catch(e) {
             return thunkAPI.rejectWithValue('Item Already Exist');
         }
     }
 );
+
+
+export const getOrders = createAsyncThunk(
+    'order/getAllOrders',
+    async(customer_id:number) => {
+        try{      
+            const res = await axios.get(`http://localhost:8500/orders/${customer_id}`);
+            console.log(res.data);
+            return {orders: res.data};
+           
+        } catch(e) {  
+            return null;      
+        }
+    }
+);
+
 
 //Create our slice and map our reducers
 export const OrderSlice = createSlice({
@@ -41,12 +60,11 @@ export const OrderSlice = createSlice({
         updateOrder: (state:OrderSliceState, action:PayloadAction<Order>)=> {
             for(let i = 0; i<state.orders.length; i++){
                 let order = state.orders[i];
-                if(order.id === action.payload.id){
-                    order.id = order.id;
-                    order.total_price= order.total_price;
-                    order.total_items = order.total_items;
-                    order.tax =  order.tax;
-                    order.shipping_price = order.shipping_price; 
+                if(order.orderId === action.payload.orderId){
+                    order.orderId = order.orderId;
+                    order.totalPrice= order.totalPrice;
+                    order.totalItem = order.totalItem;
+                   
                     state.orders.splice(i, 1, order);
                 }
             }
@@ -58,13 +76,20 @@ export const OrderSlice = createSlice({
         },
 
         removeOrder: (state:OrderSliceState, action:PayloadAction<number>) => {
-            state.orders = state.orders.filter((order:Order) => order.id !== action.payload);
+            state.orders = state.orders.filter((order:Order) => order.orderId !== action.payload);
             return state;
         },
     },
         extraReducers: (builder) => {
             builder.addCase(createOrder.fulfilled, (state, action) => {
-                localStorage.setItem('orders', JSON.stringify(action.payload.orders));
+               // console.log("orders inside create order response "+action.payload.orders);
+                //localStorage.setItem('orders', JSON.stringify(action.payload.orders));
+                return state;
+            });
+            builder.addCase(getOrders.fulfilled, (state, action) => {
+               
+                state.orders= action.payload?.orders;
+              //  localStorage.setItem('orders', JSON.stringify(action.payload?.orders));
                 return state;
             });
     }

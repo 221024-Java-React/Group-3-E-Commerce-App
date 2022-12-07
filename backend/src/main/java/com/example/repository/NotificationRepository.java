@@ -14,4 +14,5 @@ import com.example.models.ProductCategory;
 public interface NotificationRepository extends JpaRepository<Notification, Integer> {
 	
 	List<Notification> findAllByPerson(Person p);
+	//List<Notification> findByPersonOrderByModifiedDateDesc(Person p);
 }

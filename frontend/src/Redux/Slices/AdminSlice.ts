@@ -7,8 +7,8 @@ interface ProductState {
 }
 
 const cat :Category={
-    id: 0,
-    name: ""
+    productCategoryId: 0,
+    category: ""
 }
 
 const p:Product={

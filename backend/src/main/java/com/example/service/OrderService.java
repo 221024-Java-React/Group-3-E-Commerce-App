@@ -1,6 +1,7 @@
 package com.example.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.exceptions.EmailAlreadyExistsException;
 import com.example.exceptions.InvalidCredentialsException;
+import com.example.models.Notification;
 import com.example.models.Order;
 import com.example.models.OrderStatus;
 import com.example.models.PaymentType;
@@ -52,5 +54,11 @@ public class OrderService {
 	 //	Person person = new Person(0, name, email, password, "","", theme,role);
 		
 	}
+
+	public List<Order> getOrdersByPerson(int customer_id) {
+		Person person = personRepo.findById(customer_id).get();
+	 return	orderRepo.findAllByPerson(person);
+	}
+
 	
 }
