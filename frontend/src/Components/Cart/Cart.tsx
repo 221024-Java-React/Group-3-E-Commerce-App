@@ -76,6 +76,10 @@ export const Cart:React.FC = () => {
       
         console.log("Prices: " + totalPrice );
         console.log("Quantities: " + totalItems);
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 312f2c50ca491baf86a09cb95dd3a840041e1d3c
 
         const order:Order = {
             total_price: totalPrice,
@@ -96,6 +100,15 @@ export const Cart:React.FC = () => {
         }
 
 
+<<<<<<< HEAD
+=======
+=======
+     
+      
+
+       
+>>>>>>> 9fc0b33f91a120ad8cc614abd87ebe81c7827079
+>>>>>>> 312f2c50ca491baf86a09cb95dd3a840041e1d3c
         //dispatch(updateOrder(order));
         //
     }
