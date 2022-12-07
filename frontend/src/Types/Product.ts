@@ -6,13 +6,14 @@ export interface Product {
     quantity: number;
     description: string;
     category?:Category;
+    modifiedDate?: string
 }
 
 
 export interface Category{
 
-id: number;
-name: string;
+productCategoryId: number;
+category: string;
 }
 
 

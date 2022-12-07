@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
-import { Person, Role } from "../../Types/Person";
+import { Person, Role, Theme } from "../../Types/Person";
 
 
 interface AuthState{
@@ -21,15 +21,19 @@ const  personRole:Role = {
     role: ""
 }
 
+const personTheme:Theme= {
+    themeId: 0,
+    theme: ""
+}
+
 const person:Person={
-    id: 0,
-    firstName: "",
-    lastName: "",
+    customerId: 0,
+    name:"",
     email: "",
     password: "",
     phone: "",
     image: "",
-    theme: 0,
+    theme: personTheme,
     role: personRole,
     orders:[]
 };
