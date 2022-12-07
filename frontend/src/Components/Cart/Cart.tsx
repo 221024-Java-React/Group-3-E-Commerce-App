@@ -1,15 +1,9 @@
-import React, {useState, useEffect} from 'react';
-import { Product } from '../../Types/Product';
-import { Order } from '../../Types/Order';
-import { Payment } from '../../Types/Payment';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DispatchType, RootState } from '../../Redux/Store';
-import { CartCard } from './CartCard';
-import { OrderCard } from './OrderCard';
-import { addProduct } from '../../Redux/Slices/ProductSlice';
-import { addOrder, updateOrder,removeOrder } from '../../Redux/Slices/OrderSlice';
-import { addPayment } from '../../Redux/Slices/PaymentSlice';
+import { Person } from '../../Types/Person';
 import './Cart.css';
+<<<<<<< HEAD
 import { removePayment } from '../../Redux/Slices/PaymentSlice';
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
@@ -83,6 +77,34 @@ export const Cart:React.FC = () => {
     console.log(orders); 
     
     
+=======
+import { CartCard } from './CartCard';
+import { getOrders } from '../../Redux/Slices/OrderSlice';
+import { Order } from '../../Types/Order';
+import { OrderCard } from './OrderCard';
+import { Link } from 'react-router-dom';
+
+
+export const Cart:React.FC = () => {
+   
+   
+    const p:Person=  JSON.parse(localStorage.getItem("user")|| '');
+    const dispatch:DispatchType= useDispatch();
+    console.log(p);
+
+
+
+    useEffect(()=>{
+        console.log("customer id is: "+p.customerId);
+        dispatch(getOrders(p.customerId));
+
+     } , []
+    );
+    //const orders=  JSON.parse(localStorage.getItem("orders")|| '{}');
+   // console.log("all orders from cart page "+orders)
+   const orders = useSelector((state:RootState) => state.order); 
+   //console.log("order state orders "+orders.orders[0].product.description);
+>>>>>>> 954306fe9a76b41928e46bbabdaa0be7c3661a68
     return (
 
         <>
@@ -91,23 +113,47 @@ export const Cart:React.FC = () => {
             
             <div className="product-container">
             {
+<<<<<<< HEAD
                state.order.orders.map((product:Product)=>{
                     return <CartCard id={product.id} title={product.title} price={product.price} quantity={product.quantity} description={product.description} />
+=======
+                orders.orders.map((order:Order)=>{
+                    return <CartCard  key={order.product.id} id={order.product.id} 
+                    title={order.product.title} price={order.product.price} 
+                    quantity={order.product.quantity} description={order.product.description} />
+>>>>>>> 954306fe9a76b41928e46bbabdaa0be7c3661a68
                 })
             }
             </div>
             <div className="order-container">
                 <h2>Order Details</h2>
                 {
+<<<<<<< HEAD
                     state.order.orders.map((orders:Order)=>{
                         return <OrderCard key={orders.orderId} orderId={orders.orderId}  totalPrice={orders.totalPrice} totalItem={orders.totalItem}  />
+=======
+                    orders.orders.map((orders:Order)=>{
+                        return <OrderCard key={orders.orderId} orderId={orders.orderId} 
+                        person={orders.person} product={orders.product} totalPrice={orders.totalPrice} 
+                        totalItem={orders.totalItem} OrderStatus={orders.OrderStatus} 
+                        paymentType={orders.paymentType} />
+>>>>>>> 954306fe9a76b41928e46bbabdaa0be7c3661a68
                     })
                    
                 }
                 
+<<<<<<< HEAD
                 <Link to="/checkout" onClick={submitCheckout}>Checkout</Link>
+=======
+                <Link to="/checkout" onClick={()=>{}}>Checkout</Link>
+>>>>>>> 954306fe9a76b41928e46bbabdaa0be7c3661a68
             </div>
         </div>
         </>
     )
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> 954306fe9a76b41928e46bbabdaa0be7c3661a68

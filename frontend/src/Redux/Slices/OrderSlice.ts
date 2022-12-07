@@ -5,39 +5,58 @@ import { OrderDetail } from "../../Types/OrderDetail";
 
 interface OrderSliceState {
     orders: Order[],
+
 };
 
+
 const initialState:OrderSliceState = {
-    orders: []
+    orders: [],
 };
 
 
 export const createOrder = createAsyncThunk(
-    'user/addToCard',
+    'order/addToCard',
     async(order:OrderDetail, thunkAPI) => {
         try{
             
             const res = await axios.post("http://localhost:8500/orders/addTocart", order);
-
+            
             return {orders :res.data};
+           
         } catch(e) {
             return thunkAPI.rejectWithValue('Item Already Exist');
         }
     }
 );
 
+<<<<<<< HEAD
 export const orderById = createAsyncThunk(
     'user/orders/',
     async(order:number, thunkAPI) => {
         try{      
             const res = await axios.get(`http://localhost:8500/orders/${order}`);
             return {orders: res.data};
+=======
+
+export const getOrders = createAsyncThunk(
+    'order/getAllOrders',
+    async(customer_id:number) => {
+        try{      
+            const res = await axios.get(`http://localhost:8500/orders/${customer_id}`);
+            console.log(res.data);
+            return {orders: res.data};
+           
+>>>>>>> 954306fe9a76b41928e46bbabdaa0be7c3661a68
         } catch(e) {  
             return null;      
         }
     }
 );
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 954306fe9a76b41928e46bbabdaa0be7c3661a68
 //Create our slice and map our reducers
 export const OrderSlice = createSlice({
     //we need to name our slice
@@ -80,7 +99,14 @@ export const OrderSlice = createSlice({
     },
         extraReducers: (builder) => {
             builder.addCase(createOrder.fulfilled, (state, action) => {
-                localStorage.setItem('orders', JSON.stringify(action.payload.orders));
+               // console.log("orders inside create order response "+action.payload.orders);
+                //localStorage.setItem('orders', JSON.stringify(action.payload.orders));
+                return state;
+            });
+            builder.addCase(getOrders.fulfilled, (state, action) => {
+               
+                state.orders= action.payload?.orders;
+              //  localStorage.setItem('orders', JSON.stringify(action.payload?.orders));
                 return state;
             });
 

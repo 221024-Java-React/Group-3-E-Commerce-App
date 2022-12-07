@@ -10,8 +10,8 @@ console.log(user);
 
         <div  className= "notifyRecord">
 
-<p>message: {message}</p>
-<p>Date: {modifiedDate}</p>
+<p>{message}</p>
+<p>{ new Date(modifiedDate).toUTCString()}</p>
 
 </div>
        
