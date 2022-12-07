@@ -21,10 +21,16 @@ import { is } from 'immer/dist/internal';
 
 export const Cart:React.FC = () => {
 
+<<<<<<< HEAD
     const dispatch:DispatchType = useDispatch();
     const state = useSelector((state:RootState) => state);
     const userState = useSelector((state:RootState) => state.auth);
     let navigate = useNavigate();
+=======
+
+<<<<<<< HEAD
+    //const [newOrder, setNewOrder] = useState<Order>();
+>>>>>>> 54141419efeff496dca8f02941e9b8a7a6ff0e01
 
     const [newPayment, setNewPayment] = useState<Payment>({
         id:0,
@@ -58,6 +64,7 @@ export const Cart:React.FC = () => {
         dispatch(addPayment(payment3));
     }
 
+<<<<<<< HEAD
     const user = JSON.parse(localStorage.getItem("user")|| '{}');
     const orders = JSON.parse(localStorage.getItem("orders")|| '{}');
    
@@ -74,6 +81,19 @@ export const Cart:React.FC = () => {
     }
 
     useEffect(()=>{
+=======
+    useEffect(()=>{
+
+        console.log("order: " + state.order.orders);
+        console.log("State changed in the store ", state);
+    }, [state, state.product.products.length, state.order.orders, state.order.orders.length, newCart, newPayment]);
+=======
+
+    useEffect(()=>{
+        console.log("customer id is: "+p.customerId);
+        dispatch(getOrders(p.customerId));
+>>>>>>> 954306fe9a76b41928e46bbabdaa0be7c3661a68
+>>>>>>> 54141419efeff496dca8f02941e9b8a7a6ff0e01
 
     }, [state, state.order.orders.length, newPayment, userState.isLoggedIn])
   

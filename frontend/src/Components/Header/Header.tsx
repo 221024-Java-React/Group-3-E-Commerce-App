@@ -15,11 +15,17 @@ export const Header:React.FC = () => {
   let navigate = useNavigate();
   const dispatch:DispatchType = useDispatch();
 <<<<<<< HEAD
+<<<<<<< HEAD
 
  // const ordersCount = Object(JSON.stringify(localStorage.getItem("orders"))).length;
  let  ordersCount =Object.keys(JSON.parse(localStorage.getItem("orders")|| '')).length;
  //console.log("orders count "+JSON.stringify(localStorage.getItem("orders")));
   //console.log("orders count "+ ordersCount.orderId);
+=======
+  const ordersCount = Object(JSON.stringify(localStorage.getItem("orders"))).length;
+ //const ordersCount =JSON.parse(JSON.stringify(localStorage.getItem("orders"))).length;
+  console.log("orders count "+ ordersCount+ " orders"+ JSON.stringify(localStorage.getItem("orders")));
+>>>>>>> 54141419efeff496dca8f02941e9b8a7a6ff0e01
 =======
 >>>>>>> 954306fe9a76b41928e46bbabdaa0be7c3661a68
 
