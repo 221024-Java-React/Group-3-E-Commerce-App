@@ -2,23 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Product } from '../../Types/Product';
 import { useDispatch } from 'react-redux';
 import { DispatchType } from '../../Redux/Store';
-<<<<<<< HEAD
 import { updateProduct, removeProduct, ItemQuantity } from '../../Redux/Slices/ProductSlice';
 import './CartCard.css';
 import logo from '../../Assets/ecommercelogos.png';
 import { removeCartItem } from '../../Redux/Slices/OrderSlice';
-=======
-import { updateProduct } from '../../Redux/Slices/ProductSlice';
-import './CartCard.css';
-import logo from '../../Assets/ecommercelogos.png';
-import {  } from '../../Redux/Slices/OrderSlice';
->>>>>>> 954306fe9a76b41928e46bbabdaa0be7c3661a68
+import { Order } from '../../Types/Order';
 
-export const CartCard:React.FC<Product> = ({id, title, price, quantity, description}) => {
+export const CartCard:React.FC<Order> = ({id,totalPrice, totalItem}) => {
     const dispatch:DispatchType = useDispatch();
     
 
-    const [products] = useState<Product[]>([]);
+    const [products, setProds] = useState<Product[]>([]);
 
     const [quant, setQuant] = useState<number>(0);
 
@@ -27,30 +21,18 @@ export const CartCard:React.FC<Product> = ({id, title, price, quantity, descript
     }
 
     const update = () => {
-<<<<<<< HEAD
         console.log("Enters update function");
-=======
-       /* console.log("Enters update function");
->>>>>>> 954306fe9a76b41928e46bbabdaa0be7c3661a68
 
         const prod:ItemQuantity = {
             id:id,
             quantity:quant
         }
 
-<<<<<<< HEAD
         dispatch(updateProduct(prod));
     }
 
     const remove = () => {
         dispatch(removeCartItem(id));
-=======
-        dispatch(updateProduct(prod));*/
-    }
-
-    const remove = () => {
-      //  dispatch(removeCartItem(id));
->>>>>>> 954306fe9a76b41928e46bbabdaa0be7c3661a68
     }
 
 
@@ -76,3 +58,8 @@ export const CartCard:React.FC<Product> = ({id, title, price, quantity, descript
         
     )
 }
+
+
+
+
+
