@@ -13,8 +13,8 @@ export const Header:React.FC = () => {
 
   let navigate = useNavigate();
   const dispatch:DispatchType = useDispatch();
- // const ordersCount = Object(JSON.stringify(localStorage.getItem("orders"))).length;
- const ordersCount =JSON.parse(JSON.stringify(localStorage.getItem("orders"))).length;
+  const ordersCount = Object(JSON.stringify(localStorage.getItem("orders"))).length;
+ //const ordersCount =JSON.parse(JSON.stringify(localStorage.getItem("orders"))).length;
   console.log("orders count "+ ordersCount+ " orders"+ JSON.stringify(localStorage.getItem("orders")));
 
       const handleLogout = (e: { preventDefault: () => void; })=>{
