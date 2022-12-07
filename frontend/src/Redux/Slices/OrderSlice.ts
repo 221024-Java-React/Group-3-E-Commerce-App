@@ -73,6 +73,11 @@ export const OrderSlice = createSlice({
             state.orders = state.orders.filter((order:Order) => order.id !== action.payload);
             return state;
         },
+
+        removeCartItem: (state:OrderSliceState, action:PayloadAction<number>) => {
+            state.orders = state.orders.filter((order:Order) => order.product.id !== action.payload);
+            return state;
+        },
     },
         extraReducers: (builder) => {
             builder.addCase(createOrder.fulfilled, (state, action) => {
@@ -88,5 +93,5 @@ export const OrderSlice = createSlice({
     }
 });
 
-export const {addOrder, checkoutOrder, removeOrder, updateOrder} = OrderSlice.actions;
+export const {addOrder, checkoutOrder, removeOrder, updateOrder, removeCartItem} = OrderSlice.actions;
 export default OrderSlice.reducer;

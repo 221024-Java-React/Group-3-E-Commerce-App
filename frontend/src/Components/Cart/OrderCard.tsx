@@ -21,7 +21,6 @@ export const OrderCard:React.FC<Order> = (order) => {
 
     const user = JSON.parse(localStorage.getItem("user")|| '{}');
     console.log(user);
-    dispatch(orderById(1));
     return (
 
         <div>
