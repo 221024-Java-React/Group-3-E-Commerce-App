@@ -24,6 +24,8 @@ export const Checkout:React.FC = () => {
     
     }, [state]);
 
+    const orders = JSON.parse(localStorage.getItem("orders")|| '{}');
+    
     return (
         
         <>
@@ -33,8 +35,8 @@ export const Checkout:React.FC = () => {
             <div className="order-container">
                 <h2>Order Details</h2>
                 {
-                    state.order.orders.map((orders:Order)=>{
-                        return <OrderCard key={orders.id} id={orders.id} person={orders.person} product={orders.product} total_price={orders.total_price} total_items={orders.total_items} tax={orders.tax} shipping_price={orders.shipping_price} status={orders.status} payment={orders.payment} />
+                    orders.map((orders:Order)=>{
+                        return <OrderCard key={orders.orderId} orderId={orders.orderId} person={orders.person} product={orders.product} totalPrice={orders.totalPrice} totalItem={orders.totalItem} OrderStatus={orders.OrderStatus} paymentType={orders.paymentType} />
                     })
                 }
             </div>

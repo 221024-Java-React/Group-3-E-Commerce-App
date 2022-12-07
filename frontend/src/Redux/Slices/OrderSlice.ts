@@ -74,7 +74,7 @@ export const OrderSlice = createSlice({
         },
 
         removeCartItem: (state:OrderSliceState, action:PayloadAction<number>) => {
-            state.orders = state.orders.filter((order:Order) => order.product.id !== action.payload);
+          //  state.orders = state.orders.filter((order:Order) => order.product.id !== action.payload);
             return state;
         },
     },

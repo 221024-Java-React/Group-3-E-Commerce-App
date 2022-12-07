@@ -62,15 +62,9 @@ export const Cart:React.FC = () => {
     const orders = JSON.parse(localStorage.getItem("orders")|| '{}');
    
     const order:Order = {
-        id:orders.id,
-        person:orders.person,
-        product:orders.product,
-        total_price:112.99,
-        total_items:15,
-        tax:orders.tax,
-        shipping_price:orders.shipping_price,
-        status:orders.status,
-        payment:orders.payment
+        orderId:1,
+        totalPrice:112.99,
+        totalItem:15
     }
 
     useEffect(()=>{
@@ -97,8 +91,8 @@ export const Cart:React.FC = () => {
             
             <div className="product-container">
             {
-                state.order.orders.map((order:Order)=>{
-                    return <CartCard  key={order.product.id} id={order.product.id} title={order.product.title} price={order.product.price} quantity={order.product.quantity} description={order.product.description} />
+               state.order.orders.map((product:Product)=>{
+                    return <CartCard id={product.id} title={product.title} price={product.price} quantity={product.quantity} description={product.description} />
                 })
             }
             </div>
@@ -106,7 +100,7 @@ export const Cart:React.FC = () => {
                 <h2>Order Details</h2>
                 {
                     state.order.orders.map((orders:Order)=>{
-                        return <OrderCard key={orders.id} id={orders.id} person={orders.person} product={orders.product} total_price={orders.total_price} total_items={orders.total_items} tax={orders.tax} shipping_price={orders.shipping_price} status={orders.status} payment={orders.payment} />
+                        return <OrderCard key={orders.orderId} orderId={orders.orderId}  totalPrice={orders.totalPrice} totalItem={orders.totalItem}  />
                     })
                    
                 }

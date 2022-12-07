@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { orderById } from '../../Redux/Slices/OrderSlice';
 
-export const OrderCard:React.FC<Order> = (order) => {
+export const OrderCard:React.FC<Order> = ({orderId, totalItem, totalPrice}) => {
 
     let navigate = useNavigate();
     const state  = useSelector((state:RootState) => state);
@@ -25,9 +25,9 @@ export const OrderCard:React.FC<Order> = (order) => {
 
         <div>
             <br />
-            <h2>Order Id: {order.orderId}</h2>
-            <h3>Total Item: {order.totalItem}</h3>
-            <h3>Total Price: {order.totalPrice}</h3>
+            <h2>Order Id: {orderId}</h2>
+            <h3>Total Item: {totalItem}</h3>
+            <h3>Total Price: {totalPrice}</h3>
           
         </div>
  
