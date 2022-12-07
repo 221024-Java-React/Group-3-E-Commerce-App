@@ -11,8 +11,8 @@ export const Admin: React.FC = () => {
     const dispatch:DispatchType = useDispatch();
 
     const cat: Category={
-        id: 0,
-        name: ''
+        productCategoryId: 0,
+        category: ''
     }
 
     const [newProduct, setNewProduct] = useState<Product>({

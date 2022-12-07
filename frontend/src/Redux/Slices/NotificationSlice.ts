@@ -15,7 +15,9 @@ export const getNotifications = createAsyncThunk(
     async(customer_id:number) => {
         try{      
             const res = await axios.get(`http://localhost:8500/notifications/${customer_id}`);
+            console.log(res.data);
             return {notification: res.data};
+           
         } catch(e) {  
             return null;      
         }
