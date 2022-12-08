@@ -11,7 +11,6 @@ export interface Person{
 	role: Role;
 	orders: Order[]
 }
-
 export interface Role{
 	roleId: number;
   role: string

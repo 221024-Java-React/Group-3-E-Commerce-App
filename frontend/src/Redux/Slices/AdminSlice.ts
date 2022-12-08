@@ -1,7 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 import { Category, Product } from "../../Types/Product";
-
 interface ProductState {
     currentProduct: Product;
 }
@@ -19,9 +18,7 @@ const p:Product={
     description: "",
     category:cat
 };
-
 const initialState:ProductState =  {  currentProduct: p };
-
 export const addProduct = createAsyncThunk(
     'admin/addProduct',
     async(product:Product, thunkAPI) => {
@@ -35,13 +32,10 @@ export const addProduct = createAsyncThunk(
         }
     }
 );
-
-
 export const AdminSlice = createSlice({
     name: "admin",
     initialState,
     reducers: {
-
     },
     extraReducers: (builder) => {
         builder.addCase(addProduct.fulfilled, (state, action) => {      
@@ -49,9 +43,7 @@ export const AdminSlice = createSlice({
             localStorage.setItem('adminProducts', JSON.stringify(action.payload.product));
             return state;
         });
-
       
     }
 });
-
 export default AdminSlice.reducer;

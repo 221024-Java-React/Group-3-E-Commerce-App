@@ -11,23 +11,9 @@ import { logout } from '../../Redux/Slices/PersonSlice';
 import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
 
 export const Header:React.FC = () => {
-                                    
-  let navigate = useNavigate();
-  const dispatch:DispatchType = useDispatch();
-<<<<<<< HEAD
-<<<<<<< HEAD
 
- // const ordersCount = Object(JSON.stringify(localStorage.getItem("orders"))).length;
- let  ordersCount =Object.keys(JSON.parse(localStorage.getItem("orders")|| '')).length;
- //console.log("orders count "+JSON.stringify(localStorage.getItem("orders")));
-  //console.log("orders count "+ ordersCount.orderId);
-=======
-  const ordersCount = Object(JSON.stringify(localStorage.getItem("orders"))).length;
- //const ordersCount =JSON.parse(JSON.stringify(localStorage.getItem("orders"))).length;
-  console.log("orders count "+ ordersCount+ " orders"+ JSON.stringify(localStorage.getItem("orders")));
->>>>>>> 54141419efeff496dca8f02941e9b8a7a6ff0e01
-=======
->>>>>>> 954306fe9a76b41928e46bbabdaa0be7c3661a68
+ let navigate = useNavigate();
+  const dispatch:DispatchType = useDispatch();
 
       const handleLogout = (e: { preventDefault: () => void; })=>{
         e.preventDefault();
@@ -36,7 +22,7 @@ export const Header:React.FC = () => {
       }
 
       useEnhancedEffect(()=>{
-     
+
       }, [])
 
       const orders = useSelector((state:RootState) => state.order); 
@@ -54,11 +40,10 @@ export const Header:React.FC = () => {
 
 if(localStorage.getItem("user")!=null)
 {
-
  const p:Person=  JSON.parse(localStorage.getItem("user")|| '');
  console.log("header person data "+p['email']);
  console.log("header person.email data "+p.role.roleId);
- 
+
  if(p.role.roleId ===1)
  {
   return(
@@ -90,7 +75,6 @@ if(localStorage.getItem("user")!=null)
     
           )
  }
-
 }else{
   return(
     <header id="header" className="header">
@@ -101,7 +85,6 @@ if(localStorage.getItem("user")!=null)
 <DarkMode />
 </div>
 </header>
-
       )
 }
    

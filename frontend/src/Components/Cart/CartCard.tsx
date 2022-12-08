@@ -2,61 +2,34 @@ import React, { useState, useEffect } from 'react';
 import { Product } from '../../Types/Product';
 import { useDispatch } from 'react-redux';
 import { DispatchType } from '../../Redux/Store';
-<<<<<<< HEAD
-import { updateProduct, removeProduct, ItemQuantity } from '../../Redux/Slices/ProductSlice';
-=======
-<<<<<<< HEAD
-import { updateProduct, removeProduct, ItemQuantity } from '../../Redux/Slices/ProductSlice';
-=======
 import { updateProduct } from '../../Redux/Slices/ProductSlice';
->>>>>>> 954306fe9a76b41928e46bbabdaa0be7c3661a68
->>>>>>> 54141419efeff496dca8f02941e9b8a7a6ff0e01
 import './CartCard.css';
 import logo from '../../Assets/ecommercelogos.png';
-import { removeCartItem } from '../../Redux/Slices/OrderSlice';
-import { Order } from '../../Types/Order';
+import {  } from '../../Redux/Slices/OrderSlice';
 
-export const CartCard:React.FC<Order> = ({id,totalPrice, totalItem}) => {
+export const CartCard:React.FC<Product> = ({id, title, price, quantity, description}) => {
     const dispatch:DispatchType = useDispatch();
-    
 
-    const [products, setProds] = useState<Product[]>([]);
 
-    const [quant, setQuant] = useState<number>(0);
+    const [products] = useState<Product[]>([]);
+
+   const [quant, setQuant] = useState<number>(0);
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setQuant(parseInt(e.target.value));    
     }
 
     const update = () => {
-<<<<<<< HEAD
-        console.log("Enters update function");
-=======
-<<<<<<< HEAD
-        console.log("Enters update function");
-=======
-       /* console.log("Enters update function");
->>>>>>> 954306fe9a76b41928e46bbabdaa0be7c3661a68
->>>>>>> 54141419efeff496dca8f02941e9b8a7a6ff0e01
-
+  /* console.log("Enters update function");
         const prod:ItemQuantity = {
             id:id,
             quantity:quant
         }
-
-<<<<<<< HEAD
-        dispatch(updateProduct(prod));
-=======
-<<<<<<< HEAD
-        dispatch(updateProduct(prod));
-=======
         dispatch(updateProduct(prod));*/
->>>>>>> 954306fe9a76b41928e46bbabdaa0be7c3661a68
->>>>>>> 54141419efeff496dca8f02941e9b8a7a6ff0e01
     }
 
     const remove = () => {
-        dispatch(removeCartItem(id));
+      //  dispatch(removeCartItem(id));
     }
 
 
@@ -65,7 +38,6 @@ export const CartCard:React.FC<Order> = ({id,totalPrice, totalItem}) => {
         console.log("Quantity value from HTML: " + quant);
     //    console.log("State changed in the store ", state);
     }, [quant, products, products.length]);
-
     return (
         
         <div className="cartcard-container">
@@ -79,11 +51,6 @@ export const CartCard:React.FC<Order> = ({id,totalPrice, totalItem}) => {
             <button className="update-btn" onClick={update}>update</button>
             <button className="remove-btn" onClick={remove}>remove</button>
         </div>
-        
+
     )
 }
-
-
-
-
-
