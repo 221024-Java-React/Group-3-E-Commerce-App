@@ -43,7 +43,6 @@ public class PersonService {
 		if(!person.getPassword().equals(password)) {
 			throw new InvalidCredentialsException();
 		}
-		//System.out.println("The user login successfully "+person.toString());
 		return person;
 		
 	}

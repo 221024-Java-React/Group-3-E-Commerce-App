@@ -26,8 +26,8 @@ export const Register:React.FC = () => {
 
 
     useEffect(()=>{
-        if(userState.isRegistered)navigate("/login");
-    }, [userState.isRegistered])
+        if(!userState.error)navigate("/login");
+    }, [userState.error])
 
     const handleRegister = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
@@ -47,7 +47,7 @@ export const Register:React.FC = () => {
             <h1>New Customer. Please Register</h1>
 
             <form id="auth">
-            {userState.error ? <h3>Username or password incorrect</h3> : <></>}
+            {userState.error  ? <h3>Email Already Exist</h3> : <></>}
             <label>Name</label>
             <input id= "name" name="name" placeholder="Your name" onChange={handleChange}/>
             <label>Email</label>

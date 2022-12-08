@@ -27,8 +27,7 @@
 
 .logoutBtn{
   border-style: none;
-  background-color: transparent !important;
-  font-size: medium;
+
   cursor: pointer;
 }
 
@@ -152,7 +151,9 @@ input:checked + .slider:before {
 }
 
 .header{
-  border-bottom: 1px solid #e5e5e5;
+
+  box-shadow: 0 4px 8px 0 rgba(255, 254, 254, 0.8);
+  border-bottom: 1px solid #a5a5a5;
   padding: 10px 0px;
 }
 
