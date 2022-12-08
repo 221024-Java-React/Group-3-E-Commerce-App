@@ -2,34 +2,36 @@ import React, { useState, useEffect } from 'react';
 import { Product } from '../../Types/Product';
 import { useDispatch } from 'react-redux';
 import { DispatchType } from '../../Redux/Store';
-import { updateProduct } from '../../Redux/Slices/ProductSlice';
+import { updateProduct, removeProduct, ItemQuantity } from '../../Redux/Slices/ProductSlice';
 import './CartCard.css';
 import logo from '../../Assets/ecommercelogos.png';
-import {  } from '../../Redux/Slices/OrderSlice';
+import { removeCartItem } from '../../Redux/Slices/OrderSlice';
 
 export const CartCard:React.FC<Product> = ({id, title, price, quantity, description}) => {
     const dispatch:DispatchType = useDispatch();
+    
 
+    const [products, setProds] = useState<Product[]>([]);
 
-    const [products] = useState<Product[]>([]);
-
-   const [quant, setQuant] = useState<number>(0);
+    const [quant, setQuant] = useState<number>(0);
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setQuant(parseInt(e.target.value));    
     }
 
     const update = () => {
-  /* console.log("Enters update function");
+        console.log("Enters update function");
+
         const prod:ItemQuantity = {
             id:id,
             quantity:quant
         }
-        dispatch(updateProduct(prod));*/
+
+        dispatch(updateProduct(prod));
     }
 
     const remove = () => {
-      //  dispatch(removeCartItem(id));
+        dispatch(removeCartItem(id));
     }
 
 
@@ -38,6 +40,7 @@ export const CartCard:React.FC<Product> = ({id, title, price, quantity, descript
         console.log("Quantity value from HTML: " + quant);
     //    console.log("State changed in the store ", state);
     }, [quant, products, products.length]);
+
     return (
         
         <div className="cartcard-container">
@@ -51,6 +54,8 @@ export const CartCard:React.FC<Product> = ({id, title, price, quantity, descript
             <button className="update-btn" onClick={update}>update</button>
             <button className="remove-btn" onClick={remove}>remove</button>
         </div>
-
+        
     )
 }
+
+

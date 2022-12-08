@@ -11,8 +11,8 @@ import { logout } from '../../Redux/Slices/PersonSlice';
 import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
 
 export const Header:React.FC = () => {
-                                    
-  let navigate = useNavigate();
+
+ let navigate = useNavigate();
   const dispatch:DispatchType = useDispatch();
 
       const handleLogout = (e: { preventDefault: () => void; })=>{
@@ -21,6 +21,12 @@ export const Header:React.FC = () => {
         navigate("/login")
       }
 
+<<<<<<< HEAD
+      useEnhancedEffect(()=>{
+
+      }, [])
+=======
+>>>>>>> b67df1bca250abdf930e2da021755e072c1e69e5
 
       const orders = useSelector((state:RootState) => state.order); 
       const notifications = useSelector((state:RootState) => state.notify); 
@@ -38,11 +44,10 @@ export const Header:React.FC = () => {
 
 if(localStorage.getItem("user")!=null)
 {
-
  const p:Person=  JSON.parse(localStorage.getItem("user")|| '');
  console.log("header person data "+p['email']);
  console.log("header person.email data "+p.role.roleId);
- 
+
  if(p.role.roleId ===1)
  {
   return(
@@ -77,7 +82,6 @@ if(localStorage.getItem("user")!=null)
     
           )
  }
-
 }else{
   return(
     <header id="header" className="header">
@@ -88,10 +92,7 @@ if(localStorage.getItem("user")!=null)
 <DarkMode />
 </div>
 </header>
-
       )
 }
    
     }
-
-

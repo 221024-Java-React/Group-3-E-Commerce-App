@@ -7,14 +7,11 @@ import { useEffect, useState } from 'react';
 import { OrderDetail } from '../../Types/OrderDetail';
 import { createOrder, getOrders } from '../../Redux/Slices/OrderSlice';
 import { Person } from '../../Types/Person';
-
 export const ProductCard:React.FC<Product> = ({id, price, title, description,quantity }) => {
 //console.log(`../../Assets/products/${id}.jpeg`);
 let navigate = useNavigate();
 const userState = useSelector((state:RootState) => state.auth);
 const dispatch:DispatchType = useDispatch();
-
-
 
 useEffect(()=>{
     if(userState.isLoggedIn)navigate("/shop");
@@ -38,9 +35,6 @@ const handleAddToCard = (e: { preventDefault: () => void; }) => {
         dispatch(getOrders(user.customerId));
     });
 };
-
-
-
     return (
  <div className="card">
   <img className="product_image" src={require(`../../Assets/products/${id}.jpeg`)} />
@@ -52,5 +46,4 @@ const handleAddToCard = (e: { preventDefault: () => void; }) => {
 </div>
        
     )
-
 }

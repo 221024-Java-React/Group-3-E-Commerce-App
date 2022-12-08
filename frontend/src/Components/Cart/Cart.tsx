@@ -9,18 +9,15 @@ import { Order } from '../../Types/Order';
 import { OrderCard } from './OrderCard';
 import { Link } from 'react-router-dom';
 
-
 export const Cart:React.FC = () => {
-   
-   
+
+
     const p:Person=  JSON.parse(localStorage.getItem("user")|| '');
     const dispatch:DispatchType= useDispatch();
     console.log(p);
 
-
-
     useEffect(()=>{
-        console.log("customer id is: "+p.customerId);
+    console.log("customer id is: "+p.customerId);
         dispatch(getOrders(p.customerId));
 
      } , []
@@ -29,15 +26,16 @@ export const Cart:React.FC = () => {
    // console.log("all orders from cart page "+orders)
    const orders = useSelector((state:RootState) => state.order); 
    //console.log("order state orders "+orders.orders[0].product.description);
-    return (
+    
+   return (
 
         <>
         <h1 className="cart-title">Shopping Cart</h1>     
         <div className="cart-container">
-            
+
             <div className="product-container">
             {
-                orders.orders.map((order:Order)=>{
+                 orders.orders.map((order:Order)=>{
                     return <CartCard  key={order.product.id} id={order.product.id} 
                     title={order.product.title} price={order.product.price} 
                     quantity={order.product.quantity} description={order.product.description} />
@@ -53,13 +51,12 @@ export const Cart:React.FC = () => {
                         totalItem={orders.totalItem} OrderStatus={orders.OrderStatus} 
                         paymentType={orders.paymentType} />
                     })
-                   
+
                 }
-                
+               
                 <Link to="/checkout" onClick={()=>{}}>Checkout</Link>
             </div>
         </div>
         </>
     )
 }
-

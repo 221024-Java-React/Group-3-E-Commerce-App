@@ -12,6 +12,11 @@ const initialState: ProductSliceState = {
     products: []
 };
 
+export interface ItemQuantity{
+    id:number;
+    quantity:number;
+}
+
 export const allProducts = createAsyncThunk(
     'products/allProducts',
     async() => {
@@ -46,12 +51,12 @@ export const ProductSlice = createSlice({
             return state;
         },
 
-        updateProduct: (state:ProductSliceState, action:PayloadAction<number>) => {
+        updateProduct: (state:ProductSliceState, action:PayloadAction<ItemQuantity>) => {
             console.log("Enters update product slice");
             for(let i = 0; i<state.products.length; i++){
                 let product = state.products[i];
-                if(product.id === action.payload){
-                    product.quantity = product.quantity;
+                if(product.id === action.payload.id){
+                    product.quantity = action.payload.quantity;
                     state.products.splice(i, 1, product);
                 }
             }
