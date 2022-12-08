@@ -12,8 +12,6 @@ import { Cart } from './Components/Cart/Cart';
 import { Checkout } from './Components/Checkout/Checkout';
 import { CheckoutComplete } from './Components/Checkout/CheckoutComplete';
 import { Admin } from './Components/Admin/admin';
-
-
 function App() {
   return (
     <div className="App">
@@ -36,7 +34,6 @@ function App() {
       <Footer />
     </BrowserRouter>
     
-
     </div>
   );
 }

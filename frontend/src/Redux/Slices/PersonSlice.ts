@@ -9,13 +9,11 @@ interface AuthState{
     error: boolean,
     currentUser: Person
 }
-
 export interface User {
     name?:string,
     email:string;
     password:string;
 };
-
 const  personRole:Role = {
     roleId: 0,
     role: ""
@@ -37,23 +35,19 @@ const person:Person={
     role: personRole,
     orders:[]
 };
-
 const initialState:AuthState =  { isLoggedIn: false, isRegistered:false,error:false, currentUser:person };
-
 export const register = createAsyncThunk(
     'user/register',
     async(user:User, thunkAPI) => {
         try{
             
             const res = await axios.post("http://localhost:8500/persons/register", user);
-
             return res.data;
         } catch(e) {
             return thunkAPI.rejectWithValue('Email Already Exist');
         }
     }
 );
-
 export const login = createAsyncThunk(
     'user/login',
     async(user:User, thunkAPI) => {
@@ -67,8 +61,6 @@ export const login = createAsyncThunk(
         }
     }
 );
-
-
 export const UserSlice = createSlice({
     name: "auth",
     initialState,
@@ -91,13 +83,11 @@ export const UserSlice = createSlice({
             console.log("useruseruser "+JSON.stringify(localStorage.getItem('user')));
             return state;
         });
-
         builder.addCase(register.fulfilled, (state,action) => {
             state.isRegistered = true;
             state.currentUser=action.payload.user;
             return state
         });
-
         builder.addCase(login.rejected, (state) => {
             state.error = true;
             state.isLoggedIn=false;

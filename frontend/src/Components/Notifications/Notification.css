@@ -1,12 +1,10 @@
 
-
 .notifyContaner{
     padding-top: 20px;
     display: flex;
     flex-direction: column;
     gap :20px;
 }
-
 .notifyRecord{
     display: flex;
     flex-direction: row;

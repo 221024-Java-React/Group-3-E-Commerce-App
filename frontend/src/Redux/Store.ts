@@ -1,5 +1,4 @@
 import {configureStore} from '@reduxjs/toolkit';
-
 import authReducer from './Slices/PersonSlice';
 import  productReducer from './Slices/ProductSlice';
 import OrderSlice from './Slices/OrderSlice';
@@ -18,7 +17,5 @@ export const store = configureStore({
     },
     devTools:true
 });
-
-
 export type RootState = ReturnType<typeof store.getState>;
 export type DispatchType = typeof store.dispatch;

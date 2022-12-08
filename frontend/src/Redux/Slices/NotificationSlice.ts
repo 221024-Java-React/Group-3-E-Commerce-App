@@ -24,8 +24,6 @@ export const getNotifications = createAsyncThunk(
         }
     }
 );
-
-
 export const NotificationSlice = createSlice({
     //We need to name our slice
     name:"notification",
@@ -52,5 +50,4 @@ export const NotificationSlice = createSlice({
         });
     }
 });
-
 export default NotificationSlice.reducer;
