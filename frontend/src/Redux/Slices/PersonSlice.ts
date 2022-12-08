@@ -85,9 +85,21 @@ export const UserSlice = createSlice({
         });
         builder.addCase(register.fulfilled, (state,action) => {
             state.isRegistered = true;
+            state.error=false;
             state.currentUser=action.payload.user;
             return state
         });
+<<<<<<< HEAD
+=======
+
+        builder.addCase(register.rejected, (state,action) => {
+            state.isRegistered = false;
+            state.error= true;
+            
+            return state
+        });
+
+>>>>>>> b67df1bca250abdf930e2da021755e072c1e69e5
         builder.addCase(login.rejected, (state) => {
             state.error = true;
             state.isLoggedIn=false;

@@ -5,7 +5,7 @@ import { DispatchType, RootState } from '../../Redux/Store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { OrderDetail } from '../../Types/OrderDetail';
-import { createOrder } from '../../Redux/Slices/OrderSlice';
+import { createOrder, getOrders } from '../../Redux/Slices/OrderSlice';
 import { Person } from '../../Types/Person';
 export const ProductCard:React.FC<Product> = ({id, price, title, description,quantity }) => {
 //console.log(`../../Assets/products/${id}.jpeg`);
@@ -31,7 +31,9 @@ const handleAddToCard = (e: { preventDefault: () => void; }) => {
        total_price: price,
        total_items: 1,
    }   
-    dispatch(createOrder(order));
+    dispatch(createOrder(order)).then(()=>{
+        dispatch(getOrders(user.customerId));
+    });
 };
     return (
  <div className="card">

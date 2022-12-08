@@ -1,6 +1,8 @@
 .category p{
     font-size: 18px;
     text-decoration: underline;
+   
+
 }
 
 .categoryBtn {
@@ -40,6 +42,8 @@
     justify-content: flex-start;
     width: 20%;
     margin-left: 20px;
+    border-right: 1px solid #a5a5a5;
+
 }
 
 .container{
