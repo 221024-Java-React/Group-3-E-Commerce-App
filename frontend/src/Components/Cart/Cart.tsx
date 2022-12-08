@@ -58,16 +58,14 @@ export const Cart:React.FC = () => {
    //console.log("order state orders "+orders.orders[0].product.description);
 
    let tprice = 0
-   let tquantity = 0;
+   let tquantity = orders.orders.length;
    
     orders.orders.map((order:Order)=>{
-        tprice = tprice + (order.product.price * order.product.quantity);
+
+        console.log("order inside map: " + order.product.quantity);
+        tprice = tprice + (order.product.price * order.totalItem);
         return tprice;});
 
-    orders.orders.map((order:Order)=>{
-        tquantity = tquantity + order.product.quantity;
-            return tquantity;});    
-    
     console.log("total price: " + tprice);
     console.log("total quantity: " + tquantity);
 
