@@ -10,6 +10,7 @@ import { addPayment, removePayment } from '../../Redux/Slices/PaymentSlice';
 import { Link } from 'react-router-dom'
 import { Payments } from '@mui/icons-material';
 import { removeOrder } from '../../Redux/Slices/OrderSlice';
+import { OrderDetail } from '../../Types/OrderDetail';
 
 export const Checkout:React.FC = () => {
     
@@ -24,7 +25,21 @@ export const Checkout:React.FC = () => {
     
     }, [state]);
 
-    const orders = JSON.parse(localStorage.getItem("orders")|| '{}');
+    const orders = useSelector((state:RootState) => state.order); 
+    console.log(orders);
+    let tprice = 0
+    let tquantity = 0;
+   
+    orders.orders.map((order:Order)=>{
+        tprice = tprice + (order.product.price * order.product.quantity);
+        return tprice;});
+
+    orders.orders.map((order:Order)=>{
+        tquantity = tquantity + order.product.quantity;
+            return tquantity;});    
+    
+    console.log("total price: " + tprice);
+    console.log("total quantity: " + tquantity);
     
     return (
         
@@ -34,11 +49,7 @@ export const Checkout:React.FC = () => {
             
             <div className="order-container">
                 <h2>Order Details</h2>
-                {
-                    orders.map((orders:Order)=>{
-                        return <OrderCard key={orders.orderId} orderId={orders.orderId} person={orders.person} product={orders.product} totalPrice={orders.totalPrice} totalItem={orders.totalItem} OrderStatus={orders.OrderStatus} paymentType={orders.paymentType} />
-                    })
-                }
+                <OrderCard total_items={tquantity} total_price={tprice} />
             </div>
             <div className="payment-container">
                 <h2>Payment</h2>

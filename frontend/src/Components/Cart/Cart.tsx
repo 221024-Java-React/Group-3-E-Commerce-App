@@ -8,6 +8,10 @@ import { getOrders } from '../../Redux/Slices/OrderSlice';
 import { Order } from '../../Types/Order';
 import { OrderCard } from './OrderCard';
 import { Link } from 'react-router-dom';
+import { OrderDetail } from '../../Types/OrderDetail';
+import { addPayment } from '../../Redux/Slices/PaymentSlice';
+import { Payment } from '../../Types/Payment';
+import { Checkout } from '../Checkout/Checkout';
 
 export const Cart:React.FC = () => {
 
@@ -15,6 +19,32 @@ export const Cart:React.FC = () => {
     const p:Person=  JSON.parse(localStorage.getItem("user")|| '');
     const dispatch:DispatchType= useDispatch();
     console.log(p);
+
+    const checkout = () => {
+        const payment1:Payment = {
+            id:1,
+            name:"Paypal",
+            description:"Sign into Paypal to make purchase"
+        }
+
+        dispatch(addPayment(payment1));
+
+        const payment2:Payment = {
+            id:2,
+            name:"Credit Card",
+            description:"Use a credit card to make purchase"
+        }
+
+        dispatch(addPayment(payment2));
+
+        const payment3:Payment = {
+            id:2,
+            name:"Paypal",
+            description:"Use a debit card to make purchase"
+        }
+
+        dispatch(addPayment(payment3));
+    }
 
     useEffect(()=>{
     console.log("customer id is: "+p.customerId);
@@ -26,7 +56,21 @@ export const Cart:React.FC = () => {
    // console.log("all orders from cart page "+orders)
    const orders = useSelector((state:RootState) => state.order); 
    //console.log("order state orders "+orders.orders[0].product.description);
+
+   let tprice = 0
+   let tquantity = 0;
+   
+    orders.orders.map((order:Order)=>{
+        tprice = tprice + (order.product.price * order.product.quantity);
+        return tprice;});
+
+    orders.orders.map((order:Order)=>{
+        tquantity = tquantity + order.product.quantity;
+            return tquantity;});    
     
+    console.log("total price: " + tprice);
+    console.log("total quantity: " + tquantity);
+
    return (
 
         <>
@@ -44,17 +88,8 @@ export const Cart:React.FC = () => {
             </div>
             <div className="order-container">
                 <h2>Order Details</h2>
-                {
-                    orders.orders.map((orders:Order)=>{
-                        return <OrderCard key={orders.orderId} orderId={orders.orderId} 
-                        person={orders.person} product={orders.product} totalPrice={orders.totalPrice} 
-                        totalItem={orders.totalItem} OrderStatus={orders.OrderStatus} 
-                        paymentType={orders.paymentType} />
-                    })
-
-                }
-               
-                <Link to="/checkout" onClick={()=>{}}>Checkout</Link>
+                <OrderCard total_items={tquantity} total_price={tprice}  />
+                <Link to="/checkout" onClick={checkout}>Checkout</Link>
             </div>
         </div>
         </>

@@ -43,6 +43,19 @@ export const getOrders = createAsyncThunk(
     }
 );
 
+export const removeOrder = createAsyncThunk(
+    'order/removeOrder',
+    async(orderId:number, thunkAPI) => {
+        try{
+            const res = await axios.post(`http://localhost:8500/orders/`, orderId);
+            console.log(res.data);
+            return{orders: res.data};
+        } catch(e) {
+            return null;
+        }
+    }
+);
+
 
 //Create our slice and map our reducers
 export const OrderSlice = createSlice({
@@ -50,30 +63,7 @@ export const OrderSlice = createSlice({
     name: "order",
     initialState,
     reducers: {
-        addOrder: (state:OrderSliceState, action:PayloadAction<Order>) => {
-            state.orders = [...state.orders, action.payload];
-            return state;
-        },
-        updateOrder: (state:OrderSliceState, action:PayloadAction<Order>)=> {
-            for(let i = 0; i<state.orders.length; i++){
-                let order = state.orders[i];
-                if(order.orderId === action.payload.orderId){
-                    order.orderId = order.orderId;
-                    order.totalPrice= order.totalPrice;
-                    order.totalItem = order.totalItem;
-                   
-                    state.orders.splice(i, 1, order);
-                }
-            }
-        },
-        checkoutOrder: (state:OrderSliceState, action:PayloadAction<Order>) => {
-            state.orders = [...state.orders, action.payload];
-            return state;
-        },
-        removeOrder: (state:OrderSliceState, action:PayloadAction<number>) => {
-            state.orders = state.orders.filter((order:Order) => order.orderId !== action.payload);
-            return state;
-        },
+        
     },
         extraReducers: (builder) => {
             builder.addCase(createOrder.fulfilled, (state, action) => {
@@ -87,7 +77,10 @@ export const OrderSlice = createSlice({
               //  localStorage.setItem('orders', JSON.stringify(action.payload?.orders));
                 return state;
             });
+            builder.addCase(removeOrder.fulfilled, (state, action) => {
+                return state;
+            });
     }
 });
-export const {addOrder, checkoutOrder, removeOrder, updateOrder} = OrderSlice.actions;
+export const {} = OrderSlice.actions;
 export default OrderSlice.reducer;
