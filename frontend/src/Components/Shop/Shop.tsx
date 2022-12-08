@@ -8,6 +8,7 @@ import { Product } from '../../Types/Product';
 import { allProducts, productByCategory } from '../../Redux/Slices/ProductSlice';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getNotifications } from '../../Redux/Slices/NotificationSlice';
 
 export const Shop:React.FC = () => {
 
@@ -29,6 +30,7 @@ export const Shop:React.FC = () => {
 
     useEffect(()=>{
         if(localStorage.getItem("user")==null)navigate("/login");
+        dispatch(getNotifications(userState.currentUser.customerId));
     //console.log(localStorage.getItem('customerId'));
     }, [userState.isLoggedIn])
 

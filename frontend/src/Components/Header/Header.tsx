@@ -21,11 +21,15 @@ export const Header:React.FC = () => {
         navigate("/login")
       }
 
+<<<<<<< HEAD
       useEnhancedEffect(()=>{
 
       }, [])
+=======
+>>>>>>> b67df1bca250abdf930e2da021755e072c1e69e5
 
       const orders = useSelector((state:RootState) => state.order); 
+      const notifications = useSelector((state:RootState) => state.notify); 
 
       const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
@@ -62,14 +66,17 @@ if(localStorage.getItem("user")!=null)
     <header id="header" className="header">
     <div className="nav">
     <img className='logo' src={logo}/>
-    <Link className="linkReact" to="/shop">Shop</Link>
-    <Link className="linkReact" to="/notification">Notify</Link>
+  
+    <Link to="/shop"><i className="fa fa-home linkReact"></i></Link>
     <Link to="/cart"><i className="fa fa-shopping-cart"/>
     <span className='badge badge-warning' id='lblCartCount'> {orders.orders.length} </span></Link>
+    <Link to="/notification"><i className="fa fa-bell linkReact"/>
+    <span className='badge badge-warning' id='lblCartCount'> {notifications.notifications.length} </span></Link>
     <Link to="/profile"><i className="fa fa-user"></i></Link>
     <input type="text" onChange={handleChange} placeholder="Search.."/>
+    
+    <button className="fa fa-sign-out logoutBtn" name="logout" onClick={handleLogout}></button>
     <DarkMode />
-    <button className="logoutBtn" name="logout" onClick={handleLogout}>Logout</button>
     </div>
     </header>
     
