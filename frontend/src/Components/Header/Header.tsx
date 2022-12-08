@@ -21,12 +21,9 @@ export const Header:React.FC = () => {
         navigate("/login")
       }
 
-<<<<<<< HEAD
       useEnhancedEffect(()=>{
 
       }, [])
-=======
->>>>>>> b67df1bca250abdf930e2da021755e072c1e69e5
 
       const orders = useSelector((state:RootState) => state.order); 
       const notifications = useSelector((state:RootState) => state.notify); 

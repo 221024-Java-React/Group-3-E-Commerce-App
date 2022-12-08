@@ -13,7 +13,7 @@ export const PaymentCard:React.FC<Payment> = ({id, name, description}) => {
     
     useEffect(()=>{
   
-    });
+    }, []);
 
     return (
         <>

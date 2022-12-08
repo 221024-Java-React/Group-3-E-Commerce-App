@@ -5,7 +5,7 @@ import { DispatchType } from '../../Redux/Store';
 import { updateProduct } from '../../Redux/Slices/ProductSlice';
 import './CartCard.css';
 import logo from '../../Assets/ecommercelogos.png';
-import {  } from '../../Redux/Slices/OrderSlice';
+import { removeOrder } from '../../Redux/Slices/OrderSlice';
 
 export const CartCard:React.FC<Product> = ({id, title, price, quantity, description}) => {
     const dispatch:DispatchType = useDispatch();
@@ -28,8 +28,12 @@ export const CartCard:React.FC<Product> = ({id, title, price, quantity, descript
         dispatch(updateProduct(prod));*/
     }
 
+    const chkoutChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+
+    }
+
     const remove = () => {
-      //  dispatch(removeCartItem(id));
+       // dispatch(removeOrder(id));
     }
 
 
@@ -49,7 +53,7 @@ export const CartCard:React.FC<Product> = ({id, title, price, quantity, descript
             <input className="qtyInput" id="qtyId" name="quantity" type="number" onChange={handleChange} ></input>
             <p>{description}</p>
             <button className="update-btn" onClick={update}>update</button>
-            <button className="remove-btn" onClick={remove}>remove</button>
+            <button className="remove-btn" onClick={remove} onChange={()=>{}} >remove</button>
         </div>
 
     )
