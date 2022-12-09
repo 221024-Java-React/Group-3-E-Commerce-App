@@ -3,6 +3,11 @@ import axios from "axios";
 import { Order } from '../../Types/Order';
 import { OrderDetail } from "../../Types/OrderDetail";
 
+export interface Equant {
+    order_id:number;
+    quantity:number;
+}
+
 interface OrderSliceState {
     orders: Order[],
 
@@ -10,11 +15,11 @@ interface OrderSliceState {
 
 
 const initialState:OrderSliceState = {
-    orders: [],
+    orders:[],
 };
 
 export const createOrder = createAsyncThunk(
-    'order/addToCard',
+    'orders/addToCard',
     async(order:OrderDetail, thunkAPI) => {
         try{
 
@@ -30,7 +35,7 @@ export const createOrder = createAsyncThunk(
 
 
 export const getOrders = createAsyncThunk(
-    'order/getAllOrders',
+    'orders/getAllOrders',
     async(customer_id:number) => {
         try{      
             const res = await axios.get(`http://localhost:8500/orders/${customer_id}`);
@@ -44,16 +49,31 @@ export const getOrders = createAsyncThunk(
 );
 
 export const removeOrder = createAsyncThunk(
-    'order/removeOrder',
+    'orders/removeOrder',
     async(orderId:number, thunkAPI) => {
         try{
-            const res = await axios.post(`http://localhost:8500/orders/`, orderId);
+            const res = await axios.delete(`http://localhost:8500/orders/${orderId}`);
             console.log(res.data);
             return{orders: res.data};
         } catch(e) {
             return null;
         }
     }
+);
+
+export const updateQuantity = createAsyncThunk(
+    'orders/updateQuantity',
+    async(Equant:Equant, thunkAPI) => {
+        try{console.log("in slice equant: " + Equant.order_id);
+            const res = await axios.post("http://localhost:8500/orders/update", Equant);
+            console.log(res.data);
+            return{orders: res.data};
+        } catch(e) {
+            return null;
+        }
+    }
+
+
 );
 
 
@@ -80,7 +100,11 @@ export const OrderSlice = createSlice({
             builder.addCase(removeOrder.fulfilled, (state, action) => {
                 return state;
             });
+            builder.addCase(updateQuantity.fulfilled, (state, action) => {
+                return state;
+            });
     }
 });
 export const {} = OrderSlice.actions;
 export default OrderSlice.reducer;
+

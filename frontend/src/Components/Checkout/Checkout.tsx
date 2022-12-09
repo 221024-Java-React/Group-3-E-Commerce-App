@@ -6,41 +6,43 @@ import { Order } from '../../Types/Order';
 import { OrderCard } from '../Cart/OrderCard';
 import { Payment } from '../../Types/Payment';
 import { PaymentCard } from './PaymentCard';
-import { addPayment, removePayment } from '../../Redux/Slices/PaymentSlice';
 import { Link } from 'react-router-dom'
-import { Payments } from '@mui/icons-material';
 import { removeOrder } from '../../Redux/Slices/OrderSlice';
-import { OrderDetail } from '../../Types/OrderDetail';
+import PaymentSlice, { getPaymentTypes } from '../../Redux/Slices/PaymentSlice';
 
 export const Checkout:React.FC = () => {
     
     const dispatch:DispatchType = useDispatch();
     const state = useSelector((state:RootState) => state);
+    const orders = useSelector((state:RootState) => state.order); 
+    const payments = useSelector((state:RootState)=> state.payment)
 
     const handlePurchase = ()=>{
         dispatch(removeOrder(state.order.orders.length));
     };
     
     useEffect(()=>{
-    
-    }, [state]);
+        if(payments.payments.length===0){
+            dispatch(getPaymentTypes());
+        }
+    }, [payments.payments.length]);
 
-    const orders = useSelector((state:RootState) => state.order); 
-    console.log(orders);
     let tprice = 0
-    let tquantity = 0;
-   
+    let tquantity = orders.orders.length;
     orders.orders.map((order:Order)=>{
-        tprice = tprice + (order.product.price * order.product.quantity);
-        return tprice;});
 
-    orders.orders.map((order:Order)=>{
-        tquantity = tquantity + order.product.quantity;
-            return tquantity;});    
+        console.log("order inside map: " + order.product.quantity);
+        tprice = tprice + (order.product.price * order.totalItem);
+        return tprice;});
     
     console.log("total price: " + tprice);
     console.log("total quantity: " + tquantity);
     
+    console.log("total price: " + tprice);
+    console.log("total quantity: " + tquantity);
+    console.log(payments);
+    console.log("orders: " + state.order.orders);
+
     return (
         
         <>
@@ -54,8 +56,8 @@ export const Checkout:React.FC = () => {
             <div className="payment-container">
                 <h2>Payment</h2>
                 {
-                    state.payment.payments.map((payment:Payment)=>{
-                    return <PaymentCard key={payment.id} id={payment.id} name={payment.name} description={payment.description}/>
+                    payments.payments.map((payment:Payment)=>{
+                        return <PaymentCard key={payment.paymentTypeId} paymentTypeId={payment.paymentTypeId} type={payment.type}/> 
                     })
                 }
                 <Link to="/checkout-complete" onClick={handlePurchase}>Purchase Order!</Link>
