@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Payment } from '../../Types/Payment';
-import { useDispatch } from 'react-redux';
-import { DispatchType } from '../../Redux/Store';
-import { addPayment, removePayment } from '../../Redux/Slices/PaymentSlice';
 import './PaymentCard.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../Redux/Store';
 
-export const PaymentCard:React.FC<Payment> = ({id, name, description}) => {
+export const PaymentCard:React.FC<Payment> = (payment) => {
     
     const state = useSelector((state:RootState) => state);
     
@@ -19,8 +16,9 @@ export const PaymentCard:React.FC<Payment> = ({id, name, description}) => {
         <>
         <div className="paymentcard-container">
             <div>
-                <input type="checkbox" id={name} name={name}/>
-                <p>{name}</p><p>{description}</p>
+                <input type="checkbox" id={payment.type} name={payment.type}/>
+                <span>{payment.type}</span>
+                <br/><br/>
                 <br />
             </div>
         </div>

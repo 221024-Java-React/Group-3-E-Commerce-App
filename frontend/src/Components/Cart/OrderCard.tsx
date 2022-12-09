@@ -16,11 +16,8 @@ export const OrderCard:React.FC<OrderDetail> = ({total_price, total_items}) => {
     return (
 
         <div>
-            <br />
-            <h2>Order Id: </h2>
             <h3>Total Item: {total_items}</h3>
             <h3>Total Price: {total_price}</h3>
-
         </div>
 
     )

@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import axios from 'axios';
 import { Payment } from '../../Types/Payment';
 
 interface PaymentSliceState {
@@ -9,21 +10,34 @@ const initialState:PaymentSliceState = {
     payments:[]
 };
 
+export const getPaymentTypes = createAsyncThunk(
+    'payments/getPaymentTypes',
+    async() => {
+        try{      
+            const res = await axios.get(`http://localhost:8500/payments/`);
+            console.log(res.data);
+            return {payments: res.data};
+
+        } catch(e) {  
+            return null;      
+        }
+    }
+);
+
 export const PaymentSlice = createSlice({
     name: "payment",
     initialState,
     reducers: {
-        addPayment: (state:PaymentSliceState, action:PayloadAction<Payment>) => {
-            state.payments = [...state.payments, action.payload];
-            return state;
-        },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(getPaymentTypes.fulfilled, (state, action) => {
 
-        removePayment: (state:PaymentSliceState, action:PayloadAction<number>) => {
-            state.payments = state.payments.filter((payment:Payment) => payment.id !== action.payload);
+            state.payments= action.payload?.payments;
+          //  localStorage.setItem('orders', JSON.stringify(action.payload?.orders));
             return state;
-        }
+        });
     }
 });
 
-export const { addPayment, removePayment } = PaymentSlice.actions;
+export const {} = PaymentSlice.actions;
 export default PaymentSlice.reducer;
