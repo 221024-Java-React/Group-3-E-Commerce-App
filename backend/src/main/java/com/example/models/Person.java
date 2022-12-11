@@ -59,9 +59,13 @@ public class Person {
 	@OneToMany(mappedBy = "person")
 	@JsonIgnore
 	Set<Order> orders;
+	
+	@ManyToOne(fetch= FetchType.LAZY)
+	@JoinColumn(name="address_id")
+	private PAddress address;
 
 	public Person(Integer customerId, String name, String email, String password, String phone, String image,
-			Theme theme, Role role) {
+			Theme theme, Role role, PAddress address) {
 		super();
 		this.customerId = customerId;
 		this.name = name;
@@ -71,6 +75,7 @@ public class Person {
 		this.image = image;
 		this.theme = theme;
 		this.role = role;
+		this.address = address;
 	}
 
 	

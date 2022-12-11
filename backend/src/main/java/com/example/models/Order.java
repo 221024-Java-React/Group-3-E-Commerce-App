@@ -48,6 +48,16 @@ public class Order {
     private Integer totalItem;
     
     private LocalDateTime registeredAt;
-
-
+    
+    public Order(Person person, Product product, OrderStatus orderStatus, PaymentType paymentType, Double totalPrice, Integer totalItem, LocalDateTime registeredAt) {
+    	super();
+    	this.orderId = orderId;
+    	this.person = person;
+    	this.product = product;
+    	this.orderStatus = orderStatus;
+    	this.paymentType = paymentType;
+    	this.totalPrice = totalPrice;
+    	this.totalItem = totalItem;
+    	this.registeredAt = registeredAt;
+    }
 }
