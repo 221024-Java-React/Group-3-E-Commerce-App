@@ -48,8 +48,9 @@ export const Cart:React.FC = () => {
 
         console.log("order inside map: " + order.product.quantity);
         tprice = tprice + (order.product.price * order.totalItem);
-        return tprice;});
-    }
+        return tprice;
+    });
+    
     console.log("total price: " + tprice);
     console.log("total quantity: " + tquantity);
     console.log(orders);
