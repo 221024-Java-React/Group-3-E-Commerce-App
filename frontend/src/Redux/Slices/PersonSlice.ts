@@ -3,10 +3,11 @@ import axios from "axios";
 import { Person, Role, Theme } from "../../Types/Person";
 
 
-interface AuthState{
+export interface AuthState{
     isLoggedIn:boolean,
-    isRegistered: boolean
-    error: boolean,
+    isRegistered:boolean,
+    registeredError: boolean,
+    loginError: boolean,
     currentUser: Person
 }
 export interface User {
@@ -35,7 +36,10 @@ const person:Person={
     role: personRole,
     orders:[]
 };
-const initialState:AuthState =  { isLoggedIn: false, isRegistered:false,error:false, currentUser:person };
+const initialState:AuthState =  {
+    isLoggedIn: false, registeredError: false, loginError: false, currentUser: person,
+    isRegistered: false
+};
 export const register = createAsyncThunk(
     'user/register',
     async(user:User, thunkAPI) => {
@@ -66,10 +70,12 @@ export const UserSlice = createSlice({
     initialState,
     reducers: {
         logout: (state) => {
-            localStorage.removeItem("user");
-            state.error = false;
+            localStorage.clear();
+            //const rootState = useSelector((state:RootState) => state);
+
+            state.loginError = false;
             state.isLoggedIn=false;
-            state.isRegistered=true;
+            state.loginError=false;
             state.currentUser=person;
             return state;
         },
@@ -77,20 +83,27 @@ export const UserSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(login.fulfilled, (state, action) => {
             state.isLoggedIn = true;
-            state.error=false;
+            state.loginError=false;
             state.currentUser= action.payload.user;
             localStorage.setItem('user', JSON.stringify(action.payload.user));
             console.log("useruseruser "+JSON.stringify(localStorage.getItem('user')));
             return state;
         });
         builder.addCase(register.fulfilled, (state,action) => {
-            state.isRegistered = true;
-            state.error=false;
+            state.isRegistered=true;
+            state.registeredError=false;
             state.currentUser=action.payload.user;
             return state
         });
+        builder.addCase(register.rejected, (state,action) => {
+            console.log("inside login rejected")
+            state.registeredError=true;
+            state.isRegistered=false;
+           
+            return state
+        });
         builder.addCase(login.rejected, (state) => {
-            state.error = true;
+            state.loginError = true;
             state.isLoggedIn=false;
             state.currentUser=person;
             return state

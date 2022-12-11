@@ -19,7 +19,7 @@ public class NotificationService {
 	private PersonRepository pRepo;
 	private NotificationRepository nRepo;
 	
-	public List<Notification> getProductsByCategory(int cutomer_id) {
+	public List<Notification> getNotificationsForCustomer(int cutomer_id) {
 		System.out.println("category "+cutomer_id);
 		Person person = pRepo.findById(cutomer_id).get();
 			return nRepo.findAllByPerson(person);

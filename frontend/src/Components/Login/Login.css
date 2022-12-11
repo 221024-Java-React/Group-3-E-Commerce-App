@@ -1,6 +1,5 @@
-
-label, input , button{
-
+.h1Auth{
+    align-self: center;
 }
 
 html, body{
@@ -8,7 +7,7 @@ html, body{
 }
 
 .login{
-
+margin-top: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,16 +22,29 @@ html, body{
     flex-direction: column;
     align-content: space-between;
     align-items: flex-start;
+    justify-content: space-between;
     gap: 30px;
     padding: 50px;
+  
 }
 
-.authentication{
-    background-color: blue;
-   
-    padding: 10px;
-    align-self: center;
+.registerLinkFromLogin{
+    cursor: pointer;
+
 }
+
+.loginFormSubmit{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-content: space-between;
+    
+   
+}
+
+
 
 
    

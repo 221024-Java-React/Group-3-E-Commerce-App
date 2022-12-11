@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Order } from '../../Types/Order';
 import { OrderDetail } from "../../Types/OrderDetail";
+import { Person } from "../../Types/Person";
 
 export interface Equant {
     order_id:number;
@@ -12,7 +13,8 @@ interface OrderSliceState {
     orders: Order[],
 
 };
-
+  let id = 0;
+//const p:Person=  JSON.parse(localStorage.getItem("user")|| '{}');
 
 const initialState:OrderSliceState = {
     orders:[],
@@ -36,9 +38,9 @@ export const createOrder = createAsyncThunk(
 
 export const getOrders = createAsyncThunk(
     'orders/getAllOrders',
-    async(customer_id:number) => {
+    async(customerId:number) => {
         try{      
-            const res = await axios.get(`http://localhost:8500/orders/${customer_id}`);
+            const res = await axios.get(`http://localhost:8500/orders/${customerId}`);
             console.log(res.data);
             return {orders: res.data};
 

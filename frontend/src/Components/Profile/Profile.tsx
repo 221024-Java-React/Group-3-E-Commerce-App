@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-//import {fetchReceipts} from '..'
-import axios from "axios";
-import { Order } from '../../Types/Order';
+import React, { useState } from 'react';
+
 import { Person, Role, Theme } from '../../Types/Person';
 import { updateProfile } from '../../Redux/Slices/ProfileSlice';
 import { DispatchType } from '../../Redux/Store';
 import { useDispatch } from 'react-redux';
+import "./Profile.css"
 
 
 export const Profile:React.FC = () => {
@@ -65,20 +64,28 @@ export const Profile:React.FC = () => {
     };
 
     return (
-        <div>
+        <div className='ProfileRoot'>
             
-                <h1>Customer Id</h1>
-                <input name="id" required onChange={handleChange}/>
-                <h1>Name</h1>
-                <input name="name" placeholder={`${p.name}`} type="text" onChange={handleChange}/>
-                <h1>Email</h1>
-                <input name="email" placeholder={`${p.email}`}type="text" onChange={handleChange}/>
-                <h1>Password</h1>
+            <div className="profileContainer">
+                
+                <div className='profileForm'>
+                <p>Name</p>
+                <input name="name" placeholder={`${p.name}`} type="text" onChange={handleChange}/></div>
+                <div className='profileForm'>
+                <p>Email</p>
+                <input name="email" placeholder={`${p.email}`}type="text" onChange={handleChange}/></div>
+                <div className='profileForm'>
+                <p>Password</p>
                 <input name="password" placeholder={`${p.password}`}type="password" onChange={handleChange}/>
-                <h1>Phone</h1>
-                <input name="phone" placeholder={`${p.phone}`} type="text" onChange={handleChange}/>
-                <button onClick={handleUpdate}>Update User</button>
+                </div>
+                <div className='profileForm'>
+                <p>Phone</p>
+                <input name="phone" placeholder={`${p.phone}`} type="text" onChange={handleChange}/></div>
+
+                <button onClick={handleUpdate}>Save</button>
             </div>
+            </div>
+           
     )
     /*
 

@@ -22,19 +22,21 @@ export const Checkout:React.FC = () => {
     };
     
     useEffect(()=>{
-        if(payments.payments.length===0){
+       
             dispatch(getPaymentTypes());
-        }
-    }, [payments.payments.length]);
+        
+    }, []);
 
     let tprice = 0
     let tquantity = orders.orders.length;
+    if(orders.orders)
+    {
     orders.orders.map((order:Order)=>{
 
         console.log("order inside map: " + order.product.quantity);
         tprice = tprice + (order.product.price * order.totalItem);
         return tprice;});
-    
+    }
     console.log("total price: " + tprice);
     console.log("total quantity: " + tquantity);
     
@@ -56,6 +58,7 @@ export const Checkout:React.FC = () => {
             <div className="payment-container">
                 <h2>Payment</h2>
                 {
+                 
                     payments.payments.map((payment:Payment)=>{
                         return <PaymentCard key={payment.paymentTypeId} paymentTypeId={payment.paymentTypeId} type={payment.type}/> 
                     })

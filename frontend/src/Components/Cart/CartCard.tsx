@@ -53,7 +53,7 @@ export const CartCard:React.FC<Product> = ({id, title, price, quantity, descript
         
         <div className="cartcard-container">
             <br />
-            <img className='product-logo' src={logo}/>
+            <img className='product-logo' src={require(`../../Assets/products/${id>40?30:id}.jpeg`)}/>
             <p>{id}</p>
             <p>{title}</p>
             <p>{price}</p>

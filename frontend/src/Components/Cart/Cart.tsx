@@ -13,14 +13,14 @@ export const Cart:React.FC = () => {
 
     const p:Person=  JSON.parse(localStorage.getItem("user")|| '');
     const dispatch:DispatchType= useDispatch();
-    const state = useSelector((state:RootState)=>state);
+    const orderState = useSelector((state:RootState)=>state.order);
     console.log(p);
     
     useEffect(()=>{
     console.log("customer id is: "+p.customerId);
         dispatch(getOrders(p.customerId));
-        if(state.order.orders.length==0){
-            dispatch(removeOrder(state.order.orders.length)).then(()=>{
+        if(orderState.orders.length==0){
+            dispatch(removeOrder(orderState.orders.length)).then(()=>{
                 dispatch(getOrders(p.customerId));
         })}
     } , []);
@@ -30,15 +30,18 @@ export const Cart:React.FC = () => {
    const orders = useSelector((state:RootState) => state.order); 
    //console.log("order state orders "+orders.orders[0].product.description);
 
-   let tprice = 0
-   let tquantity = orders.orders.length;
+   let tprice = 0;
+   let tquantity=0;
+   if(orders.orders.length)
+   {
+    tquantity =orders.orders.length;
    
     orders.orders.map((order:Order)=>{
 
         console.log("order inside map: " + order.product.quantity);
         tprice = tprice + (order.product.price * order.totalItem);
         return tprice;});
-
+    }
     console.log("total price: " + tprice);
     console.log("total quantity: " + tquantity);
     console.log(orders);

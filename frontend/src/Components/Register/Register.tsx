@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { DispatchType, RootState } from '../../Redux/Store';
-import { register, User } from '../../Redux/Slices/PersonSlice';
+import { AuthState, register, User } from '../../Redux/Slices/PersonSlice';
 import  './Register.css'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Person } from '@mui/icons-material';
 
 export const Register:React.FC = () => {
 
     const userState = useSelector((state:RootState) => state.auth);
+    const[authState, setAuthState]= useState<AuthState>();
     const dispatch:DispatchType = useDispatch();
     let navigate = useNavigate();
     const [name, setName] = useState<string>("");
@@ -26,8 +28,8 @@ export const Register:React.FC = () => {
 
 
     useEffect(()=>{
-        if(!userState.error)navigate("/login");
-    }, [userState.error])
+      
+    }, [userState.isLoggedIn])
 
     const handleRegister = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
@@ -37,6 +39,7 @@ export const Register:React.FC = () => {
            name: name
        }   
         dispatch(register(user));
+        
     }
 
     return(
@@ -44,17 +47,22 @@ export const Register:React.FC = () => {
         
 
         <div className="login">
-            <h1>New Customer. Please Register</h1>
+           
 
             <form id="auth">
-            {userState.error  ? <h3>Email Already Exist</h3> : <></>}
+            <h1 className="h1Auth">Register</h1>
+            {userState.registeredError  ? <h1 className="h1Auth">Email Already Exist</h1> : <></>}
+            {userState.isRegistered  ? <h1 className="h1Auth">Please Login Now</h1> : <></>}
             <label>Name</label>
             <input id= "name" name="name" placeholder="Your name" onChange={handleChange}/>
             <label>Email</label>
             <input id= "email" name="email" placeholder="Your email" onChange={handleChange}/>
             <label>Password</label>
             <input type="password" id="password" name="password" placeholder="Your password" onChange={handleChange}/>
+            <div className='loginFormSubmit'>
             <button id="login" className="authentication" onClick={handleRegister}>Register</button>
+            <Link to="/login" className="registerLinkFromLogin">Login</Link></div>
+           
             </form>
         </div>
     )
