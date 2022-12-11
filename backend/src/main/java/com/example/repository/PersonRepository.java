@@ -8,8 +8,5 @@ import com.example.models.Person;
 
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Integer>{
-	
 	Person findByEmail(String email);
-
-	
 }

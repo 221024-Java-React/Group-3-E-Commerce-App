@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +49,36 @@ public class OrderController {
 		    //System.out.println("reach getallorders method orders are "+orders);
 			return orders;
 		}
+	
+	@PostMapping("/update")
+	public void updateQuantity(@RequestBody LinkedHashMap<String,Integer>body) {
+		oService.updateQuantity(body.get("order_id"),body.get("quantity"));
+		Class<? extends LinkedHashMap> order = body.getClass();
+		System.out.println(order);
+	}
+	
+	@PostMapping("/update/payment")
+	public void updatePaymentType(@RequestBody LinkedHashMap<String, Integer>body) {
+		oService.updatePaymentType(body.get("customer_id"), body.get("type"));
+		System.out.println(body.get("type"));
+	}
+	
+	@PostMapping("/update/address")
+	public void updateAddress(@RequestBody LinkedHashMap<String, String>body) {
+		int zip = Integer.parseInt(body.get("zip"));
+		int customer_id = Integer.parseInt(body.get("cutomer_id"));
+		oService.updateAddres(customer_id, body.get("address"), body.get("city"), body.get("state"), zip);
+	}
+	
+	@DeleteMapping("/{order_id}")
+	public void removeOrderById(@PathVariable int order_id) {
+		oService.removeOrderById(order_id);
+	}
+	
+	@DeleteMapping("/remove-all/{customer_id}")
+	public void removeAllOrders(@PathVariable int customer_id) {
+		oService.removeAllOrders(customer_id);
+	}
 
 	
 }
