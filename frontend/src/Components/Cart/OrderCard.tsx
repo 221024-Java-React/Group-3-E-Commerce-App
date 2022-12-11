@@ -12,12 +12,15 @@ export const OrderCard:React.FC<OrderDetail> = ({total_price, total_items}) => {
     }
     useEffect(()=>{
     }, [newOrder])
+
+    let tpriceUSD;
+    tpriceUSD = total_price.toLocaleString('en-US', { style: 'currency', currency: 'USD' }); 
     
     return (
 
         <div>
             <h3>Total Item: {total_items}</h3>
-            <h3>Total Price: {total_price}</h3>
+            <h3>Total Price: {tpriceUSD}</h3>
         </div>
 
     )

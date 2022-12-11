@@ -29,10 +29,11 @@ export const Shop:React.FC = () => {
     }
 
     useEffect(()=>{
+        dispatch({ type: 'REFRESH_PAGE' });
         if(localStorage.getItem("user")==null)navigate("/login");
         dispatch(getNotifications(userState.currentUser.customerId));
     //console.log(localStorage.getItem('customerId'));
-    }, [userState.isLoggedIn])
+    }, [dispatch, userState.isLoggedIn])
 
     
     const handleClick = (categoryId:number)=>
