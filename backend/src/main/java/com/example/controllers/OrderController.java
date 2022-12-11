@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.comparators.OrderListComparator;
 import com.example.exceptions.EmailAlreadyExistsException;
 import com.example.exceptions.InvalidCredentialsException;
 import com.example.models.Notification;
@@ -47,6 +48,8 @@ public class OrderController {
 		    
 		    List<Order> orders = oService.getOrdersByPerson(customer_id);
 		    //System.out.println("reach getallorders method orders are "+orders);
+		    OrderListComparator orderListComparator = new OrderListComparator();
+		    orders.sort(orderListComparator);
 			return orders;
 		}
 	
@@ -65,9 +68,10 @@ public class OrderController {
 	
 	@PostMapping("/update/address")
 	public void updateAddress(@RequestBody LinkedHashMap<String, String>body) {
+		System.out.println(body);
 		int zip = Integer.parseInt(body.get("zip"));
 		int customer_id = Integer.parseInt(body.get("cutomer_id"));
-		oService.updateAddres(customer_id, body.get("address"), body.get("city"), body.get("state"), zip);
+		oService.updateAddress(customer_id, body.get("address"), body.get("city"), body.get("state"), zip);
 	}
 	
 	@DeleteMapping("/{order_id}")

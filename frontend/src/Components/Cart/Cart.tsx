@@ -4,18 +4,26 @@ import { DispatchType, RootState } from '../../Redux/Store';
 import { Person } from '../../Types/Person';
 import './Cart.css';
 import { CartCard } from './CartCard';
-import { getOrders, getTotalItemsCount, removeOrder } from '../../Redux/Slices/OrderSlice';
+import { getOrders, getTotalItemsCount, removeAllOrders, removeOrder } from '../../Redux/Slices/OrderSlice';
 import { Order } from '../../Types/Order';
 import { OrderCard } from './OrderCard';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export const Cart:React.FC = () => {
 
     const p:Person=  JSON.parse(localStorage.getItem("user")|| '');
     const dispatch:DispatchType= useDispatch();
-
+    let navigate = useNavigate();
     const state = useSelector((state:RootState)=>state);
     console.log(p.address);
+
+    const handleCancel = ()=>{
+        let response = window.confirm("Do you want to proceed?");
+        if (response === true) {
+            navigate("/shop");
+            dispatch(removeAllOrders(p.customerId));
+        }
+    };
     
     useEffect(()=>{
         console.log("customer id is: "+p.customerId);
@@ -73,7 +81,8 @@ export const Cart:React.FC = () => {
             <div className="order-container">
                 <h2>Order Details</h2>
                 <OrderCard total_items={tquantity} total_price={tprice}  />
-                <Link to="/checkout">Checkout</Link>
+                <span className="checkout-option-span"><Link to="/checkout">Checkout</Link></span>
+                <span className="checkout-option-span"><Link to="/" onClick={handleCancel}>Cancel</Link></span>
             </div>
         </div>
         </>
