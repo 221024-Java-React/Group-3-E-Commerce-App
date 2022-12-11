@@ -13,6 +13,7 @@ export const Cart:React.FC = () => {
 
     const p:Person=  JSON.parse(localStorage.getItem("user")|| '');
     const dispatch:DispatchType= useDispatch();
+
     const state = useSelector((state:RootState)=>state);
     console.log(p.address);
     
@@ -35,6 +36,7 @@ export const Cart:React.FC = () => {
    //console.log("order state orders "+orders.orders[0].product.description);
 
    let tprice = 0;
+
    let tquantity = 0;
 
     orders.orders.map((order:Order)=>{
@@ -47,7 +49,7 @@ export const Cart:React.FC = () => {
         console.log("order inside map: " + order.product.quantity);
         tprice = tprice + (order.product.price * order.totalItem);
         return tprice;});
-
+    }
     console.log("total price: " + tprice);
     console.log("total quantity: " + tquantity);
     console.log(orders);

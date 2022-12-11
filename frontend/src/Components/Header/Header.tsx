@@ -8,25 +8,34 @@ import { allProducts, filterProducts } from '../../Redux/Slices/ProductSlice';
 import DarkMode from '../Theme/DarkMode';
 import { Person } from '../../Types/Person';
 import { logout } from '../../Redux/Slices/PersonSlice';
-import useEnhancedEffect from '@mui/material/utils/useEnhancedEffect';
+import { getNotifications } from '../../Redux/Slices/NotificationSlice';
+import { getOrders } from '../../Redux/Slices/OrderSlice';
+import { useEffect } from 'react';
 
 export const Header:React.FC = () => {
-
- let navigate = useNavigate();
+                                    
+  let navigate = useNavigate();
   const dispatch:DispatchType = useDispatch();
 
       const handleLogout = (e: { preventDefault: () => void; })=>{
         e.preventDefault();
         dispatch(logout())
         navigate("/login")
+        window.location.reload();
       }
 
-      useEnhancedEffect(()=>{
-
-      }, [])
-
+      const user = useSelector((state:RootState) => state.auth); 
       const orders = useSelector((state:RootState) => state.order); 
       const notifications = useSelector((state:RootState) => state.notify); 
+      if(!notifications) dispatch(getNotifications(user.currentUser.customerId));
+      if(!orders)dispatch(getOrders(user.currentUser.customerId));
+
+      useEffect(()=>{
+       
+       
+    //console.log(localStorage.getItem('customerId'));
+    }, [])
+
 
       const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value;
@@ -41,34 +50,41 @@ export const Header:React.FC = () => {
 
 if(localStorage.getItem("user")!=null)
 {
+
  const p:Person=  JSON.parse(localStorage.getItem("user")|| '');
  console.log("header person data "+p['email']);
  console.log("header person.email data "+p.role.roleId);
-
+ 
  if(p.role.roleId ===1)
  {
   return(
+
     <header id="header" className="header">
+       
     <div className="nav">
     <img className='logo' src={logo}/>
     <DarkMode />
-    <Link to="/admin">Admin</Link>
-    <button className="logoutBtn" name="logout" onClick={handleLogout}>Logout</button>
+    <button className="fa fa-sign-out logoutBtn" name="logout" onClick={handleLogout}></button>
     </div>
     </header>
     
           )
  }else {
   return(
+    <>
+    <h3 className='topheader'>Free Shipping on all Orders</h3>
     <header id="header" className="header">
+        
     <div className="nav">
     <img className='logo' src={logo}/>
   
     <Link to="/shop"><i className="fa fa-home linkReact"></i></Link>
     <Link to="/cart"><i className="fa fa-shopping-cart"/>
-    <span className='badge badge-warning' id='lblCartCount'> {orders.orders.length} </span></Link>
+    <span className='badge badge-warning' id='lblCartCount'> 
+    {orders.orders==null?0: orders.orders.length} </span></Link>
     <Link to="/notification"><i className="fa fa-bell linkReact"/>
-    <span className='badge badge-warning' id='lblCartCount'> {notifications.notifications.length} </span></Link>
+    <span className='badge badge-warning' id='lblCartCount'>
+       {notifications.notifications==null? 0 :notifications.notifications.length} </span></Link>
     <Link to="/profile"><i className="fa fa-user"></i></Link>
     <input type="text" onChange={handleChange} placeholder="Search.."/>
     
@@ -76,20 +92,23 @@ if(localStorage.getItem("user")!=null)
     <DarkMode />
     </div>
     </header>
-    
+    </>
           )
  }
+
 }else{
   return(
-    <header id="header" className="header">
+    
+<header id="header" className="header">
 <div className="nav">
 <img className='logo' src={logo}/>
-<Link to="/login">Login</Link>
-<Link to="/register">Register</Link>
 <DarkMode />
 </div>
 </header>
+
       )
 }
    
     }
+
+

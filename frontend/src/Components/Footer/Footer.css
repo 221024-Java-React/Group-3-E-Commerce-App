@@ -23,7 +23,7 @@
     display: flex;
     flex-flow: row wrap;
     padding: 30px 30px 20px 30px;
-    color: #2f2f2f;
+    color: black;
     border-top: 1px solid #a5a5a5;
     margin-top:30px;
     box-shadow: 0 4px 8px 0 rgba(255, 254, 254, 0.8);
@@ -57,7 +57,7 @@
   
   .footer address {
     font-style: normal;
-    color: #999;
+    color: white;
   }
   
   .footer ul {
@@ -84,7 +84,7 @@
   }
   
   .navUl a {
-    color: #999;
+    color: white;
   }
   
   .navUl--extra {

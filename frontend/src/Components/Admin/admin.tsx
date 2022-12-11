@@ -3,7 +3,7 @@ import  { useDispatch } from 'react-redux'
 import { Category, Product } from '../../Types/Product';
 import { DispatchType } from '../../Redux/Store';
 import { addProduct } from '../../Redux/Slices/AdminSlice';
-
+import "./Admin.css"
 
 
 export const Admin: React.FC = () => {
@@ -49,21 +49,31 @@ export const Admin: React.FC = () => {
     }
 
     return(
-        <div className="new-product">
+        <div className="adminRoot">
+            
+            <div className="adminContainer">
+            <div className="adminForm">
             <h1>title</h1>
-            <input name="title" type="text" required onChange={handleChange}/>
+            <input name="title" type="text" required onChange={handleChange}/></div>
+            <div className="adminForm">
             <h1>price</h1>
-            <input name="price" type="text" required onChange={handleChange}/>
+            <input name="price" type="text" required onChange={handleChange}/> </div>
+            <div className="adminForm">
             <h1>image</h1>
-            <input name="image" onChange={handleChange}/>
+            <input name="image" onChange={handleChange}/></div>
+            <div className="adminForm">
             <h1>quantity</h1>
-            <input name="quantity" onChange={handleChange}/>
+            <input name="quantity" onChange={handleChange}/></div>
+            <div className="adminForm">
             <h1>description</h1>
-            <input name="description" type="textarea" onChange={handleChange}/>
+            <input name="description" type="textarea" onChange={handleChange}/></div>
+            <div className="adminForm">
             <h1>category</h1>
-            <input name="category" onChange={handleChange}/>
+            <input name="category" onChange={handleChange}/></div>
             <button onClick={handleClick}>Create Product</button>
         </div>
+        </div>
+       
     )
     
 }

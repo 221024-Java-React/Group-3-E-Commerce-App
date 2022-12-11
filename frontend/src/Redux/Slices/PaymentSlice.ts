@@ -45,6 +45,7 @@ export const PaymentSlice = createSlice({
         builder.addCase(getPaymentTypes.fulfilled, (state, action) => {
 
             state.payments= action.payload?.payments;
+            console.log("payments inside payment slice "+state.payments);
           //  localStorage.setItem('orders', JSON.stringify(action.payload?.orders));
             return state;
         });

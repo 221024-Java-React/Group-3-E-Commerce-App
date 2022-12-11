@@ -26,7 +26,7 @@ public class NotificationController {
 	@GetMapping("/{customer_id}")
 	public List<Notification> getAllNotifications(@PathVariable int customer_id){
 		    
-			return nService.getProductsByCategory(customer_id);
+			return nService.getNotificationsForCustomer(customer_id);
 		}
 
 }
