@@ -89,7 +89,7 @@ public class OrderService {
 		orderRepo.deleteAll(orders);
 	}
 
-	public void updateAddres(int customer_id, String paddress, String city, String state, int zip) {
+	public void updateAddress(int customer_id, String paddress, String city, String state, int zip) {
 		Person person = personRepo.findById(customer_id).get();
 		List<Order> orders = orderRepo.findAllByPerson(person);
 		PAddress address = new PAddress(customer_id, paddress, city, state, zip);
