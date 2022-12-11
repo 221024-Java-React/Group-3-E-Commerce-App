@@ -3,6 +3,7 @@ import axios from "axios";
 import { PAddress } from "../../Types/PAddress";
 import { Order } from '../../Types/Order';
 import { OrderDetail } from "../../Types/OrderDetail";
+import { Person } from "../../Types/Person";
 
 export interface Equant {
     order_id:number;
@@ -42,9 +43,9 @@ export const createOrder = createAsyncThunk(
 
 export const getOrders = createAsyncThunk(
     'orders/getAllOrders',
-    async(customer_id:number) => {
+    async(customerId:number) => {
         try{      
-            const res = await axios.get(`http://localhost:8500/orders/${customer_id}`);
+            const res = await axios.get(`http://localhost:8500/orders/${customerId}`);
             console.log(res.data);
             return {orders: res.data};
 

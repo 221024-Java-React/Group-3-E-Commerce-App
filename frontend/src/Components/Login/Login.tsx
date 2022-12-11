@@ -3,9 +3,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import { DispatchType, RootState } from '../../Redux/Store';
 import {  login, User } from '../../Redux/Slices/PersonSlice';
 import  './Login.css'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { allProducts } from '../../Redux/Slices/ProductSlice';
 import { Person } from '../../Types/Person';
+import { getNotifications } from '../../Redux/Slices/NotificationSlice';
+import { getOrders } from '../../Redux/Slices/OrderSlice';
 
 export const Login:React.FC = () => {
     let navigate = useNavigate();
@@ -26,12 +28,18 @@ export const Login:React.FC = () => {
     useEffect(()=>{
         if(userState.isLoggedIn)
         {
-            const p:Person=  JSON.parse(localStorage.getItem("user")|| '');
+            const p:Person=  JSON.parse(localStorage.getItem("user")|| '{}');
+            if(p){
             if(p.role.roleId===1)
         navigate("/admin");
-        else  navigate("/shop");
-        
+        else  
+        {
+          
+            navigate("/shop");
+
+            }
         }
+    }
         console.log(localStorage.getItem('customerId'));
     }, [userState.isLoggedIn])
 
@@ -53,16 +61,20 @@ export const Login:React.FC = () => {
         
 
         <div className="login">
-            <h1>Welcome to Ecommerce. Please Login</h1>
+            
 
             <form id="auth">
-            {userState.error ? <h3>Username or password incorrect</h3> : <></>}
+            <h1 className="h1Auth">Login</h1>
+            {userState.loginError ? <h3>Username or password incorrect</h3> : <></>}
             <label>Email</label>
             <input id= "email" name="email" placeholder="Your email" onChange={handleChange}/>
             <label>Password</label>
             <input type="password" id="password" name="password" placeholder="Your password" onChange={handleChange}/>
+            <div className='loginFormSubmit'>
             <button id="login" className="authentication" onClick={handleLogin}>Login</button>
+            <Link to="/register" className="registerLinkFromLogin">register</Link></div>
             </form>
+          
         </div>
     )
 

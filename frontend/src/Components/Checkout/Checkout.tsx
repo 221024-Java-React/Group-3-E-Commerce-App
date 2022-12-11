@@ -55,6 +55,7 @@ export const Checkout:React.FC = () => {
     };
     
     useEffect(()=>{
+
         dispatch({ type: 'REFRESH_PAGE' });
         if(payments.payments.length===0){
             dispatch(getPaymentTypes()).then(()=>{
@@ -107,6 +108,7 @@ export const Checkout:React.FC = () => {
                     </div>
                 </div>
             </div>
+
             <div className="right-col-container">
                 <div className="payment-container">
                     <h2>Payment</h2>
@@ -118,6 +120,7 @@ export const Checkout:React.FC = () => {
                     <span className="checkout-option-span"><Link to="/checkout-complete" onClick={handlePurchase}>Purchase Order!</Link></span>
                     <span className="checkout-option-span"><Link to="/" onClick={handleCancel}>Cancel</Link></span>
                 </div>
+
             </div>
         </div>
         </>

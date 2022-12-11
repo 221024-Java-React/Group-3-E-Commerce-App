@@ -1,5 +1,6 @@
 import './Footer.css'
 import logo from '../../Assets/ecommercelogos.png'
+import { Link } from 'react-router-dom';
 export const Footer:React.FC = () => {
         return (
           
@@ -29,15 +30,15 @@ export const Footer:React.FC = () => {
           
                 <ul className="navUl">
                   <li>
-                    <a href="#">Shop</a>
+                    <Link to="/shop">Shop</Link>
                   </li>
           
                   <li>
-                    <a href="#">Cart</a>
+                      <Link to="/cart">Cart</Link>
                   </li>
                       
                   <li>
-                    <a href="#">Profile</a>
+                    <Link to="/profile">Profile</Link>
                   </li>
                 </ul>
               </li>
@@ -51,15 +52,15 @@ export const Footer:React.FC = () => {
                 
                 <ul className="navUl">
                   <li>
-                    <a href="#">Privacy Policy</a>
+                    <a>Privacy Policy</a>
                   </li>
                   
                   <li>
-                    <a href="#">Terms of Use</a>
+                    <a>Terms of Use</a>
                   </li>
                   
                   <li>
-                    <a href="#">Sitemap</a>
+                    <a>Sitemap</a>
                   </li>
                 </ul>
               </li>

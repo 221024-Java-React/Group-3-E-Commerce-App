@@ -18,8 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.exceptions.InvalidCredentialsException;
 import com.example.models.Notification;
 import com.example.models.Person;
+import com.example.models.Product;
 import com.example.repository.NotificationRepository;
 import com.example.repository.PersonRepository;
+import com.example.repository.ProductRepository;
 
 @Component
 @Aspect
@@ -27,11 +29,13 @@ import com.example.repository.PersonRepository;
 public class NotificationAspect {
 	 NotificationRepository nr;
 	 PersonRepository pr;
+	 ProductRepository productRepo;
 	 Notification notification = new Notification();
 	 
 	 @Autowired
-	 public NotificationAspect(PersonRepository pr, NotificationRepository nr)
+	 public NotificationAspect(PersonRepository pr, NotificationRepository nr, ProductRepository productRepo)
 	 {
+		 this.productRepo= productRepo;
 		 this.pr=pr;
 		 this.nr=nr;
 	 }
@@ -39,7 +43,7 @@ public class NotificationAspect {
 	@AfterReturning("execution(* com.example.service.PersonService.login(..))")
 	public void NotifyWhenUserLogsIn(JoinPoint jp) {
 		
-		 notification.setMessage("you was logged in");
+		 notification.setMessage("you logged in");
 		 notification.setModifiedDate(LocalDateTime.now());
 		 Person person = pr.findByEmail(jp.getArgs()[0].toString());
 		 notification.setPerson(person);
@@ -48,7 +52,23 @@ public class NotificationAspect {
 	
 	@AfterReturning("execution(* com.example.service.PersonService.register(..))")
 	public void NotifyWhenUserRegister(JoinPoint jp) {
-		System.out.println("The user: " + jp.getArgs()[0] + " was logged in");
+		 notification.setMessage("you resitered");
+		 notification.setModifiedDate(LocalDateTime.now());
+		 Person person = pr.findByEmail(jp.getArgs()[0].toString());
+		 notification.setPerson(person);
+		 nr.save(notification);
+		
+	}
+	
+	@AfterReturning("execution(* com.example.service.OrderService.addToCart(..))")
+	public void NotifyWhenUserAddToCart(JoinPoint jp) {
+		Product product = productRepo.findById(Integer.parseInt( jp.getArgs()[1].toString())).get();
+		 notification.setMessage("you added product "+ product.getTitle() + " to the cart");
+		 notification.setModifiedDate(LocalDateTime.now());
+		 Person person = pr.findById(Integer.parseInt(jp.getArgs()[0].toString())).get();
+		 notification.setPerson(person);
+		 nr.save(notification);
+		
 	}
 	
 
