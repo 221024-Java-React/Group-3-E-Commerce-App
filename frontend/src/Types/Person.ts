@@ -1,4 +1,5 @@
 import { Order } from "./Order";
+import { PAddress } from "./PAddress";
 
 export interface Person{
     customerId: number;
@@ -9,7 +10,8 @@ export interface Person{
 	image:string;
 	theme:Theme;
 	role: Role;
-	orders: Order[]
+	orders: Order[];
+	address?:PAddress;
 }
 export interface Role{
 	roleId: number;

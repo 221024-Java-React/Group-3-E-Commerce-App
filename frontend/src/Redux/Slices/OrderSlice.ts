@@ -1,5 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, isAsyncThunkAction, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { PAddress } from "../../Types/PAddress";
 import { Order } from '../../Types/Order';
 import { OrderDetail } from "../../Types/OrderDetail";
 import { Person } from "../../Types/Person";
@@ -7,14 +8,18 @@ import { Person } from "../../Types/Person";
 export interface Equant {
     order_id:number;
     quantity:number;
+    total_quantity?:number;
+}
+
+export interface PType {
+    customer_id:number;
+    type:number;
 }
 
 interface OrderSliceState {
     orders: Order[],
 
 };
-  let id = 0;
-//const p:Person=  JSON.parse(localStorage.getItem("user")|| '{}');
 
 const initialState:OrderSliceState = {
     orders:[],
@@ -63,6 +68,19 @@ export const removeOrder = createAsyncThunk(
     }
 );
 
+export const removeAllOrders = createAsyncThunk(
+    'orders/removeAllOrders',
+    async(customer_id:number) => {
+        try{
+            const res = await axios.delete(`http://localhost:8500/orders/remove-all/${customer_id}`);
+            console.log(res.data);
+            return{orders: res.data};
+        }catch(e){
+            return null;
+        }
+    }
+);
+
 export const updateQuantity = createAsyncThunk(
     'orders/updateQuantity',
     async(Equant:Equant, thunkAPI) => {
@@ -74,8 +92,47 @@ export const updateQuantity = createAsyncThunk(
             return null;
         }
     }
+);
 
+export const getTotalItemsCount = createAsyncThunk(
+    'orders/getAllItemsCount',
+    async(customer_id:number) => {
+        try{      
+            const res = await axios.get(`http://localhost:8500/orders/${customer_id}`);
+            console.log(res.data);
+            return {orders: res.data};
 
+        } catch(e) {  
+            return null;      
+        }
+    }
+);
+
+export const updatePaymentType = createAsyncThunk(
+    'payments/updatePaymentType',
+    async(PType:PType) => {
+        try{console.log("type in slice: " + PType);
+            const res = await axios.post("http://localhost:8500/orders/update/payment", PType);
+            console.log(res.data);
+            return{orders:res.data};
+        }catch(e){
+            console.log("type in slice: " + PType);
+            return null;
+        }
+    }
+);
+
+export const updateAddress = createAsyncThunk(
+    'orders/updateAddress',
+    async(PAddress:PAddress) => {
+        try{
+            const res = await axios.post("http://localhost:8500/orders/update/address", PAddress);
+            console.log(res.data);
+            return{orders: res.data};
+        } catch(e) {
+            return null;
+        }
+    }
 );
 
 
@@ -94,7 +151,6 @@ export const OrderSlice = createSlice({
                 return state;
             });
             builder.addCase(getOrders.fulfilled, (state, action) => {
-
                 state.orders= action.payload?.orders;
               //  localStorage.setItem('orders', JSON.stringify(action.payload?.orders));
                 return state;
@@ -102,7 +158,21 @@ export const OrderSlice = createSlice({
             builder.addCase(removeOrder.fulfilled, (state, action) => {
                 return state;
             });
+            builder.addCase(removeAllOrders.fulfilled, (state, action) => {
+                return state;
+            })
             builder.addCase(updateQuantity.fulfilled, (state, action) => {
+                return state;
+            });
+            builder.addCase(getTotalItemsCount.fulfilled, (state, action) => {
+                state.orders= action.payload?.orders;
+              //  localStorage.setItem('orders', JSON.stringify(action.payload?.orders));
+                return state;
+            });
+            builder.addCase(updatePaymentType.fulfilled, (state, action) => {
+                return state;
+            });
+            builder.addCase(updateAddress.fulfilled, (state, action) => {
                 return state;
             });
     }

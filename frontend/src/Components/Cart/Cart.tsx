@@ -4,7 +4,7 @@ import { DispatchType, RootState } from '../../Redux/Store';
 import { Person } from '../../Types/Person';
 import './Cart.css';
 import { CartCard } from './CartCard';
-import { getOrders, removeOrder } from '../../Redux/Slices/OrderSlice';
+import { getOrders, getTotalItemsCount, removeOrder } from '../../Redux/Slices/OrderSlice';
 import { Order } from '../../Types/Order';
 import { OrderCard } from './OrderCard';
 import { Link } from 'react-router-dom';
@@ -13,17 +13,22 @@ export const Cart:React.FC = () => {
 
     const p:Person=  JSON.parse(localStorage.getItem("user")|| '');
     const dispatch:DispatchType= useDispatch();
-    const orderState = useSelector((state:RootState)=>state.order);
-    console.log(p);
+
+    const state = useSelector((state:RootState)=>state);
+    console.log(p.address);
     
     useEffect(()=>{
-    console.log("customer id is: "+p.customerId);
-        dispatch(getOrders(p.customerId));
-        if(orderState.orders.length==0){
-            dispatch(removeOrder(orderState.orders.length)).then(()=>{
+        console.log("customer id is: "+p.customerId);
+        dispatch({ type: 'REFRESH_PAGE' });
+        dispatch(getOrders(p.customerId)).then(()=>{
+            dispatch(getTotalItemsCount(p.customerId));
+        });
+        
+        if(state.order.orders.length==0){
+            dispatch(removeOrder(state.order.orders.length)).then(()=>{
                 dispatch(getOrders(p.customerId));
         })}
-    } , []);
+    } , [dispatch]);
 
     //const orders=  JSON.parse(localStorage.getItem("orders")|| '{}');
    // console.log("all orders from cart page "+orders)
@@ -31,10 +36,13 @@ export const Cart:React.FC = () => {
    //console.log("order state orders "+orders.orders[0].product.description);
 
    let tprice = 0;
-   let tquantity=0;
-   if(orders.orders.length)
-   {
-    tquantity =orders.orders.length;
+
+   let tquantity = 0;
+
+    orders.orders.map((order:Order)=>{
+       tquantity += (order.totalItem);
+       return tquantity;
+    })
    
     orders.orders.map((order:Order)=>{
 

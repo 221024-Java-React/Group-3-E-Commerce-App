@@ -15,7 +15,7 @@ export const CartCard:React.FC<Product> = ({id, title, price, quantity, descript
     let [quant, setQuant] = useState<number>(0);
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-       setQuant(parseInt(e.target.value))
+       setQuant(parseInt(e.target.value));
         console.log("total item change: " + quant) ;
     }
     
@@ -49,14 +49,19 @@ export const CartCard:React.FC<Product> = ({id, title, price, quantity, descript
         console.log("Quantity value from HTML: " + Equant);
     //    console.log("State changed in the store ", state);
     }, [products, products.length]);
+
+    let tpriceUSD;
+    tpriceUSD = price.toLocaleString('en-US', { style: 'currency', currency: 'USD' }); 
+
     return (
         
         <div className="cartcard-container">
             <br />
-            <img className='product-logo' src={require(`../../Assets/products/${id>40?30:id}.jpeg`)}/>
-            <p>{id}</p>
+
+            <img className='product-logo' src={logo}/>
             <p>{title}</p>
-            <p>{price}</p>
+            <p>{tpriceUSD}</p>
+            <p>Qty</p>
             <input className="qtyInput" id="qtyId" name="quantity" type="number" onChange={handleChange} ></input>
             <p>{description}</p>
             <button className="update-btn" onClick={update}>update</button>

@@ -24,16 +24,12 @@ export const Shop:React.FC = () => {
     //console.log(JSON.parse(localStorage.getItem("products")|| '{}'));
     //console.log(productState.products);
 
-
     useEffect(()=>{
-        console.log("currentuser "+person.customerId)
-        if(!person)navigate("/login");
-        dispatch(getNotifications(person.customerId));
-        dispatch(getOrders(person.customerId));
-        dispatch(allProducts());
+        dispatch({ type: 'REFRESH_PAGE' });
+        if(localStorage.getItem("user")==null)navigate("/login");
+        dispatch(getNotifications(userState.currentUser.customerId));
     //console.log(localStorage.getItem('customerId'));
-    }, [])
-
+    }, [dispatch, userState.isLoggedIn])
     
     const handleClick = (categoryId:number)=>
     {
@@ -42,8 +38,6 @@ export const Shop:React.FC = () => {
         else dispatch(productByCategory(categoryId))
     }
 
-   
-     
     return (
         <div>
             <img className='heroImage' src={image}></img>

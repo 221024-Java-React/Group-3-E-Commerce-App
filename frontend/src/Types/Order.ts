@@ -1,3 +1,4 @@
+import { PAddress } from "./PAddress";
 import { Person } from "./Person";
 import { Product } from "./Product";
 
