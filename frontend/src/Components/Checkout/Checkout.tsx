@@ -5,8 +5,7 @@ import './Checkout.css';
 import { Order } from '../../Types/Order';
 import { OrderCard } from '../Cart/OrderCard';
 import { Payment } from '../../Types/Payment';
-import { PaymentCard } from './PaymentCard';
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { getTotalItemsCount, PType, removeAllOrders, updatePaymentType } from '../../Redux/Slices/OrderSlice';
 import { getPaymentTypes } from '../../Redux/Slices/PaymentSlice';
 import { Person } from '../../Types/Person';
@@ -32,6 +31,7 @@ export const Checkout:React.FC = () => {
 
     const handlePurchase = ()=>{
         dispatch(updatePaymentType(ptype));
+        //dispatch(removeAllOrders(p.customerId));
         navigate("/checkout-complete");
     };
 
