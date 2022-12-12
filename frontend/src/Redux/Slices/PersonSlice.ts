@@ -61,6 +61,19 @@ export const login = createAsyncThunk(
         }
     }
 );
+
+export const forgotPassword = createAsyncThunk(
+    'user/forgotPassword',
+    async(email:String, thunkAPI) => {
+        try{    
+            const res = await axios.get(`http://localhost:8500/persons/forgotPassword${email}`);
+           return {user: res.data};
+        } catch(e) {
+            return thunkAPI.rejectWithValue('Incorrect email');
+        }
+    }
+);
+
 export const UserSlice = createSlice({
     name: "auth",
     initialState,
@@ -95,7 +108,10 @@ export const UserSlice = createSlice({
             state.currentUser=person;
             return state
         });
-   
+        builder.addCase(forgotPassword.fulfilled, (state, action)=>{
+            state.currentUser=action.payload.user;
+            return state
+        });
     }
 });
 export const {logout}= UserSlice.actions;

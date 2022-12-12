@@ -5,6 +5,7 @@ import {  login, User } from '../../Redux/Slices/PersonSlice';
 import  './Login.css'
 import { useNavigate } from 'react-router-dom';
 import { allProducts } from '../../Redux/Slices/ProductSlice';
+import { Link } from 'react-router-dom'
 import { Person } from '../../Types/Person';
 
 export const Login:React.FC = () => {
@@ -62,6 +63,9 @@ export const Login:React.FC = () => {
             <label>Password</label>
             <input type="password" id="password" name="password" placeholder="Your password" onChange={handleChange}/>
             <button id="login" className="authentication" onClick={handleLogin}>Login</button>
+            <Link to = "./ForgotPassword">
+            <button id="login" className="authentication">Forgot Password</button>
+            </Link>
             </form>
         </div>
     )

@@ -4,6 +4,8 @@ import './App.css';
 import Footer from './Components/Footer/Footer';
 import {Header} from './Components/Header/Header';
 import { Login } from './Components/Login/Login';
+import {ForgotPassword} from './Components/Login/ForgotPassword'
+import {ResetPassword} from './Components/Login/ResetPassword'
 import { Profile } from './Components/Profile/Profile';
 import { Register } from './Components/Register/Register';
 import { Shop } from './Components/Shop/Shop';
@@ -22,6 +24,8 @@ function App() {
      
         <Route path="" element={<Login />}/>
         <Route path="/login" element={<Login />}/>
+        <Route path="/ForgotPassword" element={<ForgotPassword />}/>
+        <Route path="/ResetPassword" element={<ResetPassword />}/>
         <Route path="/register" element={<Register />}/>
         <Route path="/shop" element={<Shop />}/>
         <Route path="/notification" element={<Notification />}/>

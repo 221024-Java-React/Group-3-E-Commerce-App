@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.exceptions.EmailAlreadyExistsException;
 import com.example.exceptions.InvalidCredentialsException;
+import com.example.exceptions.InvalidEmailException;
 import com.example.models.Person;
 import com.example.models.Role;
 import com.example.models.Theme;
@@ -47,4 +48,14 @@ public class PersonService {
 		
 	}
 
+	{/* New */}
+	public Person forgotPassword(String email) {
+		Person person = personRepo.findByEmail(email);
+		
+		try{person.getPassword();
+		}catch(Exception e) {
+			throw new InvalidEmailException();
+		}	
+		return person;
+	}
 }
