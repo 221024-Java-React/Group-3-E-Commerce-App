@@ -59,4 +59,29 @@ public class ProductService {
 		return null;
 	}
 	
+	public Product updateProduct(int id, String title, double price, String image, int quantity, String description, int categoryId) {
+		Product p = tRepo.findById(id).get();
+		System.out.println(p);
+		p.setTitle(title);
+		p.setPrice(price);
+		p.setPrice(price);
+		p.setImage(image);
+		p.setQuantity(quantity);
+		p.setDescription(description);
+		ProductCategory category = cRepo.findById(categoryId).get();
+		p.setCategory(category);
+		//Add logic here to do the updating
+		tRepo.save(p);
+		return null;
+	}
+	
+	
+	public Product deleteProduct(int id) {
+		Product p = tRepo.findById(id).get();
+		tRepo.delete(p);
+		return null;
+	}
+	
+	
+	
 }

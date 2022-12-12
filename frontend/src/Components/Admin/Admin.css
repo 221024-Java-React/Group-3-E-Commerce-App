@@ -26,4 +26,21 @@
 }
 
 
+.productcard{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+   
+}
+
+.shoptitle{
+    width: 100%;
+    text-align: start;
+    margin-left: 10px;
+}
+
 
