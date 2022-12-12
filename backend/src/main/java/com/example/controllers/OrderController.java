@@ -63,7 +63,8 @@ public class OrderController {
 	@PostMapping("/update/payment")
 	public void updatePaymentType(@RequestBody LinkedHashMap<String, Integer>body) {
 		oService.updatePaymentType(body.get("customer_id"), body.get("type"));
-		System.out.println(body.get("type"));
+		System.out.println("order controller update type: " + body.get("type"));
+		System.out.println("order controller update customer id: " + body.get("customer_id"));
 	}
 	
 	@DeleteMapping("/{order_id}")
