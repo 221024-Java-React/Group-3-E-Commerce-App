@@ -33,6 +33,11 @@ public class PersonController {
 		System.out.println("fsfsfdsfsfffsffdfsdd   "+body.toString());
 		return eService.register(body.get("name"), body.get("email"), body.get("password"));
 	}
+	@PostMapping("/forgotPassword")
+	public Person forgotPassword(@RequestBody LinkedHashMap<String, String> body) {
+		System.out.println("inside forgot password controller");
+		return eService.forgotPassword(body.get("email"), body.get("old"), body.get("new"));
+	}
 	
 	@PostMapping("/login")
 	public Person login(@RequestBody LinkedHashMap<String, String> body) {
@@ -60,5 +65,15 @@ public class PersonController {
 		int customer_id = Integer.parseInt(body.get("customer_id"));
 		eService.updateAddress(customer_id, body.get("street"), body.get("city"), body.get("state"), zip);
 	}
+	
+	@PutMapping("/update")
+	public Person updatePerson(@RequestBody Person person) {
+	System.out.println("inside contorller update profile "+person.getEmail());
+		return eService.updatePerson(person);
+		
+		
+	}
+	
+	
 }
 

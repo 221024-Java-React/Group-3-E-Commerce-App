@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PAddress {
+public class Address {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

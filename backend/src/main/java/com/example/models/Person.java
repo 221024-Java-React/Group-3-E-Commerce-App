@@ -59,12 +59,12 @@ public class Person {
 	@JsonIgnore
 	Set<Order> orders;
 	
-	@ManyToOne(fetch= FetchType.LAZY)
+	@ManyToOne(fetch= FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="address_id")
-	private PAddress address;
+	private Address address;
 
 	public Person(Integer customerId, String name, String email, String password, String phone, String image,
-			Theme theme, Role role, PAddress address) {
+			Theme theme, Role role, Address address) {
 		super();
 		this.customerId = customerId;
 		this.name = name;

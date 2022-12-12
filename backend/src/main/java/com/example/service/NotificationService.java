@@ -22,6 +22,6 @@ public class NotificationService {
 	public List<Notification> getNotificationsForCustomer(int cutomer_id) {
 		System.out.println("category "+cutomer_id);
 		Person person = pRepo.findById(cutomer_id).get();
-			return nRepo.findAllByPerson(person);
+			return nRepo.findAllByPersonOrderByModifiedDateDesc(person);
 	}
 }

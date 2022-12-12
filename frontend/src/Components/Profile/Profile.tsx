@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Person, Role, Theme } from '../../Types/Person';
-import { updateProfile } from '../../Redux/Slices/ProfileSlice';
-import { DispatchType } from '../../Redux/Store';
-import { useDispatch } from 'react-redux';
+import { Person, Address, Theme } from '../../Types/Person';
+import { DispatchType, RootState } from '../../Redux/Store';
+import { useDispatch, useSelector } from 'react-redux';
 import "./Profile.css"
+import { updateProfile } from '../../Redux/Slices/PersonSlice';
 
 
 export const Profile:React.FC = () => {
@@ -12,34 +12,45 @@ export const Profile:React.FC = () => {
     const dispatch:DispatchType = useDispatch();
     
     const p:Person=  JSON.parse(localStorage.getItem("user")|| '');
-    
-    const r :Role={
-        roleId: 0,
-        role: ""
-    }
-    
-    const t :Theme={
-        themeId: 0,
-        theme: ""
-    }
+    const userState = useSelector((state:RootState) => state.auth);
+
+    const [newAddress, setNewAddress] = useState<Address>({
+        address_id: 0,
+        city:'',
+        street: '',
+        state: '',
+        zip:0
+
+    });
+
 
 
     const [newPerson, setNewPerson] = useState<Person>({
-        customerId: 0,
-        name: "",
-        email: "",
-        password: "",
-        phone: "",
-        image: "",
-        theme: t,
-        role: r,
-        orders: []
+        customerId: p.customerId,
+        name: p.name,
+        email: p.email,
+        password: p.password,
+        phone: p.phone,
+        image: p.image,
+        theme: p.theme,
+        role: p.role,
+        orders: p.orders,
+        address: p.address
     });
+
+    
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         setNewPerson({
             ...newPerson,
             [e.target.name]: e.target.value
+        });
+    }
+    const handleAddressChange=(e: { target: { name: any; value: any; }; })=>{
+        setNewAddress({
+            ...newAddress,
+            [e.target.name]: e.target.value,
+          
         });
     }
 
@@ -51,9 +62,10 @@ export const Profile:React.FC = () => {
             password: newPerson.password,
             phone: newPerson.phone,
             image: newPerson.image,
-            theme: newPerson.theme,
-            role: newPerson.role,
-            orders: newPerson.orders
+            theme: p.theme,
+            role: p.role,
+            orders: p.orders,
+            address: newAddress
         };
 
         dispatch(updateProfile(person));
@@ -81,87 +93,102 @@ export const Profile:React.FC = () => {
                 <div className='profileForm'>
                 <p>Phone</p>
                 <input name="phone" placeholder={`${p.phone}`} type="text" onChange={handleChange}/></div>
+                <h1>Address Information</h1>
 
-                <button onClick={handleUpdate}>Save</button>
-            </div>
-            </div>
-           
-    )
-    /*
+<div className='profileForm'>
+<p>Street</p>
+<input name="street" placeholder={`${p.address?.street}`} type="text" onChange={handleAddressChange}/></div>
+<div className='profileForm'>
+<p>City</p>
+<input name="city" placeholder={`${p.address?.city}`}type="text" onChange={handleAddressChange}/></div>
+<div className='profileForm'>
+<p>State</p>
+<input name="state" placeholder={`${p.address?.state}`}type="password" onChange={handleAddressChange}/>
+</div>
+<div className='profileForm'>
+<p>Zip Code</p>
+<input name="zip" placeholder={`${p.address?.zip}`} type="text" onChange={handleAddressChange}/>
+</div>
+<button onClick={handleUpdate}>Save</button>
+</div>
+</div>
 
-    async function getReceipts() {
-        try {
+)
+/*
+
+async function getReceipts() {
+try {
 
 
 
 
-   
+
 const ReceiptCard: React.FC<Receipt> = ({ items, userId, receiptNumber: receiptId, dateTime: date, total }) => {
 
-    const totalPrice = (items: Items[]) => {
-        let total = 0;
-        for (let i: number = 0; i < items.length; i++) {
-            total += items[i].amount * items[i].price;
-            console.log(total)
-        }
-        return total;
-    }
+const totalPrice = (items: Items[]) => {
+let total = 0;
+for (let i: number = 0; i < items.length; i++) {
+total += items[i].amount * items[i].price;
+console.log(total)
+}
+return total;
+}
 
-    return (
-        <div>
-            <h1>Receipt ID: {receiptId}</h1>
-            <h1>{date}</h1>
-            <body>
-                {
-                    items.map((item, index) => {
-                        return (
-                            <li key={index} >{item.amount} x {item.name}</li>
-                        )
-                    })
-                }
-            </body>
-            <h2>
-                Total Price: ${total}
-            </h2>
-        </div>
-    )
+return (
+<div>
+<h1>Receipt ID: {receiptId}</h1>
+<h1>{date}</h1>
+<body>
+{
+    items.map((item, index) => {
+        return (
+            <li key={index} >{item.amount} x {item.name}</li>
+        )
+    })
+}
+</body>
+<h2>
+Total Price: ${total}
+</h2>
+</div>
+)
 }
 
 export default ReceiptCard
 
-    
 
 
-    export const ViewReceipts:React.FC = () => {
 
-        const [receipts, setReceipts] = useState<Order[]>([]);
-        const [userId, setUserId] = useState<number>(7);
-        const [role, setRole] = useState<string>("customer");
-    
-        useEffect(() => {
-      
-            axios.get(`http://localhost:8500/receipts/?id=${localStorage.getItem("userId")}`)
-                .then(response => setReceipts(response.data));
-    
-        }, []);
+export const ViewReceipts:React.FC = () => {
+
+const [receipts, setReceipts] = useState<Order[]>([]);
+const [userId, setUserId] = useState<number>(7);
+const [role, setRole] = useState<string>("customer");
+
+useEffect(() => {
+
+axios.get(`http://localhost:8500/receipts/?id=${localStorage.getItem("userId")}`)
+.then(response => setReceipts(response.data));
+
+}, []);
 
 return (
-        <div>
-            <h1>Receipts</h1>
-            { 
-                receipts.map((receipt) => {
-                    receiptId={receipt.receiptId}
-                    person={receipt.person}
-                    product={receipt.product}
-                    registeredAt={receipt.registeredAt}
-                    totalPrice={receipt.totalPrice}
-                    totalItem={receipt.totalItem}
-                    OrderStatus={receipt.OrderStatus}
-                    paymentType={receipt.paymentType}
+<div>
+<h1>Receipts</h1>
+{ 
+receipts.map((receipt) => {
+    receiptId={receipt.receiptId}
+    person={receipt.person}
+    product={receipt.product}
+    registeredAt={receipt.registeredAt}
+    totalPrice={receipt.totalPrice}
+    totalItem={receipt.totalItem}
+    OrderStatus={receipt.OrderStatus}
+    paymentType={receipt.paymentType}
 
-                })
-            }
-        </div>
+})
+}
+</div>
 );
 
 

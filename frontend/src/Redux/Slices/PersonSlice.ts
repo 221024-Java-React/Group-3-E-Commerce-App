@@ -2,12 +2,19 @@ import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 import { Person, Address, Role, Theme } from "../../Types/Person";
 
+export interface  resetDetails {
+    email: string,
+    old: string,
+    new: string
+         }
+
 export interface AuthState{
-    isLoggedIn:boolean,
+   isLoggedIn:boolean,
     isRegistered:boolean,
     registeredError: boolean,
     loginError: boolean,
-    currentUser: Person
+    currentUser: Person,
+    resetError: boolean
 }
 export interface User {
     name?:string,
@@ -37,8 +44,36 @@ const person:Person={
 };
 const initialState:AuthState =  {
     isLoggedIn: false, registeredError: false, loginError: false, currentUser: person,
-    isRegistered: false
+    isRegistered: false,
+    resetError: false
 };
+
+export const forgotPassword = createAsyncThunk(
+    'user/forgotPassword',
+    async(reset:resetDetails, thunkAPI) => {
+        try{    
+            const res = await axios.post("http://localhost:8500/persons/forgotPassword",reset);
+           return {user: res.data};
+        } catch(e) {
+            return thunkAPI.rejectWithValue('Incorrect email');
+        }
+    }
+);
+
+export const updateProfile = createAsyncThunk(
+    'admin/updateProduct',
+    async(person:Person, thunkAPI) => {
+        try{
+            
+            const res = await axios.put("http://localhost:8500/persons/update", person);
+            console.log(res.data);
+            return {user:res.data};
+        } catch(e) {
+            return thunkAPI.rejectWithValue('Profile could not be updated');
+        }
+    }
+);
+
 export const register = createAsyncThunk(
     'user/register',
     async(user:User, thunkAPI) => {
@@ -122,6 +157,17 @@ export const UserSlice = createSlice({
         builder.addCase(updateAddress.fulfilled, (state, action) => {
             return state;
         });
+        builder.addCase(forgotPassword.fulfilled, (state, action)=>{
+            state.currentUser=action.payload.user;
+            state.resetError =true;
+            return state
+        });
+     
+            builder.addCase(updateProfile.fulfilled, (state, action) => {      
+                //  initialState.currentProduct = action.payload.product;
+                  localStorage.setItem("user", JSON.stringify(action.payload.user));
+                  return state;
+            });
     }
 });
 export const {logout}= UserSlice.actions;
