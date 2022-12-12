@@ -25,11 +25,12 @@ export const Shop:React.FC = () => {
     //console.log(productState.products);
 
     useEffect(()=>{
-        dispatch({ type: 'REFRESH_PAGE' });
-        if(localStorage.getItem("user")==null)navigate("/login");
-        dispatch(getNotifications(userState.currentUser.customerId));
-    //console.log(localStorage.getItem('customerId'));
-    }, [dispatch, userState.isLoggedIn])
+       // dispatch({ type: 'REFRESH_PAGE' });
+        if(!userState.currentUser.customerId)navigate("/login");
+         dispatch(getNotifications(userState.currentUser.customerId));
+        dispatch(getOrders(userState.currentUser.customerId));
+        if(!productState.products) dispatch(allProducts());
+    }, [userState.isLoggedIn])
     
     const handleClick = (categoryId:number)=>
     {
@@ -47,9 +48,9 @@ export const Shop:React.FC = () => {
         <div className="category">
             <h1>Categories</h1>
             <button className='categoryBtn' name="all" onClick={()=>handleClick(1)}>All</button>
-            <button className='categoryBtn' name= "sales"onClick={()=>handleClick(4)}>Sales</button>
+            <button className='categoryBtn' name= "sales"onClick={()=>handleClick(3)}>Sales</button>
             <button className='categoryBtn' name="deals" onClick={()=>handleClick(2)}>Deals</button>
-            <button className='categoryBtn' name="featured" onClick={()=>handleClick(3)}>Best Selling</button>
+            <button className='categoryBtn' name="featured" onClick={()=>handleClick(4)}>Best Selling</button>
            
         </div>
        

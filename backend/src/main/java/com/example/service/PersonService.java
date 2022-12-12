@@ -83,6 +83,7 @@ public class PersonService {
 	}
 
 	public Person updatePerson(Person person) {
+		System.out.println("address id update"+person.getAddress().getAddressId());
 		//addressRepo.save(person.getAddress());
 	return	personRepo.save(person);
 		

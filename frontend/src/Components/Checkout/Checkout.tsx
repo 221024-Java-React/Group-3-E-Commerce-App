@@ -5,12 +5,10 @@ import './Checkout.css';
 import { Order } from '../../Types/Order';
 import { OrderCard } from '../Cart/OrderCard';
 import { Payment } from '../../Types/Payment';
-import { PaymentCard } from './PaymentCard';
-import { Link, useNavigate } from 'react-router-dom'
-import { getTotalItemsCount, removeAllOrders } from '../../Redux/Slices/OrderSlice';
+import { useNavigate } from 'react-router-dom'
+import { getTotalItemsCount, PType, removeAllOrders, updatePaymentType } from '../../Redux/Slices/OrderSlice';
 import { getPaymentTypes } from '../../Redux/Slices/PaymentSlice';
-import { Address, Person } from '../../Types/Person';
-import { updateAddress } from '../../Redux/Slices/PersonSlice';
+import { Person } from '../../Types/Person';
 
 export const Checkout:React.FC = () => {
     
@@ -20,31 +18,20 @@ export const Checkout:React.FC = () => {
     const payments = useSelector((state:RootState)=> state.payment);
     const p:Person = JSON.parse(localStorage.getItem("user")|| '');
     let navigate = useNavigate();
-    const [paddress, setAddress] = useState<Address>({
-        street:"",
-        city:"",
-        state:"",
-        zip:0
-    });
+    const [type, setType] = useState<number>(0);
 
-    const handleAddressInput = (e:React.ChangeEvent<HTMLInputElement>) => {
-       setAddress({
-            ...paddress,
-            [e.target.name] : e.target.value
-       });
+    const handlePaymentType = (e:React.ChangeEvent<HTMLInputElement>)=>{
+        setType(parseInt(e.target.value));
+    }
+
+    let ptype:PType = {
+        customer_id:p.customerId,
+        type:type
     }
 
     const handlePurchase = ()=>{
-        let Address:Address = {
-            customer_id: p.customerId,
-            street: paddress.street,
-            city: paddress.city,
-            state: paddress.state,
-            zip: paddress.zip
-        };
-        
-       console.log("PAddress address: " + Address);
-        dispatch(updateAddress(Address));
+        dispatch(updatePaymentType(ptype));
+        //dispatch(removeAllOrders(p.customerId));
         navigate("/checkout-complete");
     };
 
@@ -80,29 +67,37 @@ export const Checkout:React.FC = () => {
     console.log("orders: " + state.order.orders);
 
     return (
-        
         <>
         <h1 className="checkout-title">Checkout Page</h1>     
         <div className="checkout-container">
             <div className="left-col-container">
                 <div className="payment-container">
                     <h2>Payment</h2>
+                    <div>
                     {
                         payments.payments.map((payment:Payment)=>{
-                            return <PaymentCard key={payment.paymentTypeId} paymentTypeId={payment.paymentTypeId} type={payment.type} /> 
+                            return(<>
+                            <label>{payment.type}</label>
+                            <input
+                                type="radio"
+                                name="option"
+                                value={payment.paymentTypeId}
+                                onChange={handlePaymentType}
+                            /><br/><br/>
+                            </>
+                            )
                         })
+
                     }
+                    
+                    </div>
                 </div>
                 <div className="address-container">
                     <h2>Mailing/Shipping Address</h2>
-                    <h3>street</h3>
-                    <input name="street" type="text" required onChange={handleAddressInput}/>
-                    <h3>city</h3>
-                    <input name="city" type="text" required onChange={handleAddressInput}/> 
-                    <h3>state</h3>
-                    <input name="state" onChange={handleAddressInput}/>
-                    <h3>zip</h3>
-                    <input name="zip" onChange={handleAddressInput}/>
+                    <span>{p.address?.street}</span>
+                    <span>{p.address?.city}</span>
+                    <span>{p.address?.state}</span>
+                    <span>{p.address?.zip}</span>
                 </div>
             </div>
             <div className="right-col-container">
@@ -112,8 +107,6 @@ export const Checkout:React.FC = () => {
                     <button className="checkout-option-span"  onClick={handlePurchase}>Purchase Order!</button>
                     <button className="checkout-option-span"  onClick={handleCancel}>Cancel</button>
                 </div>
-                
-
             </div>
         </div>
         </>

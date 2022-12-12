@@ -159,8 +159,9 @@ export const UserSlice = createSlice({
         });
         builder.addCase(forgotPassword.fulfilled, (state, action)=>{
             state.currentUser=action.payload.user;
+            localStorage.setItem("user", JSON.stringify(action.payload.user));
             state.resetError =true;
-            return state
+        //    return state
         });
      
             builder.addCase(updateProfile.fulfilled, (state, action) => {      

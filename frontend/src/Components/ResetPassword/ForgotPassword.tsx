@@ -36,7 +36,7 @@ export const ForgotPassword:React.FC = () => {
 
 return(
     <div className="login">
-        <h1>Please Enter your email.</h1>
+        <h1>Reset Your Password</h1>
         <form id="auth">
             {userState.resetError ? <h3>Invalid Credentails</h3> : <></>}
             <input id= "email" name="email" placeholder="Your email" onChange={handleChange}></input>

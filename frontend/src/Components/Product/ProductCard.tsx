@@ -7,21 +7,21 @@ import { useEffect, useState } from 'react';
 import { OrderDetail } from '../../Types/OrderDetail';
 import { createOrder, getOrders } from '../../Redux/Slices/OrderSlice';
 import { Person } from '../../Types/Person';
+import { getNotifications } from '../../Redux/Slices/NotificationSlice';
 export const ProductCard:React.FC<Product> = ({id, price, title, description,quantity ,category}) => {
 //console.log(`../../Assets/products/${id}.jpeg`);
 let navigate = useNavigate();
 const userState = useSelector((state:RootState) => state.auth);
 const dispatch:DispatchType = useDispatch();
 let stringPrice= '';
-if(category?.productCategoryId===4)
+if(category?.productCategoryId===3)
 {
     stringPrice= `$${price} - 20% OFF -   $${price*85/100}`;
 }
 else stringPrice = `$${price}`;
 useEffect(()=>{
     if(userState.isLoggedIn)navigate("/shop");
-//console.log(localStorage.getItem('customerId'));
-}, [userState.isLoggedIn])
+}, [])
 const user = JSON.parse(localStorage.getItem("user")|| '{}');
 //console.log(user);
 
@@ -38,6 +38,7 @@ const handleAddToCard = (e: { preventDefault: () => void; }) => {
    }   
     dispatch(createOrder(order)).then(()=>{
         dispatch(getOrders(userState.currentUser.customerId));
+        dispatch(getNotifications(userState.currentUser.customerId))
     });
 };
     return (
