@@ -1,7 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
-import { Person, Role, Theme } from "../../Types/Person";
-
+import { Person, Address, Role, Theme } from "../../Types/Person";
 
 export interface AuthState{
     isLoggedIn:boolean,
@@ -65,6 +64,18 @@ export const login = createAsyncThunk(
         }
     }
 );
+export const updateAddress = createAsyncThunk(
+    'orders/updateAddress',
+    async(PAddress:Address, thunkAPI) => {
+        try{console.log("in slice PAddress: " + PAddress.city);
+            const res = await axios.post("http://localhost:8500/persons/update/address", PAddress);
+            console.log(res.data);
+            return{user: res.data};
+        } catch(e) {
+            return null;
+        }
+    }
+);
 export const UserSlice = createSlice({
     name: "auth",
     initialState,
@@ -108,7 +119,9 @@ export const UserSlice = createSlice({
             state.currentUser=person;
             return state
         });
-   
+        builder.addCase(updateAddress.fulfilled, (state, action) => {
+            return state;
+        });
     }
 });
 export const {logout}= UserSlice.actions;

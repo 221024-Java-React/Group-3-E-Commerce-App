@@ -39,7 +39,7 @@
     align-items: flex-start;
     flex-direction: column;
     border-style: solid;
-    border-color: #7a9445;
+    border-color: #EAA64B;
     padding: 3%;
 }
 
@@ -68,7 +68,7 @@
     justify-content: right;
     flex-direction: column;
     border-style: solid;
-    border-color: #7a9445;
+    border-color: #EAA64B;
     padding: 15px;
 }
 

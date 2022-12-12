@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice, isAsyncThunkAction, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { PAddress } from "../../Types/PAddress";
 import { Order } from '../../Types/Order';
 import { OrderDetail } from "../../Types/OrderDetail";
-import { Person } from "../../Types/Person";
+
 
 export interface Equant {
     order_id:number;
@@ -85,7 +84,7 @@ export const updateQuantity = createAsyncThunk(
     'orders/updateQuantity',
     async(Equant:Equant, thunkAPI) => {
         try{console.log("in slice equant: " + Equant.order_id);
-            const res = await axios.post("http://localhost:8500/orders/update", Equant);
+            const res = await axios.post("http://localhost:8500/orders/update/quantity", Equant);
             console.log(res.data);
             return{orders: res.data};
         } catch(e) {
@@ -122,27 +121,12 @@ export const updatePaymentType = createAsyncThunk(
     }
 );
 
-export const updateAddress = createAsyncThunk(
-    'orders/updateAddress',
-    async(PAddress:PAddress) => {
-        try{
-            const res = await axios.post("http://localhost:8500/orders/update/address", PAddress);
-            console.log(res.data);
-            return{orders: res.data};
-        } catch(e) {
-            return null;
-        }
-    }
-);
-
-
 //Create our slice and map our reducers
 export const OrderSlice = createSlice({
     //we need to name our slice
     name: "order",
     initialState,
     reducers: {
-        
     },
         extraReducers: (builder) => {
             builder.addCase(createOrder.fulfilled, (state, action) => {
@@ -170,9 +154,6 @@ export const OrderSlice = createSlice({
                 return state;
             });
             builder.addCase(updatePaymentType.fulfilled, (state, action) => {
-                return state;
-            });
-            builder.addCase(updateAddress.fulfilled, (state, action) => {
                 return state;
             });
     }

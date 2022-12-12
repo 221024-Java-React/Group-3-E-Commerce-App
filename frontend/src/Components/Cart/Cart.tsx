@@ -18,12 +18,12 @@ export const Cart:React.FC = () => {
     console.log(p.address);
 
     const handleCancel = ()=>{
-        let response = window.confirm("Do you want to proceed?");
-        if (response === true) {
-            navigate("/shop");
-            dispatch(removeAllOrders(p.customerId));
-        }
+        navigate("/shop");
     };
+
+    const handleCheckout = () => {
+        navigate("/checkout");
+    }
     
     useEffect(()=>{
         console.log("customer id is: "+p.customerId);
@@ -68,21 +68,24 @@ export const Cart:React.FC = () => {
         <>
         <h1 className="cart-title">Shopping Cart</h1>     
         <div className="cart-container">
-
-            <div className="product-container">
-            {
-                 orders.orders.map((order:Order)=>{
+            <div className="left-col-container">
+                <div className="product-container">
+                {
+                    orders.orders.map((order:Order)=>{
                     return <CartCard  key={order.orderId} id={order.orderId} 
                     title={order.product.title} price={order.product.price} 
                     quantity={order.product.quantity} description={order.product.description} />
-                })
-            }
+                    })
+                    }
+                </div>
             </div>
-            <div className="order-container">
+            <div className="right-col-container">
+                <div className="order-container">
                 <h2>Order Details</h2>
                 <OrderCard total_items={tquantity} total_price={tprice}  />
-                <span className="checkout-option-span"><Link to="/checkout">Checkout</Link></span>
-                <span className="checkout-option-span"><Link to="/" onClick={handleCancel}>Cancel</Link></span>
+                <button className="checkout-option-span"  onClick={handleCheckout}>Checkout</button>
+                <button className="checkout-option-span"  onClick={handleCancel}>Cancel</button>
+                </div>
             </div>
         </div>
         </>

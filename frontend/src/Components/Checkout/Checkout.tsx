@@ -7,10 +7,10 @@ import { OrderCard } from '../Cart/OrderCard';
 import { Payment } from '../../Types/Payment';
 import { PaymentCard } from './PaymentCard';
 import { Link, useNavigate } from 'react-router-dom'
-import { getTotalItemsCount, removeAllOrders, updateAddress } from '../../Redux/Slices/OrderSlice';
+import { getTotalItemsCount, removeAllOrders } from '../../Redux/Slices/OrderSlice';
 import { getPaymentTypes } from '../../Redux/Slices/PaymentSlice';
-import { Person } from '../../Types/Person';
-import { PAddress } from '../../Types/PAddress';
+import { Address, Person } from '../../Types/Person';
+import { updateAddress } from '../../Redux/Slices/PersonSlice';
 
 export const Checkout:React.FC = () => {
     
@@ -20,43 +20,39 @@ export const Checkout:React.FC = () => {
     const payments = useSelector((state:RootState)=> state.payment);
     const p:Person = JSON.parse(localStorage.getItem("user")|| '');
     let navigate = useNavigate();
-    let [address, setAddress] = useState<string>("");
-    let [city, setCity] = useState<string>("");
-    let [pstate, setState] = useState<string>("");
-    let [zip, setZip] = useState<number>(0);
+    const [paddress, setAddress] = useState<Address>({
+        street:"",
+        city:"",
+        state:"",
+        zip:0
+    });
 
     const handleAddressInput = (e:React.ChangeEvent<HTMLInputElement>) => {
-       setAddress(e.target.value);
-       setCity(e.target.value);
-       setState(e.target.value);
-       setZip(parseInt(e.target.value));
+       setAddress({
+            ...paddress,
+            [e.target.name] : e.target.value
+       });
     }
-    
-    let PAddress:PAddress = {
-            customer_id:p.customerId,
-            address:address,
-            city:city,
-            state:pstate,
-            zip:zip
-        }
 
-    console.log("PAddress: " + PAddress);
     const handlePurchase = ()=>{
-        dispatch(updateAddress(PAddress));
-        //dispatch(removeAllOrders(p.customerId));
+        let Address:Address = {
+            customer_id: p.customerId,
+            street: paddress.street,
+            city: paddress.city,
+            state: paddress.state,
+            zip: paddress.zip
+        };
+        
+       console.log("PAddress address: " + Address);
+        dispatch(updateAddress(Address));
+        navigate("/checkout-complete");
     };
 
     const handleCancel = ()=>{
-        let response = window.confirm("Do you want to proceed?");
-        if (response === true) {
             navigate("/shop");
-            dispatch(removeAllOrders(p.customerId));
-        }
     };
-    
-    useEffect(()=>{
 
-        dispatch({ type: 'REFRESH_PAGE' });
+    useEffect(()=>{
         if(payments.payments.length===0){
             dispatch(getPaymentTypes()).then(()=>{
                 dispatch(getTotalItemsCount(p.customerId));
@@ -89,27 +85,6 @@ export const Checkout:React.FC = () => {
         <h1 className="checkout-title">Checkout Page</h1>     
         <div className="checkout-container">
             <div className="left-col-container">
-                <div className="order-container">
-                    <h2>Order Details</h2>
-                    <OrderCard total_items={tquantity} total_price={tprice} />
-                </div>
-                <div className="address-container">
-                    <h2>Mailing/Shipping Address</h2>
-                    <div className="address-form">
-                    <label>Address:</label>
-                    <input className="address-input" type="text" name="address" onChange={handleAddressInput}/>
-                    <label>City:</label>
-                    <input className="address-input" type="text" name="city" onChange={handleAddressInput}/>
-                    <label>State:</label>
-                    <input className="address-input" type="text" name="state" onChange={handleAddressInput}/>
-                    <label>Zipcode:</label>
-                    <input className="address-input" type="text" name="zip" onChange={handleAddressInput}/>
-                    <br/>
-                    </div>
-                </div>
-            </div>
-
-            <div className="right-col-container">
                 <div className="payment-container">
                     <h2>Payment</h2>
                     {
@@ -117,9 +92,27 @@ export const Checkout:React.FC = () => {
                             return <PaymentCard key={payment.paymentTypeId} paymentTypeId={payment.paymentTypeId} type={payment.type} /> 
                         })
                     }
-                    <span className="checkout-option-span"><Link to="/checkout-complete" onClick={handlePurchase}>Purchase Order!</Link></span>
-                    <span className="checkout-option-span"><Link to="/" onClick={handleCancel}>Cancel</Link></span>
                 </div>
+                <div className="address-container">
+                    <h2>Mailing/Shipping Address</h2>
+                    <h3>street</h3>
+                    <input name="street" type="text" required onChange={handleAddressInput}/>
+                    <h3>city</h3>
+                    <input name="city" type="text" required onChange={handleAddressInput}/> 
+                    <h3>state</h3>
+                    <input name="state" onChange={handleAddressInput}/>
+                    <h3>zip</h3>
+                    <input name="zip" onChange={handleAddressInput}/>
+                </div>
+            </div>
+            <div className="right-col-container">
+                <div className="order-container">
+                    <h2>Order Details</h2>
+                    <OrderCard total_items={tquantity} total_price={tprice} />
+                    <button className="checkout-option-span"  onClick={handlePurchase}>Purchase Order!</button>
+                    <button className="checkout-option-span"  onClick={handleCancel}>Cancel</button>
+                </div>
+                
 
             </div>
         </div>

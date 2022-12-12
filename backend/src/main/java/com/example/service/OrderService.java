@@ -88,11 +88,4 @@ public class OrderService {
 		List<Order> orders = orderRepo.findAllByPerson(person);
 		orderRepo.deleteAll(orders);
 	}
-
-	public void updateAddress(int customer_id, String paddress, String city, String state, int zip) {
-		Person person = personRepo.findById(customer_id).get();
-		List<Order> orders = orderRepo.findAllByPerson(person);
-		PAddress address = new PAddress(customer_id, paddress, city, state, zip);
-		addressRepo.save(address);
-	}
 }

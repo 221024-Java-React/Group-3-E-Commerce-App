@@ -17,11 +17,11 @@ export const Admin: React.FC = () => {
 
     const [newProduct, setNewProduct] = useState<Product>({
         id: 0,
-            title: '',
-            price: 0,
-            quantity: 0,
-            description: '',
-            category: cat
+        title: '',
+        price: 0,
+        quantity: 0,
+        description: '',
+        category: cat
     });
 
 

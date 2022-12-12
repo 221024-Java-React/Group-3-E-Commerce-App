@@ -20,10 +20,10 @@ public class PAddress {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique = true, name="address_id")
+	@Column(name="address_id")
 	private Integer addressId;
 	
-	private String address;
+	private String street;
 	
 	private String city;
 	
