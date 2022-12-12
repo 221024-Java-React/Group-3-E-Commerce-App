@@ -23,7 +23,7 @@ public class PAddress {
 	@Column(name="address_id")
 	private Integer addressId;
 	
-	private String address;
+	private String street;
 	
 	private String city;
 	

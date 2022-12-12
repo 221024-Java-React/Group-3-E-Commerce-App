@@ -42,6 +42,7 @@ export const Checkout:React.FC = () => {
             state: paddress.state,
             zip: paddress.zip
         };
+        
        console.log("PAddress address: " + Address);
         dispatch(updateAddress(Address));
         navigate("/checkout-complete");
@@ -94,8 +95,8 @@ export const Checkout:React.FC = () => {
                 </div>
                 <div className="address-container">
                     <h2>Mailing/Shipping Address</h2>
-                    <h3>address</h3>
-                    <input name="address" type="text" required onChange={handleAddressInput}/>
+                    <h3>street</h3>
+                    <input name="street" type="text" required onChange={handleAddressInput}/>
                     <h3>city</h3>
                     <input name="city" type="text" required onChange={handleAddressInput}/> 
                     <h3>state</h3>

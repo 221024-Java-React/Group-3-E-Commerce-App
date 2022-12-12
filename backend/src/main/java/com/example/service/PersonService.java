@@ -58,9 +58,9 @@ public class PersonService {
 	public void updateAddress(int customer_id, String street, String city, String state, int zip) {
 		Person person = personRepo.findById(customer_id).get();
 		PAddress address = new PAddress(1, street, city, state, zip);
-		System.out.println("address id: " + address.getAddressId());
+		System.out.println("address id: " + address.getStreet());
 		address.setAddressId(address.getAddressId());
-		System.out.println("address id: " + address.getAddressId());
+		System.out.println("address id: " + address.getStreet());
 		person.setAddress(address);
 		addressRepo.save(address);
 	}
