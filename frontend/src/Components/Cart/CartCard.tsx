@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DispatchType, RootState } from '../../Redux/Store';
 import { updateProduct } from '../../Redux/Slices/ProductSlice';
 import './CartCard.css';
-import logo from '../../Assets/ecommercelogos.png';
+//import logo from '../../Assets/ecommercelogos.png';
 import { Equant, getOrders, removeOrder, updateQuantity } from '../../Redux/Slices/OrderSlice';
 import { Person } from '../../Types/Person';
 import { Order } from '../../Types/Order';
@@ -69,7 +69,7 @@ export const CartCard:React.FC<Product> = ({id, title, price, quantity, descript
         
         <div className="cartcard-container">
             <br />
-            <img className='product-logo' src={logo}/>
+            <img className="product-logo" src={require(`../../Assets/products/${id}.jpeg`)} />
             <p>{title}</p>
             <p>{tpriceUSD}</p>
             <p>{tQty} Qty</p> 
