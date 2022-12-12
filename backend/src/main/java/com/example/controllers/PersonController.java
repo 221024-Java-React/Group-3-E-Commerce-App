@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,6 +51,14 @@ public class PersonController {
 	@ExceptionHandler({EmailAlreadyExistsException.class})
 	public ResponseEntity<String> handleExists(){
 		return new ResponseEntity<>("Email already registered", HttpStatus.CONFLICT);
+	}
+	
+	@PostMapping("/update/address")
+	public void updateAddress(@RequestBody LinkedHashMap<String, String>body) {
+		System.out.println(body);
+		int zip = Integer.parseInt(body.get("zip"));
+		int customer_id = Integer.parseInt(body.get("customer_id"));
+		eService.updateAddress(customer_id, body.get("street"), body.get("city"), body.get("state"), zip);
 	}
 }
 

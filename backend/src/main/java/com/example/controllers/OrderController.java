@@ -53,7 +53,7 @@ public class OrderController {
 			return orders;
 		}
 	
-	@PostMapping("/update")
+	@PostMapping("/update/quantity")
 	public void updateQuantity(@RequestBody LinkedHashMap<String,Integer>body) {
 		oService.updateQuantity(body.get("order_id"),body.get("quantity"));
 		Class<? extends LinkedHashMap> order = body.getClass();
@@ -64,14 +64,6 @@ public class OrderController {
 	public void updatePaymentType(@RequestBody LinkedHashMap<String, Integer>body) {
 		oService.updatePaymentType(body.get("customer_id"), body.get("type"));
 		System.out.println(body.get("type"));
-	}
-	
-	@PostMapping("/update/address")
-	public void updateAddress(@RequestBody LinkedHashMap<String, String>body) {
-		System.out.println(body);
-		int zip = Integer.parseInt(body.get("zip"));
-		int customer_id = Integer.parseInt(body.get("cutomer_id"));
-		oService.updateAddress(customer_id, body.get("address"), body.get("city"), body.get("state"), zip);
 	}
 	
 	@DeleteMapping("/{order_id}")
