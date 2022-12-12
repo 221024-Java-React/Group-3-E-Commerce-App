@@ -62,6 +62,7 @@ public class NotificationAspect {
 	
 	@AfterReturning("execution(* com.example.service.OrderService.addToCart(..))")
 	public void NotifyWhenUserAddToCart(JoinPoint jp) {
+		System.out.println("inside aspect add to card");
 		Product product = productRepo.findById(Integer.parseInt( jp.getArgs()[1].toString())).get();
 		 notification.setMessage("you added product "+ product.getTitle() + " to the cart");
 		 notification.setModifiedDate(LocalDateTime.now());

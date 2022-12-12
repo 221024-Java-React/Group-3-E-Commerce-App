@@ -73,6 +73,7 @@ export const Login:React.FC = () => {
             <div className='loginFormSubmit'>
             <button id="login" className="authentication" onClick={handleLogin}>Login</button>
             <Link to="/register" className="registerLinkFromLogin">register</Link></div>
+            <Link to="/reset" className="registerLinkFromLogin">Forgot password? click here</Link>
             </form>
           
         </div>

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.exceptions.EmailAlreadyExistsException;
 import com.example.exceptions.InvalidCredentialsException;
 import com.example.models.Order;
-import com.example.models.PAddress;
+import com.example.models.Address;
 import com.example.models.Person;
 import com.example.models.Role;
 import com.example.models.Theme;
@@ -35,7 +35,7 @@ public class PersonService {
 	public Person register(String name, String email, String password) {
 		Role role = roleRepo.findById(2).get();
 		Theme theme = themeRepo.findById(1).get();
-		PAddress address = null;
+		Address address = null;
 		Person person = new Person(0, name, email, password, "","", theme,role,address);
 		
 		try {
@@ -55,13 +55,36 @@ public class PersonService {
 		return person;
 	}
 	
+	public Person forgotPassword(String email, String oldPassword, String newPassword) {
+		Person person = personRepo.findByEmail(email);
+		if(person.getCustomerId()>0)
+		{
+			System.out.println("person service "+person.getCustomerId());
+			if(person.getPassword().equals(oldPassword))
+			{
+				person.setPassword(newPassword);
+				personRepo.save(person);
+			}
+		}else {
+			throw new InvalidCredentialsException();
+		}	
+		
+		return person;
+	}
+	
 	public void updateAddress(int customer_id, String street, String city, String state, int zip) {
 		Person person = personRepo.findById(customer_id).get();
-		PAddress address = new PAddress(1, street, city, state, zip);
+		Address address = new Address(1, street, city, state, zip);
 		System.out.println("address id: " + address.getStreet());
 		address.setAddressId(address.getAddressId());
 		System.out.println("address id: " + address.getStreet());
 		person.setAddress(address);
 		addressRepo.save(address);
+	}
+
+	public Person updatePerson(Person person) {
+		//addressRepo.save(person.getAddress());
+	return	personRepo.save(person);
+		
 	}
 }

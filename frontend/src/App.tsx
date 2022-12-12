@@ -12,6 +12,7 @@ import { Cart } from './Components/Cart/Cart';
 import { Checkout } from './Components/Checkout/Checkout';
 import { CheckoutComplete } from './Components/Checkout/CheckoutComplete';
 import { Admin } from './Components/Admin/admin';
+import { ForgotPassword } from './Components/ResetPassword/ForgotPassword';
 function App() {
   return (
     <div className="App">
@@ -27,6 +28,7 @@ function App() {
         <Route path="/notification" element={<Notification />}/>
         <Route path="/admin" element={<Admin />}/>
         <Route path="/profile" element={<Profile />}/>
+        <Route path="/reset" element={<ForgotPassword />}/>
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />}/>;
         <Route path="/checkout-complete" element={<CheckoutComplete />}/>;

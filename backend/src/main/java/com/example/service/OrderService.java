@@ -13,7 +13,7 @@ import com.example.exceptions.InvalidCredentialsException;
 import com.example.models.Notification;
 import com.example.models.Order;
 import com.example.models.OrderStatus;
-import com.example.models.PAddress;
+import com.example.models.Address;
 import com.example.models.PaymentType;
 import com.example.models.Person;
 import com.example.models.Product;
