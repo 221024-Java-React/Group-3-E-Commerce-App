@@ -14,7 +14,7 @@ let navigate = useNavigate();
 const userState = useSelector((state:RootState) => state.auth);
 const dispatch:DispatchType = useDispatch();
 let stringPrice= '';
-if(category?.productCategoryId===3)
+if(category?.productCategoryId===3 || category?.productCategoryId===2)
 {
     stringPrice= `$${price} - 20% OFF -   $${price*85/100}`;
 }
@@ -43,10 +43,17 @@ const handleAddToCard = (e: { preventDefault: () => void; }) => {
 };
     return (
  <div className="card">
+    {
+        category?.productCategoryId===4? <i className="fa fa-star featuredProduct"></i>:<></>
+    }
   <img className="product_image" src={require(`../../Assets/products/${id}.jpeg`)} />
   <h1>{title}</h1>
   <p className="prduct-price">{stringPrice}</p>
-  <p className="price">In stock {quantity} items</p>
+  {
+        category?.productCategoryId!==2?  <p className="price">In stock {quantity} items</p>
+        :<></>
+    }
+ 
   <p>{description}</p>
   <p><button onClick={handleAddToCard}>Add to Cart</button></p>
 </div>

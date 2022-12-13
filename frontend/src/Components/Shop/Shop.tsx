@@ -50,7 +50,7 @@ export const Shop:React.FC = () => {
             <button className='categoryBtn' name="all" onClick={()=>handleClick(1)}>All</button>
             <button className='categoryBtn' name= "sales"onClick={()=>handleClick(3)}>Sales</button>
             <button className='categoryBtn' name="deals" onClick={()=>handleClick(2)}>Deals</button>
-            <button className='categoryBtn' name="featured" onClick={()=>handleClick(4)}>Best Selling</button>
+            <button className='categoryBtn' name="featured" onClick={()=>handleClick(4)}>Featured</button>
            
         </div>
        

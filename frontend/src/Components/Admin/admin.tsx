@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import  { useDispatch } from 'react-redux'
+import  { useDispatch, useSelector } from 'react-redux'
 import { Category, Product } from '../../Types/Product';
-import { DispatchType } from '../../Redux/Store';
+import { DispatchType, RootState } from '../../Redux/Store';
 import { addProduct, allProducts, deleteProduct, updateProduct } from '../../Redux/Slices/AdminSlice';
 import "./Admin.css"
 import { AdminProductCard } from './AdminCard';
@@ -10,6 +10,7 @@ import { AdminProductCard } from './AdminCard';
 export const Admin: React.FC = () => {
 
     const products = JSON.parse(localStorage.getItem("products")|| '{}');
+    const productState = useSelector((state:RootState) => state.product); 
     const dispatch:DispatchType = useDispatch();
 
     const cat: Category={
@@ -139,7 +140,14 @@ export const Admin: React.FC = () => {
         <div className="productcard">
         <h1 className="shoptitle">Product List</h1>
         {
+            
+            !products?
             products.map((product:Product) => {
+                return <AdminProductCard key={product.id} id={product.id} price={product.price}
+                title={product.title} description={product.description}
+                quantity={product.quantity} image={''} category={product.category}                 />
+            })
+            :  productState.products.map((product:Product) => {
                 return <AdminProductCard key={product.id} id={product.id} price={product.price}
                 title={product.title} description={product.description}
                 quantity={product.quantity} image={''} category={product.category}                 />
