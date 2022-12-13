@@ -5,6 +5,7 @@ import OrderSlice from './Slices/OrderSlice';
 import PaymentSlice from './Slices/PaymentSlice';
 import AdminSlice from './Slices/AdminSlice';
 import NotificationSlice from './Slices/NotificationSlice';
+import ReceiptSlice from './Slices/ReceiptSlice';
 
 export const store = configureStore({
     reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
         order: OrderSlice,
         payment: PaymentSlice,
         admin: AdminSlice,
-        notify: NotificationSlice
+        notify: NotificationSlice,
+        receipt: ReceiptSlice
     },
     devTools:true
 });

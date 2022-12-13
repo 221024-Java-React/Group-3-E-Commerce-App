@@ -18,7 +18,7 @@ export const makeReceipt = createAsyncThunk(
         try{console.log("in slice receipt: " + receipt.total_items);
 
             const res = await axios.post("http://localhost:8500/receipts/make/", receipt);
-
+            console.log(res.data);
             return {receipts :res.data};
 
         } catch(e) {
@@ -26,7 +26,6 @@ export const makeReceipt = createAsyncThunk(
         }
     }
 );
-
 
 export const getAllReceipts = createAsyncThunk(
     'receipts/getAllReceipts',
@@ -55,7 +54,7 @@ export const ReceiptSlice = createSlice({
             });
             builder.addCase(getAllReceipts.fulfilled, (state, action) => {
                 state.receipts= action.payload?.receipts;
-              //  localStorage.setItem('orders', JSON.stringify(action.payload?.orders));
+                //localStorage.setItem('receipts', JSON.stringify(action.payload?.receipts));
                 return state;
             });
             

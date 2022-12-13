@@ -3,7 +3,7 @@ import { Order } from "./Order";
 
 export interface Receipt{
     receipt_id?:number;
-    cusomter_id:number;
+    customer_id:number;
     address?:Address;
     order_number?:string;
     date_purchased?:Date;

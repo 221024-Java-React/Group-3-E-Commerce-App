@@ -23,7 +23,7 @@ export const Checkout:React.FC = () => {
 
     const [type, setType] = useState<number>(1);
     let [rreceipt, setReceipt] = useState<Receipt>({
-        cusomter_id:0,
+        customer_id:0,
         total_items:0,
         total_price:0
     })
@@ -56,11 +56,11 @@ export const Checkout:React.FC = () => {
 
     console.log("ptype: " + ptype.type);
     let receipt:Receipt ={
-            cusomter_id:p.customerId,
+            customer_id:p.customerId,
             total_items:tquantity,
             total_price:tprice
         }
-        console.log("receipt: " + receipt.cusomter_id);
+        console.log("receipt: " + receipt.customer_id);
         console.log("receipt: " + receipt.total_items);
         console.log("receipt: " + receipt.total_price);
 
@@ -80,10 +80,6 @@ export const Checkout:React.FC = () => {
             navigate("/shop");
     };
 
-    const receiptClick = ()=>{
-        dispatch(makeReceipt(receipt));
-};
-
     useEffect(()=>{
         if(payments.payments.length===0){
             dispatch(getPaymentTypes()).then(()=>{
@@ -97,7 +93,6 @@ export const Checkout:React.FC = () => {
         <h1 className="checkout-title">Checkout Page</h1>     
         <div className="checkout-container">
             <div className="left-col-container">
-                <button onClick={receiptClick}>test</button>
                 <div className="payment-container">
                     <h2>Payment</h2>
                     <div>
