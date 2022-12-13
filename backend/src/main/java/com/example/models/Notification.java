@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 	@Data
 	@AllArgsConstructor
 	@NoArgsConstructor
-	public class Notification  {
+	public class Notification {
 		
 		@Id
 		@GeneratedValue(strategy=GenerationType.IDENTITY)

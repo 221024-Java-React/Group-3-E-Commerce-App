@@ -84,7 +84,13 @@ public class EcommerceApplication {
 				ttr.save(tt3);
 				ttr.save(tt4);
 			}
-		
+			
+			/*if(er.count() < 1) {
+				Optional<Role> roles;
+				roles = err.findById(1);
+				Person admin = new Person();
+				er.save(admin);
+			}*/
 		};
 	}
 

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,21 +48,6 @@ public class ProductController {
 		return tService.addProduct(Integer.parseInt(body.get("id")),body.get("title"), Double.parseDouble(body.get("price")),
 				Integer.parseInt(body.get("quantity")) ,body.get("description"), Integer.parseInt(body.get("category")));
 	} 
-	
-	@PutMapping("/update")
-	public Product updateProduct(@RequestBody LinkedHashMap<String,String>body) {
-	
-		return tService.updateProduct(Integer.parseInt(body.get("id")),body.get("title"), Double.parseDouble(body.get("price")), body.get("image"),
-				Integer.parseInt(body.get("quantity")) ,body.get("description"), Integer.parseInt(body.get("category")));
-		
-	}
-	
-	@DeleteMapping("/delete")
-	public Product deleteProduct(@RequestBody LinkedHashMap<String,Integer>body) {
-		
-		return tService.deleteProduct((body.get("id")));
-		
-	}
 		
 	}
 
