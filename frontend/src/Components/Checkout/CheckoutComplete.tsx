@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { makeReceipt } from '../../Redux/Slices/ReceiptSlice';
 import './CheckoutComplete.css';
 
 export const CheckoutComplete:React.FC = () => {
+
+    useEffect(()=>{
+        //dispatch(getReceipt(id));
+    }, [])
 
     return (
         <>
