@@ -72,15 +72,19 @@ export const Profile:React.FC = () => {
     }
 
     const initialState = {
-        receipts:[]
+        
     };
+
+
 
     return (
         <div className='ProfileRoot'>
             
             <div className="profileContainer">
-            <h1>Gerneral Information</h1>
 
+                <div className="order-history-container">
+                    
+                </div>
                 <div className='profileForm'>
                 <p>Name</p>
                 <input name="name" placeholder={`${p.name}`} type="text" onChange={handleChange}/></div>
@@ -113,7 +117,6 @@ export const Profile:React.FC = () => {
 <button onClick={handleUpdate}>Save</button>
 </div>
 </div>
-
 )
 /*
 

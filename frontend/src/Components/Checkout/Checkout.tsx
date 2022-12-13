@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom'
 import { getTotalItemsCount, PType, removeAllOrders, updatePaymentType } from '../../Redux/Slices/OrderSlice';
 import { getPaymentTypes } from '../../Redux/Slices/PaymentSlice';
 import { Person } from '../../Types/Person';
+import { makeReceipt } from '../../Redux/Slices/ReceiptSlice';
+import { Receipt } from '../../Types/Receipt';
 
 export const Checkout:React.FC = () => {
     
@@ -18,34 +20,14 @@ export const Checkout:React.FC = () => {
     const payments = useSelector((state:RootState)=> state.payment);
     const p:Person = JSON.parse(localStorage.getItem("user")|| '');
     let navigate = useNavigate();
-    const [type, setType] = useState<number>(0);
 
-    const handlePaymentType = (e:React.ChangeEvent<HTMLInputElement>)=>{
-        setType(parseInt(e.target.value));
-    }
+    const [type, setType] = useState<number>(1);
+    let [rreceipt, setReceipt] = useState<Receipt>({
+        cusomter_id:0,
+        total_items:0,
+        total_price:0
+    })
 
-    let ptype:PType = {
-        customer_id:p.customerId,
-        type:type
-    }
-
-    const handlePurchase = ()=>{
-        dispatch(updatePaymentType(ptype));
-        //dispatch(removeAllOrders(p.customerId));
-        navigate("/checkout-complete");
-    };
-
-    const handleCancel = ()=>{
-            navigate("/shop");
-    };
-
-    useEffect(()=>{
-        if(payments.payments.length===0){
-            dispatch(getPaymentTypes()).then(()=>{
-                dispatch(getTotalItemsCount(p.customerId));
-            });
-        }
-    }, [dispatch, payments.payments.length]);
 
     let tprice = 0
     let tquantity = 0;
@@ -66,11 +48,56 @@ export const Checkout:React.FC = () => {
     console.log(payments);
     console.log("orders: " + state.order.orders);
 
+
+    let ptype:PType = {
+        customer_id:p.customerId,
+        type:type
+    }
+
+    console.log("ptype: " + ptype.type);
+    let receipt:Receipt ={
+            cusomter_id:p.customerId,
+            total_items:tquantity,
+            total_price:tprice
+        }
+        console.log("receipt: " + receipt.cusomter_id);
+        console.log("receipt: " + receipt.total_items);
+        console.log("receipt: " + receipt.total_price);
+
+    const handlePurchase = ()=>{
+        
+        dispatch(makeReceipt(receipt));
+        dispatch(updatePaymentType(ptype));
+        //dispatch(removeAllOrders(p.customerId));
+        navigate("/checkout-complete");
+    };
+
+    const handlePaymentType = (e:React.ChangeEvent<HTMLInputElement>)=>{
+        setType(parseInt(e.target.value));
+    }
+
+    const handleCancel = ()=>{
+            navigate("/shop");
+    };
+
+    const receiptClick = ()=>{
+        dispatch(makeReceipt(receipt));
+};
+
+    useEffect(()=>{
+        if(payments.payments.length===0){
+            dispatch(getPaymentTypes()).then(()=>{
+                dispatch(getTotalItemsCount(p.customerId));
+            });
+        }
+    }, [dispatch, payments.payments.length]);
+
     return (
         <>
         <h1 className="checkout-title">Checkout Page</h1>     
         <div className="checkout-container">
             <div className="left-col-container">
+                <button onClick={receiptClick}>test</button>
                 <div className="payment-container">
                     <h2>Payment</h2>
                     <div>
