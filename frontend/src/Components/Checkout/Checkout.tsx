@@ -20,12 +20,14 @@ export const Checkout:React.FC = () => {
     const payments = useSelector((state:RootState)=> state.payment);
     const p:Person = JSON.parse(localStorage.getItem("user")|| '');
     let navigate = useNavigate();
+
     const [type, setType] = useState<number>(1);
     let [rreceipt, setReceipt] = useState<Receipt>({
         cusomter_id:0,
         total_items:0,
         total_price:0
     })
+
 
     let tprice = 0
     let tquantity = 0;
@@ -45,6 +47,7 @@ export const Checkout:React.FC = () => {
     console.log("total quantity: " + tquantity);
     console.log(payments);
     console.log("orders: " + state.order.orders);
+
 
     let ptype:PType = {
         customer_id:p.customerId,
@@ -111,6 +114,7 @@ export const Checkout:React.FC = () => {
                             </>
                             )
                         })
+
                     }
                     
                     </div>

@@ -51,10 +51,18 @@ export const Login:React.FC = () => {
            }   
         dispatch(login(user)).then(()=>{
             dispatch(allProducts());
+            clearAllInputs();
         });
   };
     
- 
+  const  clearAllInputs = ()=>{
+    var elements = document.getElementsByTagName("input");
+for (var ii=0; ii < elements.length; ii++) {
+  if (elements[ii].type == "text") {
+    elements[ii].value = "";
+  }
+}
+}
 
     return(
 

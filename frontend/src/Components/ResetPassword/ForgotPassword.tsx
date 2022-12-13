@@ -30,15 +30,27 @@ export const ForgotPassword:React.FC = () => {
     const handleForgot = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         console.log("button clicked! "+reset.email);
-        dispatch(forgotPassword(reset));
+        dispatch(forgotPassword(reset)).then(()=>{
+            clearAllInputs();
+        });
        
   };
 
+  const  clearAllInputs = ()=>{
+    var elements = document.getElementsByTagName("input");
+for (var ii=0; ii < elements.length; ii++) {
+  if (elements[ii].type == "text") {
+    elements[ii].value = "";
+  }
+}
+}
+
 return(
     <div className="login">
-        <h1>Please Enter your email.</h1>
+        <h1>Reset Your Password</h1>
         <form id="auth">
             {userState.resetError ? <h3>Invalid Credentails</h3> : <></>}
+            {userState.isReset  ? <h1 className="h1Auth">Please Login New Password</h1> : <></>}
             <input id= "email" name="email" placeholder="Your email" onChange={handleChange}></input>
             <input id= "oldpassword" name="oldpassword" placeholder="Old Password" onChange={handleChange}></input>
             <input id= "newpassword" name="newpassword" placeholder="New password" onChange={handleChange}></input>

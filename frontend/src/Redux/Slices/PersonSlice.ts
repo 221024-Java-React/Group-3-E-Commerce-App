@@ -9,12 +9,13 @@ export interface  resetDetails {
          }
 
 export interface AuthState{
-   isLoggedIn:boolean,
+    isLoggedIn:boolean,
     isRegistered:boolean,
     registeredError: boolean,
     loginError: boolean,
     currentUser: Person,
-    resetError: boolean
+    resetError: boolean,
+    isReset:boolean
 }
 export interface User {
     name?:string,
@@ -45,7 +46,8 @@ const person:Person={
 const initialState:AuthState =  {
     isLoggedIn: false, registeredError: false, loginError: false, currentUser: person,
     isRegistered: false,
-    resetError: false
+    resetError: false,
+    isReset: false
 };
 
 export const forgotPassword = createAsyncThunk(
@@ -159,6 +161,15 @@ export const UserSlice = createSlice({
         });
         builder.addCase(forgotPassword.fulfilled, (state, action)=>{
             state.currentUser=action.payload.user;
+            localStorage.setItem("user", JSON.stringify(action.payload.user));
+            state.resetError =false;
+            state.isReset=true;
+            return state
+        });
+        builder.addCase(forgotPassword.rejected, (state, action)=>{
+            //state.currentUser=action.payload.user;
+            //localStorage.setItem("user", JSON.stringify(action.payload.user));
+            state.isReset=false
             state.resetError =true;
             return state
         });

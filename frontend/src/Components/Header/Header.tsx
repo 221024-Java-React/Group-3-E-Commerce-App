@@ -27,11 +27,11 @@ export const Header:React.FC = () => {
       const user = useSelector((state:RootState) => state.auth); 
       const orders = useSelector((state:RootState) => state.order); 
       const notifications = useSelector((state:RootState) => state.notify); 
-      if(!notifications) dispatch(getNotifications(user.currentUser.customerId));
-      if(!orders)dispatch(getOrders(user.currentUser.customerId));
+      
 
       useEffect(()=>{
-       
+        if(!notifications) dispatch(getNotifications(user.currentUser.customerId));
+        if(!orders)dispatch(getOrders(user.currentUser.customerId));
        
     //console.log(localStorage.getItem('customerId'));
     }, [])
@@ -48,14 +48,14 @@ export const Header:React.FC = () => {
         }
       };
 
-if(localStorage.getItem("user")!=null)
+if(user.isLoggedIn && user.currentUser)
 {
 
- const p:Person=  JSON.parse(localStorage.getItem("user")|| '');
- console.log("header person data "+p['email']);
- console.log("header person.email data "+p.role.roleId);
+ //const p:Person=  JSON.parse(localStorage.getItem("user")|| '{}');
+ //console.log("header person data "+p['email']);
+ //console.log("header person.email data "+p.role.roleId);
  
- if(p.role.roleId ===1)
+ if(user.currentUser.role.roleId ===1)
  {
   return(
 

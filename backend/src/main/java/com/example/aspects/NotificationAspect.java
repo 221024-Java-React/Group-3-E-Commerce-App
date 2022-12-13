@@ -42,7 +42,7 @@ public class NotificationAspect {
 	
 	@AfterReturning("execution(* com.example.service.PersonService.login(..))")
 	public void NotifyWhenUserLogsIn(JoinPoint jp) {
-		
+		 notification = new Notification();
 		 notification.setMessage("you logged in");
 		 notification.setModifiedDate(LocalDateTime.now());
 		 Person person = pr.findByEmail(jp.getArgs()[0].toString());
@@ -52,6 +52,7 @@ public class NotificationAspect {
 	
 	@AfterReturning("execution(* com.example.service.PersonService.register(..))")
 	public void NotifyWhenUserRegister(JoinPoint jp) {
+		 notification = new Notification();
 		 notification.setMessage("you resitered");
 		 notification.setModifiedDate(LocalDateTime.now());
 		 Person person = pr.findByEmail(jp.getArgs()[0].toString());
@@ -63,6 +64,7 @@ public class NotificationAspect {
 	@AfterReturning("execution(* com.example.service.OrderService.addToCart(..))")
 	public void NotifyWhenUserAddToCart(JoinPoint jp) {
 		System.out.println("inside aspect add to card");
+		 notification = new Notification();
 		Product product = productRepo.findById(Integer.parseInt( jp.getArgs()[1].toString())).get();
 		 notification.setMessage("you added product "+ product.getTitle() + " to the cart");
 		 notification.setModifiedDate(LocalDateTime.now());
@@ -71,6 +73,7 @@ public class NotificationAspect {
 		 nr.save(notification);
 		
 	}
+	
 	
 
 }

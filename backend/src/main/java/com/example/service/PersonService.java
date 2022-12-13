@@ -65,10 +65,10 @@ public class PersonService {
 				person.setPassword(newPassword);
 				personRepo.save(person);
 			}
-		}else {
+		else {
 			throw new InvalidCredentialsException();
 		}	
-		
+		}else throw new InvalidCredentialsException();
 		return person;
 	}
 	
@@ -83,6 +83,7 @@ public class PersonService {
 	}
 
 	public Person updatePerson(Person person) {
+		System.out.println("address id update"+person.getAddress().getAddressId());
 		//addressRepo.save(person.getAddress());
 	return	personRepo.save(person);
 		

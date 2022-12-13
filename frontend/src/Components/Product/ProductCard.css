@@ -7,10 +7,10 @@
 }
 
 .product_image{
-    width:100%;
-   height: 200px;
-    object-fit: contain;
-    
+   
+    object-fit:fill;
+    width:200px;
+    height: 200px;
 }
 
 .card {
@@ -25,6 +25,12 @@
   .price {
     color: #EA3238;
     font-size: 22px;
+  }
+
+  .featuredProduct{
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 10px;
   }
   
   .card button {

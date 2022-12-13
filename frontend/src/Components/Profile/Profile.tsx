@@ -15,11 +15,11 @@ export const Profile:React.FC = () => {
     const userState = useSelector((state:RootState) => state.auth);
 
     const [newAddress, setNewAddress] = useState<Address>({
-        address_id: 0,
-        city:'',
-        street: '',
-        state: '',
-        zip:0
+        address_id: p.address?.address_id?p.address.address_id:1,
+        city:p.address?.city? p.address.city:'',
+        street: p.address?.street? p.address.street:'',
+        state: p.address?.state? p.address.state:'',
+        zip:p.address?.zip? p.address.zip:0,
 
     });
 
@@ -81,6 +81,7 @@ export const Profile:React.FC = () => {
         <div className='ProfileRoot'>
             
             <div className="profileContainer">
+
                 <div className="order-history-container">
                     
                 </div>
@@ -107,7 +108,7 @@ export const Profile:React.FC = () => {
 <input name="city" placeholder={`${p.address?.city}`}type="text" onChange={handleAddressChange}/></div>
 <div className='profileForm'>
 <p>State</p>
-<input name="state" placeholder={`${p.address?.state}`}type="password" onChange={handleAddressChange}/>
+<input name="state" placeholder={`${p.address?.state}`}type="text" onChange={handleAddressChange}/>
 </div>
 <div className='profileForm'>
 <p>Zip Code</p>
