@@ -19,13 +19,14 @@ const user = JSON.parse(localStorage.getItem("user")|| '{}');
 
 
     return (
- <div className="card">
-  <img className="product_image" src={require(`../../Assets/products/${id}.jpeg`)} />
+ <div className="admincard">
+  <img className="admin_image" src={require(`../../Assets/products/${id}.jpeg`)} />
   <h1>{id}</h1>
   <h1>{title}</h1>
   <p className="price">$ {price}</p>
   <p className="price">In stock {quantity} items</p>
   <p>{description}</p>
+  
 </div>
        
     )

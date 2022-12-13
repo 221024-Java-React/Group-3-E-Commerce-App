@@ -65,10 +65,10 @@ public class PersonService {
 				person.setPassword(newPassword);
 				personRepo.save(person);
 			}
-		}else {
+		else {
 			throw new InvalidCredentialsException();
 		}	
-		
+		}else throw new InvalidCredentialsException();
 		return person;
 	}
 	

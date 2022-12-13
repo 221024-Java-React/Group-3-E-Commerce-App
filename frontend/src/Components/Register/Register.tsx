@@ -38,8 +38,19 @@ export const Register:React.FC = () => {
            password: password,
            name: name
        }   
-        dispatch(register(user));
+        dispatch(register(user)).then(()=>{
+            clearAllInputs();
+        });
         
+    }
+
+    const  clearAllInputs = ()=>{
+        var elements = document.getElementsByTagName("input");
+    for (var ii=0; ii < elements.length; ii++) {
+      if (elements[ii].type == "text") {
+        elements[ii].value = "";
+      }
+    }
     }
 
     return(

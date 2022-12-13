@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import  { useDispatch, useSelector } from 'react-redux'
 import { Category, Product } from '../../Types/Product';
 import { DispatchType, RootState } from '../../Redux/Store';
@@ -8,7 +8,7 @@ import { AdminProductCard } from './AdminCard';
 
 
 export const Admin: React.FC = () => {
-
+   
     const products = JSON.parse(localStorage.getItem("products")|| '{}');
     const productState = useSelector((state:RootState) => state.product); 
     const dispatch:DispatchType = useDispatch();
@@ -17,6 +17,10 @@ export const Admin: React.FC = () => {
         productCategoryId: 0,
         category: ''
     }
+    
+    useEffect(()=>{
+      dispatch(allProducts());
+        }, []);
 
     const [newProduct, setNewProduct] = useState<Product>({
         id: 0,
@@ -47,7 +51,10 @@ export const Admin: React.FC = () => {
             category: newProduct.category
         };
         console.log(product);
-        dispatch(addProduct(product));
+        dispatch(addProduct(product)).then(()=>{
+            dispatch(allProducts());
+            clearAllInputs();
+        });
     }
 
     const handleAllProducts = (categoryId:number)=> {
@@ -64,7 +71,9 @@ export const Admin: React.FC = () => {
             category: newProduct.category
         };
         console.log(product);
-        dispatch(updateProduct(product));
+        dispatch(updateProduct(product)).then(()=>{
+            dispatch(allProducts());
+        });
     }
 
     const handleDelete = () => {
@@ -76,13 +85,26 @@ export const Admin: React.FC = () => {
             description: newProduct.description,
             category: newProduct.category
         };
-        dispatch(deleteProduct(product));
+        dispatch(deleteProduct(product)).then(()=>{
+            dispatch(allProducts());
+            clearAllInputs();
+        });
     }
+ const  clearAllInputs = ()=>{
+    var elements = document.getElementsByTagName("input");
+for (var ii=0; ii < elements.length; ii++) {
+  if (elements[ii].type == "text") {
+    elements[ii].value = "";
+  }
+}
+}
 
     return(
-        <div className="adminRoot">
+        <>
+        <br/><br/><br/>
+                <div className="adminRoot">
             
-            <div className="adminContainer">
+            <div className="generalContainer">
             <div className="adminForm">
             <h1>title</h1>
             <input name="title" type="text" required onChange={handleChange}/></div>
@@ -104,7 +126,7 @@ export const Admin: React.FC = () => {
             <button onClick={handleClick}>Create Product</button>
         </div>
 
-        <div className="adminContainer">
+        <div className="addressContainer">
                 <div className="adminForm">
                 <h1>id</h1>
                 <input name="id" required onChange={handleChange}/></div>
@@ -129,15 +151,15 @@ export const Admin: React.FC = () => {
                 <button onClick={handleClick}>Update Product</button>
             </div>
 
-            <div className="adminContainer">
-                <div className="adminForm">
+            <div className="addressContainer">
+                <div className="adminDeleteContainer">
                 <h1>id</h1>
                 <input name="id" required onChange={handleChange}/>
                 <button onClick={handleDelete}>Delete Product</button>
                 </div>
             </div>
-
-        <div className="productcard">
+ </div>
+        <div className="addressContainer">
         <h1 className="shoptitle">Product List</h1>
         {
             
@@ -154,9 +176,9 @@ export const Admin: React.FC = () => {
             })
         }   
         </div>
-        </div>
-        
        
+        
+        </>
     )
     
 }
